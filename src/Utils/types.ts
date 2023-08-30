@@ -8,11 +8,13 @@ export type Line =
 
 export type Lyrics = Line[]
 
+export type Album = { name: string, coverArt: string }
 export type Track =
 {
+    id: number,
     name: string,
     band: string,
-    album: { name: string, coverArt: string },
+    album: Album,
     src: string,
     lyrics: Lyrics
 }
@@ -24,3 +26,6 @@ export enum PlayerState
     PAUSED = "PAUSED", 
     SEEKING = "SEEKING" 
 };
+
+
+export type SeekLineFunctionType = (timestamp: number) => void;

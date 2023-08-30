@@ -104,12 +104,15 @@ const useLineIndex = (lyrics: Lyrics) =>
        setValue(newIndex)
     }
 
+    const reset = () => setValue(lyrics.length > 0? 0:-1)
+
     return {
         value,
 
         seek,
         goForward,
-        goBack
+        goBack,
+        reset
     }
 }
 
@@ -125,7 +128,8 @@ const useLine = (lyrics: Lyrics) =>
 }
 
 
-export const useLyricsReader = ( timestamp: number, lyrics: Lyrics) =>
+// TODO: we should look into whether to stick with useState or use useReducer for this hook
+export const useLyricsReader = (trackID: number, timestamp: number, lyrics: Lyrics) =>
 {    
     const { line, index } = useLine(lyrics);
     const [chosenLine, setChosenLine] = useState<Line | null>(index.value > -1? lyrics[index.value]: null);
@@ -143,10 +147,24 @@ export const useLyricsReader = ( timestamp: number, lyrics: Lyrics) =>
         visibleLine: line.value
     });
 
+
+    const resetState = () =>
+    {
+        setChosenLine(index.value > -1? lyrics[index.value]: null)
+        line.hide();
+        index.reset();
+    }
+
     useEffect(() =>
-    {  
-        console.log("index.value: ", index.value);
+    {
+        console.log("trackID: ", trackID);
         
+        resetState()
+        
+    }, [trackID])
+
+    useEffect(() =>
+    {          
         if (index.value > -1) 
         {
             setChosenLine(lyrics[index.value])

@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@font-face {
+  font-family: "Holy Script";
+  src: url("./assets/fonts/OPTIHolly-Script.otf");
+}

@@ -17,14 +17,15 @@ const Ball = (props: BallProps) =>
         isDragging, 
         release, 
         hold  
-    } = props;
-
-
-    console.log("BAAAAALL");
+    } = props;  
+    
+    
+    console.log("ballPosition ball: ", ballPosition);
     
 
     return (
         <motion.div
+            key={""+isDragging}
             layout
             className=
             {`
@@ -50,19 +51,13 @@ const Ball = (props: BallProps) =>
                 
             //     hold();
             // }}
-            // onMouseUp={e =>
-            // {
-            //     release( ballPosition)
-            // }}
+            onMouseUp={e =>
+            {
+                release(ballPosition)
+            }}
 
             drag="x" dragMomentum={false}
-            
-            onDrag={(e, info) =>  
-            {
-                console.log("HOLD");
-                
-                 
-            }}
+        
 
             onDragStart={ () => hold()}
             onDragEnd={(e, info) => release(info.point.x)}

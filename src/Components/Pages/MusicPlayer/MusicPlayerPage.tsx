@@ -1,102 +1,66 @@
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 
+import LyricsView from '../../Organisms/LyricsView'
 
-import MiniMusicPlayer from '../../Organisms/MiniMusicPlayer'
-import LyricsOverlay from '../../Organisms/LyricsOverlay'
+import CoverArt from '../../Atoms/CoverArt'
 
-import { Harridan } from '../../../Utils/dummyData'
-import {  PlayerState, PlayerState as PlayerStatus } from '../../../Utils/types'
-import {  useLyricsReader } from '../../../Utils/hooks/lyricsHooks'
+import { TrackContext } from '../../SongContext'
+import { useNavigate } from 'react-router-dom'
 
-type Props = {}
-
-const useTimestamp = () =>
+const MusicPlayerPage = () => 
 {
-    const [value, setValue] = useState<number>(0);
+    /* TODO: 
+        maybe I can send a copy of the song instead of the song itself? 
+        I only need to update the timestamp anyways
+    */
+    const { track, timestamp } = useContext(TrackContext)
 
-    const update = (targetTimestamp: number) =>
-    {
-        if (targetTimestamp) 
-        {
-            setValue(targetTimestamp * 1000)  
-        }
-    }
-    
-    const reset = () => setValue(0);
+    const navigate = useNavigate();
 
-    return {
-        value,
-        update,
-        reset
-    }
-}
-
-
-const usePlayerState = () =>
-{
-    const [playerState, setPlayerState] = useState<PlayerStatus>(PlayerStatus.STOPPED);
-
-    useEffect(() => { console.log("playerState: ", playerState) }, [playerState])
-    
-    return {
-        value: playerState,
-
-        play: () => setPlayerState(PlayerState.PLAYING),
-        pause: () => setPlayerState(PlayerState.PAUSED),
-        seek: () => setPlayerState(PlayerState.SEEKING),
-        stop: () => setPlayerState(PlayerState.STOPPED),
-    }
-}
-
-const useOverlay = () =>
-{
-    const [isShown, setShown] = useState<boolean>(false)
-    
-    const show = () => setShown(true)
-    const hide = () => setShown(false);
-
+    // TODO: I need fallbacks here
     return (
-        {
-            isShown,
-
-            show, hide
-        }
-    )
-}
-
-const MusicPlayerPage = (props: Props) => 
-{
-    const playerStatus = usePlayerState();
-    const timestamp = useTimestamp();
-
-    const { line, seekLine } = useLyricsReader(timestamp.value, Harridan.lyrics)
-    const overlay = useOverlay();
-    
-    return (
-        <div 
-            className=
-            {`
-                relative
-                bg-[#009dc4]
-                min-h-screen w-screen
-                
-                flex
-                items-center justify-center
-            `}
-        >
-            <div className='flex h-[600px]'>
-                <MiniMusicPlayer 
-                    playerState={playerStatus}
-                    song={Harridan}
-                    timestamp={timestamp}
-
-                    seekLine={seekLine}
-                    showLyrics={overlay.show}
+        <div className={`z-[1] relative grid min-h-screen w-screen`}>
+            <div className='z-[-1] absolute h-full w-full'>
+                <img 
+                    className='z-[1] absolute  h-full w-full object-cover'
+                    src={track.value? track.value.album.coverArt: ""}
+                    title={"Background"}
+                    alt={"Background"}
                 />
 
-                <LyricsOverlay line={line} />
+                <div className='z-[2] absolute h-full w-full backdrop-blur-sm' />
             </div>
-        </div>
+
+            <section className={`grid grid-cols-2  auto-cols-max w-full items-center`}>
+                <div className='flex justify-center'>
+                    <CoverArt 
+                        className={`border min-w-[300px] w-[550px] rounded-lg`}
+                        name={track.value? track.value.album.name: ""}
+                        coverArt={track.value? track.value.album.coverArt: ""} 
+                    />
+                </div>
+
+                <div className='flex justify-center h-[700px]'>
+                   {
+                        track.value
+                    && 
+                        <LyricsView  
+                            track={track.value} 
+                            timestamp={timestamp.value}
+                        />
+                    } 
+
+                    <button 
+                        className='h-[50px] w-[80px] rounded-md bg-orange-600 text-white'
+                        value='Songs'
+                         
+                        onClick={() => navigate("/")} 
+                    >
+                        Go to Songs
+                    </button>
+                </div>
+            </section>   
+        </div>       
     )
 }
 

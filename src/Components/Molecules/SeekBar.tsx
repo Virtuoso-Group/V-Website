@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Ball from "../Atoms/Ball";
 
-type TimeInfoProps =
+type TimeInfo =
 {
     duration: number, 
     timestamp: number 
@@ -15,7 +15,8 @@ type Controls =
 
 interface SeekBarProps
 {
-    timeInfo: TimeInfoProps,
+    isPlaying: boolean,
+    timeInfo: TimeInfo,
     controls: Controls,
 
     changeToSeeking: () => void
@@ -23,7 +24,7 @@ interface SeekBarProps
 
 const Bar = (props: SeekBarProps) =>
 {
-    const { changeToSeeking } = props;
+    const { isPlaying, changeToSeeking } = props;
 
     const barContainerRef = useRef<HTMLDivElement>(null);
     const { duration, timestamp: current } = props.timeInfo;
@@ -71,7 +72,7 @@ const Bar = (props: SeekBarProps) =>
         {
             changeToSeeking()
         }
-    }, [isDragging, changeToSeeking])
+    }, [isDragging])
 
     return (
     <div 
@@ -89,6 +90,7 @@ const Bar = (props: SeekBarProps) =>
         />
 
         <Ball 
+            key={""+isPlaying}
             isDragging={isDragging}
             ballPosition={ballPosition}
             hold={hold}
@@ -98,46 +100,12 @@ const Bar = (props: SeekBarProps) =>
     )
 }
 
-const TimeInfo = (props: TimeInfoProps) =>
-{
-    const convertMilliToTimeStamp = (milliseconds: number): string =>
-    {
-        const minutes = ""+(Math.floor(milliseconds / 60000));
-        const seconds = ""+Math.floor((milliseconds % 60000) / 1000);
-        
-        return `${minutes}:${seconds.padStart(2, "0")}`
-    }
-    
-    const currentTime = convertMilliToTimeStamp(props.timestamp);
-    
-    const duration = convertMilliToTimeStamp(props.duration);
-
-    return (
-    <p 
-        className=
-        {`
-            flex justify-between
-            w-full 
-
-            px-2
-            font-light text-gray-300
-            text-xs
-        `}
-    >
-        <span>{currentTime}</span>
-
-        <span>{duration}</span>
-    </p>
-    )
-}
 
 const SeekBar = (props: SeekBarProps) =>
 {
     return (
-        <div className='flex flex-col w-full gap-2'>
+        <div>
             <Bar {...props} />
-
-            <TimeInfo {...props.timeInfo} />
         </div>
     )
 }
