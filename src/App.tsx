@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
-import MusicPlayerPage from './Components/Pages/MusicPlayer/MusicPlayerPage';
+import TrackOverlay from './Components/Pages/MusicPlayer/TrackOverlay';
 
 import WebsiteLayout from './Components/Organisms/WebsiteLayout';
 import TrackContextContainer from './Components/SongContext';
@@ -17,17 +17,7 @@ const router = createBrowserRouter(
   {
     path: "/",
     element: <WebsiteLayout />,
-    children: 
-    [
-      {
-        index: true,
-        element: <TracksPage />
-      },
-      {
-        path: "player", 
-        element: <MusicPlayerPage />,
-      }
-    ]
+    children: [{ index: true, element: <TracksPage /> }]
   }
 ])
 

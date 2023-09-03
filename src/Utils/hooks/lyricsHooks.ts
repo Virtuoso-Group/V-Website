@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Line, Lyrics, PlayerState } from "../types";
+import { Line, Lyrics, LyricsObject, PlayerState } from "../types";
 
 export const isWithinRange = (line: Line, timestamp: number) =>
 {
@@ -61,10 +61,10 @@ const useLineIndex = (lyrics: Lyrics) =>
 {
     const [value, setValue] = useState<number>(-1);
 
-    useEffect(() => 
-    {
-        console.log("new Index: ", value);  
-    }, [value])
+    // useEffect(() => 
+    // {
+    //     console.log("new Index: ", value);  
+    // }, [value])
 
     useEffect( () =>
     {
@@ -98,8 +98,6 @@ const useLineIndex = (lyrics: Lyrics) =>
     const seek = (timestamp: number) => 
     {
        const newIndex = seekLineIndex(lyrics, timestamp, 0, lyrics.length);
-
-       console.log("newIndex: ", newIndex);
        
        setValue(newIndex)
     }
@@ -129,23 +127,24 @@ const useLine = (lyrics: Lyrics) =>
 
 
 // TODO: we should look into whether to stick with useState or use useReducer for this hook
-export const useLyricsReader = (trackID: number, timestamp: number, lyrics: Lyrics) =>
+export const useLyricsReader = (trackID: number, timestamp: number, lyricsObject: LyricsObject) =>
 {    
+    const lyrics = lyricsObject.lyrics;
     const { line, index } = useLine(lyrics);
     const [chosenLine, setChosenLine] = useState<Line | null>(index.value > -1? lyrics[index.value]: null);
 
 
-    console.log("LOG: ",
-    {
-        timestamp,
-        chosenLine:
-        {
-            value: lyrics[index.value],
-            index: index.value,
-        },
+    // console.log("LOG: ",
+    // {
+    //     timestamp,
+    //     chosenLine:
+    //     {
+    //         value: lyrics[index.value],
+    //         index: index.value,
+    //     },
         
-        visibleLine: line.value
-    });
+    //     visibleLine: line.value
+    // });
 
 
     const resetState = () =>
@@ -157,7 +156,7 @@ export const useLyricsReader = (trackID: number, timestamp: number, lyrics: Lyri
 
     useEffect(() =>
     {
-        console.log("trackID: ", trackID);
+        // console.log("trackID: ", trackID);
         
         resetState()
         

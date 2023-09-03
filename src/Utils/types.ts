@@ -8,6 +8,12 @@ export type Line =
 
 export type Lyrics = Line[]
 
+export type LyricsObject =
+{
+    status: "available" | "unavailable" | "instrumental",
+    lyrics: Lyrics
+}
+
 export type Album = { name: string, coverArt: string }
 export type Track =
 {
@@ -16,7 +22,7 @@ export type Track =
     band: string,
     album: Album,
     src: string,
-    lyrics: Lyrics
+    lyricsObj: LyricsObject
 }
 
 export enum PlayerState 

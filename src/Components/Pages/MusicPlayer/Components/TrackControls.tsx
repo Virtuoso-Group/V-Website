@@ -1,10 +1,15 @@
 import { IconType } from "react-icons";
 import ButtonIcon from "../../../Atoms/ButtonIcon"
 import { FaPause, FaPlay, FaStepBackward, FaStepForward } from "react-icons/fa";
+import { GoTriangleDown, GoTriangleUp } from 'react-icons/go'
 import SeekBar from "../../../Molecules/SeekBar";
 import { useEffect, useRef, useState } from "react";
-import { Album, PlayerState, SeekLineFunctionType, Track } from "../../../../Utils/types";
+import { Album, SeekLineFunctionType, Track } from "../../../../Utils/types";
 import CoverArt from "../../../Atoms/CoverArt";
+import useOverlay from "../../../../Utils/hooks/useOverlay";
+import TrackOverlay from "../TrackOverlay";
+import { AnimatePresence, motion } from "framer-motion";
+import ToggleTriangle from "../../../Atoms/ToggleTriangle";
 
 interface TimeInfoProps
 {
@@ -41,15 +46,6 @@ const TimeInfo = (props: TimeInfoProps) =>
 
 interface Props
 {
-    playerState:
-    {
-        value: PlayerState,
-        play: () => void,
-        pause: () => void,
-        seek: () => void,
-        stop: () => void,
-    },
-
     track: Track,
     timestamp:
     {
@@ -64,14 +60,23 @@ interface Props
     }
 }
 
+interface SongInfoProps
+{
+    className?: string, 
 
-const SongInformation = (props: { className?: string, songName: string, album: Album,  bandName: string }) =>
+    songName: string, 
+    album: Album,  
+    bandName: string,
+}
+
+
+const SongInformation = (props: SongInfoProps) =>
 {
     const { className, songName, bandName, album } = props;
 
     return (
         <div className={className}>
-             <CoverArt 
+            <CoverArt
                 className={`h-[50px] bg-blue-800 rounded-sm`}
                 name={album.name}
                 coverArt={album.coverArt} 
@@ -82,10 +87,8 @@ const SongInformation = (props: { className?: string, songName: string, album: A
                     {songName}
                 </span>
 
-                
-            
                 <span className='text-sm font-light text-gray-300 align-middle text-slate-300'>
-                    {bandName} <span className="">.</span> {album.name}
+                    {bandName} <span className="">•</span> {album.name}
                 </span>
             </p>
         </div>
@@ -159,25 +162,41 @@ const PlayerControls = (props: PlayerControlsProps) =>
     )
 }
 
+
+
+
+enum PlayerState 
+{
+    PLAYING = "Playing",
+    PAUSED = "PAUSED",
+    STOPPED = "STOPPED"
+}
+
 const TrackControls = (props: Props) =>
 {
-    const { playerState, track, lyrics, timestamp } = props;
+    const { track, lyrics, timestamp } = props;
+
+    const songOverlayControls = useOverlay();
 
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
     const metaDataLoaded = useRef<boolean>(false);
 
     // TODO: We probably don't need this to be state, because it updates once and only once.
     const [duration, setDuration] = useState<number>(0);
+    const [playerState, setPlayerState] = useState<PlayerState>(PlayerState.STOPPED)
+
+
+    const timeInfo = { duration, timestamp: timestamp.value }    
 
     const play = () => audioPlayerRef.current?.play();
 
     const pause = () => audioPlayerRef.current?.pause();
 
-    const togglePlay = () => playerState.value === PlayerState.PLAYING? pause() : play();
+    const togglePlay = () => playerState === PlayerState.PLAYING? pause() : play();
 
     const reset = () => 
     {
-        playerState.stop();
+        setPlayerState(PlayerState.STOPPED)
         timestamp.reset();
         setDuration(0)
     }
@@ -193,7 +212,7 @@ const TrackControls = (props: Props) =>
             if (lyrics.seekLine)
             {
                 lyrics.seekLine(newTimeStamp)
-            }
+            }            
 
             audioPlayerRef.current.currentTime = newTimeStamp / 1000;
 
@@ -201,97 +220,90 @@ const TrackControls = (props: Props) =>
         }
     }
 
-    const timeInfo = { duration, timestamp: timestamp.value }
-
-    useEffect(() => 
-    {
-        reset()
-    
-      return () => 
-      {
-      }
-    }, [track.id])
-
-
-    useEffect(() =>
-    {
-        if (duration) 
-        {
-            play()
-        }
-    }, [duration])
-    
-
     return (
         <>
             <audio 
+                key={track.id}
                 ref={audioPlayerRef}
                 src={track.src}
                 onLoadedMetadata={e =>
                 {
                     if (audioPlayerRef.current?.duration) 
                     {
+                        reset() 
+                        songOverlayControls.show();
                         metaDataLoaded.current = true;
                         const songDuration = audioPlayerRef.current?.duration;
                         const adjustedDuration = songDuration? songDuration * 1000:0;
                         
                         setDuration(adjustedDuration);
 
-                        // play()
+                        play()
                     }
                 }}
-                /* TODO: 
-                        Maybe it's not a good idea to use this function, 
-                        it's best to unify the player timer and lyrics timer.
-                */
                 onTimeUpdate={e => 
-                {
-                    console.log("time delta: ", e.currentTarget.currentTime * 1000);
-                    
+                {                    
                     timestamp.update(e.currentTarget.currentTime)
                 }}
-                onPlay={playerState.play}
-                onPause={playerState.pause}
+                onPlay={() => setPlayerState(PlayerState.PLAYING)}
+                onPause={() => setPlayerState(PlayerState.PAUSED)}
                 onEnded={reset}
             />
-        
-            <div className={`z-[50] fixed bottom-0 w-full bg-black`} >
-                <SeekBar
-                    isPlaying={playerState.value === PlayerState.PLAYING}
-                    timeInfo={timeInfo}
-                    changeToSeeking={playerState.seek}
-                    controls={{ pause, seek }}
-                />
 
-                <div className="grid grid-cols-3 content-center w-full h-[75px] py-[25px] px-20">
-                    <SongInformation 
-                        className="justify-self-start flex gap-5"
-                        album={track.album}
-                        songName={track.name} 
-                        bandName={track.band} 
+            <div className="flex w-full">
+                <AnimatePresence>
+                    {
+                        songOverlayControls.isShown
+                    && 
+                        <TrackOverlay timestamp={timestamp.value} track={track} />
+                    }
+                </AnimatePresence>
+
+                <div className={`z-[50] fixed bottom-0 w-full bg-black`} >
+                    <SeekBar
+                        trackID={track.id}
+                        timeInfo={timeInfo}
+                        controls={{ pause, seek }}
                     />
 
-                    <PlayerControls 
-                        className="flex items-center gap-10  justify-self-center h-full"
-                        isPlaying={playerState.value === PlayerState.PLAYING} 
+                    <div className="w-full flex items-center justify-between h-[75px]  py-[25px]">
+                        <div className="absolute flex items-center cursor-pointer ">
+                            <ToggleTriangle 
+                                isOn={songOverlayControls.isShown}
 
-                        stepBackwards={() => { console.log("Backwards!") }}
-                        togglePlay={togglePlay}
-                        stepForwards={() => { console.log("Forwards!") }}
-                    />
-                    
-                    <TimeInfo 
-                        className=
-                        {`
-                            flex items-center justify-center
-                            justify-self-end
-                            font-light text-gray-300
-                            text-xs
-                        `}
+                                toggle={songOverlayControls.toggle}
+                            />
+                        </div>
 
+                        <div className="grid grid-cols-3 content-center w-full h-full  px-20">
+                            <SongInformation 
+                                className="justify-self-start flex gap-5"
+                                album={track.album}
+                                songName={track.name} 
+                                bandName={track.band} 
+                            />
+
+                            <PlayerControls 
+                                className="flex items-center gap-10  justify-self-center h-full"
+                                isPlaying={playerState === PlayerState.PLAYING} 
+
+                                stepBackwards={() => { console.log("Backwards!") }}
+                                togglePlay={togglePlay}
+                                stepForwards={() => { console.log("Forwards!") }}
+                            />
                         
-                        timeInfo={timeInfo} 
-                    />
+                            <TimeInfo 
+                                className=
+                                {`
+                                    flex items-center justify-center
+                                    justify-self-end
+                                    font-light text-gray-300
+                                    text-xs
+                                `}                                
+                                timeInfo={timeInfo} 
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

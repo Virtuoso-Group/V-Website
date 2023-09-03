@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import Ball from "../Atoms/Ball";
 
+import { motion } from "framer-motion";
+
 type TimeInfo =
 {
     duration: number, 
@@ -15,27 +17,41 @@ type Controls =
 
 interface SeekBarProps
 {
-    isPlaying: boolean,
+    trackID: number,
     timeInfo: TimeInfo,
     controls: Controls,
-
-    changeToSeeking: () => void
 }
 
-const Bar = (props: SeekBarProps) =>
+const SeekBar = (props: SeekBarProps) =>
 {
-    const { isPlaying, changeToSeeking } = props;
-
     const barContainerRef = useRef<HTMLDivElement>(null);
     const { duration, timestamp: current } = props.timeInfo;
     const [isDragging, setIsDragging] = useState<boolean>(false);
+    const [ballPosition, setBallPosition] = useState<number>(0);
+    const [currentPercentage, setCurrentPercentage] = useState<number>(0)
 
-    const currentPercentage = (current / duration) * 100;
-    const barWidth = barContainerRef.current?.getBoundingClientRect().width??0;
-    const ballPosition = currentPercentage/100 * barWidth
+    const barWidth = barContainerRef.current?.getBoundingClientRect().width??1;
 
+    useEffect(() => 
+    {
+        // 0 divided by 0 causes NAN, which causes the ball not to initially move
+        if (duration) 
+        {
+            setCurrentPercentage((current / duration) * 100)
+        }
+    
+    }, [current, duration])
+
+    useEffect(() => 
+    {
+        const ballPosition = currentPercentage/100 * barWidth??0
+        setBallPosition(ballPosition)
+    
+    }, [currentPercentage, barWidth])
+    
     const seekWrapper = (clientX: number) =>
     {
+
         const boundingRect = barContainerRef.current?.getBoundingClientRect();
 
         if (boundingRect) 
@@ -45,7 +61,7 @@ const Bar = (props: SeekBarProps) =>
             const actualClientX =  clientX - x ;
 
             const percentage = (actualClientX / width);
-            
+                        
             props.controls.seek(percentage)
         }     
     }
@@ -60,53 +76,28 @@ const Bar = (props: SeekBarProps) =>
     {
         setIsDragging(false)
         seekWrapper(xPoint)
-    }
-
-
-    console.log("ballPosition: ", ballPosition);
-    
-
-    useEffect(() =>
-    {
-        if (isDragging) 
-        {
-            changeToSeeking()
-        }
-    }, [isDragging])
+    }    
 
     return (
     <div 
         ref={barContainerRef}
         className='relative w-full h-[3.5px] bg-slate-400 cursor-pointer flex items-center'
-        onClick={e => 
-        {
-            seekWrapper(e.clientX)
-        }}
+        onClick={e => seekWrapper(e.clientX)}
     >
-        {/* TODO: we can animate this part as well, that would be cool */}
-        <div 
+        <motion.div 
             className='z-[1] absolute h-full bg-white'
-            style={{ width: `${currentPercentage}%` }}
+            animate={{ width: currentPercentage? `${currentPercentage}%`: "0%"}}
+            transition={{  duration: 0.25, type: "spring", bounce: 0.25 }}
         />
 
+       
         <Ball 
-            key={""+isPlaying}
             isDragging={isDragging}
-            ballPosition={ballPosition}
+            ballPosition={ballPosition?? 0}
             hold={hold}
             release={release}
         />
     </div>
-    )
-}
-
-
-const SeekBar = (props: SeekBarProps) =>
-{
-    return (
-        <div>
-            <Bar {...props} />
-        </div>
     )
 }
 

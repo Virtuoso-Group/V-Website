@@ -13,53 +13,47 @@ const Ball = (props: BallProps) =>
 {
     const 
     { 
+        isDragging,
         ballPosition, 
-        isDragging, 
+
         release, 
         hold  
     } = props;  
+        
     
-    
-    console.log("ballPosition ball: ", ballPosition);
-    
+    // TODO: this stupid ball is baggy! I have no idea why!
+    // It's initially stuck unless you change the key!
 
+    // The cause? ballPosition is initially NAN, which messes everything up!
+    // This component can 
     return (
         <motion.div
-            key={""+isDragging}
             layout
             className=
             {`
                 z-[2] 
-                absolute 
+                relative 
 
                 aspect-square h-[15px] 
 
                 rounded-full 
                 bg-white 
+
+                drop-shadow
                 
                 ${isDragging? "cursor-grabbing": "cursor-grab"} 
             `}
             
-            initial={{ x: ballPosition }}
-            animate={{ x: ballPosition }}
-            transition={{  duration: 0.5, type: "spring", bounce: 0.25 }}
+            animate={{ x: ballPosition, rotate: 0.04 }}
+            transition={{  duration: 0.25 }}
 
             onClick={e => e.stopPropagation()}
-            // onMouseDown={e =>
-            // {
-            //     e.stopPropagation();
-                
-            //     hold();
-            // }}
-            onMouseUp={e =>
-            {
-                release(ballPosition)
-            }}
+        
+            onMouseUp={e => release(ballPosition)}
 
             drag="x" dragMomentum={false}
         
-
-            onDragStart={ () => hold()}
+            onDragStart={() => hold()}
             onDragEnd={(e, info) => release(info.point.x)}
         />
     )

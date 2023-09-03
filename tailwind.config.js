@@ -25,6 +25,16 @@ module.exports = {
       fontFamily:
       {
         'holyScript': ['Holy Script']
+      },
+      dropShadow:
+      {
+        '5xl': [
+          '0.5px 0.5px 0 #000', 
+          '-0.5px -0.5px 0 #000', 
+          '0.5px -0.5px 0 #000',
+          '-0.5px 0.5px 0 #000',
+          '0.5px 0.5px 0 #000'
+        ]
       }
     },
   },

@@ -7,10 +7,13 @@ const useOverlay = () =>
     const show = () => setShown(true)
     const hide = () => setShown(false);
 
+    const toggle = () => isShown? hide(): show();
+
     return (
         {
             isShown,
 
+            toggle,
             show, hide
         }
     )

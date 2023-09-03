@@ -69,15 +69,6 @@ const TrackContextContainer = (props: { children: React.ReactNode }) =>
 
     const [seekLine, setSeekLine] = useState<SeekLineFunctionType | null>(null)
 
-    /* TODO: 
-        I would like to move this somewhere else 
-    */
-
-        useEffect(() =>
-        {
-            console.log("context seekLine: ", seekLine);
-        }, [seekLine])
-
     return (
         <TrackContext.Provider 
             value={{ 
