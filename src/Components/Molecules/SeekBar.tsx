@@ -45,6 +45,7 @@ const SeekBar = (props: SeekBarProps) =>
     useEffect(() => 
     {
         const ballPosition = currentPercentage/100 * barWidth??0
+        
         setBallPosition(ballPosition)
     
     }, [currentPercentage, barWidth])
@@ -77,7 +78,7 @@ const SeekBar = (props: SeekBarProps) =>
         setIsDragging(false)
         seekWrapper(xPoint)
     }    
-
+    
     return (
     <div 
         ref={barContainerRef}

@@ -1,22 +1,38 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useOutletContext } from "react-router-dom";
 import WebsiteHeader from "./WebsiteHeader";
-import { useContext, useEffect } from "react";
-import { TrackContext } from "../SongContext";
+import { useEffect, useState } from "react";
 import TrackControls from "../Pages/MusicPlayer/Components/TrackControls";
+import useTrack from "../../Utils/hooks/useTrack";
+import useTimestamp from "../../Utils/hooks/useTimestamp";
+import { SeekLineFunctionType, Track } from "../../Utils/types";
 
 
+type WebsiteContext = 
+{
+    selectTrack: (track: Track) => void
+}
+
+// TODO: what should the semantic html tag be for this component?
 const WebsiteLayout = () =>
 {
-    // TODO: what should the semantic html tag be for this component?
-    const { track, timestamp, lyrics } = useContext(TrackContext);
+    const track = useTrack();
 
-    useEffect(() => {
-    
-      return () => 
-      {
-        track.reset()
-      }
-    }, [])
+    /* 
+        TODO: useTimestamp() was here, but I moved it down to TrackControls component.
+        When the hook was here, it seemed to have caused the entire website to constantly rerender,
+        I got this information from the React profiler.
+
+        As soon as I moved the useTimestamp() hook down to the TrackControls component, only its children rerendered,
+        including the child components that have nothing to do with the timestamp.
+
+        I moved the useTimestamp hook down because it is exclusively used in the TrackControls.
+    */
+
+    const [seekLine, setSeekLine] = useState<SeekLineFunctionType | null>(null)
+
+    const setSeekLineWrapper = (seekLineFunction: SeekLineFunctionType) => setSeekLine(seekLineFunction);
+
+    useEffect(() => { return () => { track.reset() }}, []);
     
     return (
         <main className="relative min-h-screen w-screen">
@@ -37,18 +53,15 @@ const WebsiteLayout = () =>
             />
 
             <div className="z-[10] min-h-screen min-w-screen">
-                <Outlet />
+                <Outlet context={{ selectTrack: track.selectTrack } satisfies WebsiteContext} />
             </div>
-
 
             {
                 track.value
             &&
                 <TrackControls 
                     track={track.value}
-                    timestamp={timestamp}
-
-                    lyrics={{ seekLine: lyrics.seekLine }}            
+                    lyrics={{ seekLine, setSeekLine: setSeekLineWrapper}}            
                 />
             }
         </main>
@@ -56,3 +69,9 @@ const WebsiteLayout = () =>
 }
 
 export default WebsiteLayout;
+
+
+export const useWebsiteContext = () => 
+{
+    return useOutletContext<WebsiteContext>();
+}

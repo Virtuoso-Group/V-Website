@@ -1,33 +1,30 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useLyricsReader } from "../../Utils/hooks/lyricsHooks";
-import { Lyrics, LyricsObject, SeekLineFunctionType, Track } from "../../Utils/types";
-import { TrackContext } from "../SongContext";
+import { LyricsObject, SeekLineFunctionType } from "../../Utils/types";
 
 interface Props 
 { 
     trackID: number,
     lyricsObject: LyricsObject,
     timestamp: number,
+
+    setSeekLine: (seekLineFunction: SeekLineFunctionType) => void
 }
 
 const LyricsView = (props: Props) =>
 {
-    const { trackID, timestamp, lyricsObject } = props
+    const { trackID, timestamp, lyricsObject, setSeekLine } = props
 
-    const { lyrics: lyricsLogic } = useContext(TrackContext)
-    const { line, seekLine } = useLyricsReader(trackID, timestamp, lyricsObject);
+    const { line, seekLine } = useLyricsReader(trackID, timestamp, lyricsObject.lyrics);
 
     useEffect(() => 
     {                
         if (seekLine) 
         {
-            lyricsLogic.setSeekLine(seekLine);
+            setSeekLine(seekLine);
         }
         
-        return () => 
-        {
-            
-        }
+        return () => { }
     }, [])
     
     return (

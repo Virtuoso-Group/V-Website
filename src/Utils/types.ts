@@ -14,13 +14,19 @@ export type LyricsObject =
     lyrics: Lyrics
 }
 
-export type Album = { name: string, coverArt: string }
+export type Album = 
+{ 
+    id: number,
+    name: string, 
+    coverArt: string 
+}
+
 export type Track =
 {
     id: number,
     name: string,
     band: string,
-    album: Album,
+    albumID: number,
     src: string,
     lyricsObj: LyricsObject
 }

@@ -16,8 +16,8 @@ const useTimestamp = () =>
 
     return {
         value,
-        update,
-        reset
+
+        update, reset
     }
 }
 

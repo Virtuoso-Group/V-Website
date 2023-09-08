@@ -1,24 +1,24 @@
-// import AudioFile from '../assets/audio/Harridan.mp3'
-import HarridanFile from '../assets/music/Harridan.mp3'
-import SoulSeekerFile from '../assets/music/SoulSeeker.mp3'
-import HotelCaliforniaFile from '../assets/music/HotelCalifornia.mp3'
-import MoonloopCodaFile from '../assets/music/Moonloop_Coda.mp3'
-import AllThatYouveGotFile from '../assets/music/AllThatYouveGot.mp3'
-import FendForYourselfFile from '../assets/music/FendForYourself.mp3'
-import TheSoundofNoOneListeningFile from '../assets/music/TheSoundofNo-OneListening.mp3'
+import HarridanFile from '../../assets/music/Harridan.mp3'
+import SoulSeekerFile from '../../assets/music/SoulSeeker.mp3'
+import HotelCaliforniaFile from '../../assets/music/HotelCalifornia.mp3'
+import MoonloopCodaFile from '../../assets/music/Moonloop_Coda.mp3'
+import AllThatYouveGotFile from '../../assets/music/AllThatYouveGot.mp3'
+import FendForYourselfFile from '../../assets/music/FendForYourself.mp3'
+import TheSoundofNoOneListeningFile from '../../assets/music/TheSoundofNo-OneListening.mp3'
+import LazarusFile from '../../assets/music/Lazarus.mp3'
+import TheRemedyFile from '../../assets/music/TheRemedy.mp3'
+import CharacterSelectFile from '../../assets/music/CharacterSelect.mp3'
+import OpeningMovieFile from '../../assets/music/OpeningMovie.mp3'
+import FarBelowFile from '../../assets/music/FarBelow.mp3'
 
-import { Track } from './types'
+import { Track } from '../types'
 
 export const Harridan: Track = 
 {
     id: 0,
     name: "Harridan",
     band: "Porcupine Tree",
-    album: 
-    {
-        name: "CLOSURE/CONTINUATION",
-        coverArt: "https://i.discogs.com/ToSXSFOum9JyUA8KiQf7OAa4Hy7akb0_ubAv4sKlJTw/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIzNjEy/ODY3LTE2NjMyODE4/NjUtNzg1OS5qcGVn.jpeg"
-    },
+    albumID: 0,
     src: HarridanFile,
     lyricsObj:
     {
@@ -282,11 +282,7 @@ export const SoulSeeker: Track =
     id: 1,
     name: "Soul Seeker",
     band: "Crossfaith",
-    album: 
-    {
-        name: "Soul Seeker",
-        coverArt: "https://i.scdn.co/image/ab67616d0000b273811f195826f821502a0e251e"
-    },
+    albumID: 1,
     src: SoulSeekerFile,
 
     lyricsObj:
@@ -588,11 +584,7 @@ export const HotelCalifornia: Track =
     id: 2,
     name: "Hotel California",
     band: "Eagles",
-    album: 
-    {
-        name: "Hotel California",
-        coverArt: "https://d24jnm9llkb1ub.cloudfront.net/icpn/603497922888/603497922888-cover-zoom.jpg"
-    },
+    albumID: 2 ,
     src: HotelCaliforniaFile,
 
     lyricsObj:
@@ -894,11 +886,7 @@ export const MoonloopCoda: Track =
     id: 3,
     name: "Moonloop (Coda)",
     band: "Porcupine Tree",
-    album: 
-    {
-        name: "The Sky Moves Sideways",
-        coverArt: "https://www.progarchives.com/progressive_rock_discography_covers/290/cover_3535101952016_r.jpg"
-    },
+    albumID: 3,
     src: MoonloopCodaFile,
     lyricsObj:
     {
@@ -913,11 +901,7 @@ export const AllThatYouveGot: Track =
     id: 4,
     name: "All That You've Got",
     band: "The Pineapple Thief",
-    album: 
-    {
-        name: "Di§olution",
-        coverArt: "https://f4.bcbits.com/img/a3906062646_10.jpg"
-    },
+    albumID: 4,
     src: AllThatYouveGotFile,
     lyricsObj:
     {
@@ -932,16 +916,55 @@ export const FendForYourself: Track =
     id: 5,
     name: "Fend for Yourself",
     band: "The Pineapple Thief",
-    album: 
-    {
-        name: "Your Wilderness",
-        coverArt: "https://f4.bcbits.com/img/a0782605810_10.jpg"
-    },
+    albumID: 5,
     src: FendForYourselfFile,
     lyricsObj:
     {
-        status: "unavailable",
-        lyrics: []
+        status: "available",
+        lyrics: 
+        [
+            {
+                value: "Go fend for yourself",
+                range: { start: 0, end: 6750 }
+            },
+
+            {
+                value: "You will find me frozen in stone",
+                range: { start: 9550, end: 17000 }
+            },
+
+            {
+                value: "Ooh with a whisper you had flown",
+                range: { start: 19000, end: 31500 }
+            },
+
+            {
+                value: "And never looked back",
+                range: { start: 32000, end: 35500 }
+            },
+
+
+
+            {
+                value: "Go fend for yourself",
+                range: { start: 64000, end: 71000  }
+            },
+
+            {
+                value: "You will find me frozen in stone",
+                range: { start: 72500, end: 73000 + 8000 }
+            },
+
+            {
+                value: "Ooh with a whisper you had flown",
+                range: { start: 83000, end: 96000 }
+            },
+
+            // {
+            //     value: "And never looked back",
+            //     range: { start: 32000, end: 35500 }
+            // }
+        ]
     }
 }
 
@@ -951,11 +974,7 @@ export const TheSoundofNoOneListening: Track =
     id: 6,
     name: "The Sound of No-One Listening",
     band: "Porcupine Tree",
-    album: 
-    {
-        name: "Stars Die | The Delerium Years 1991 - 1997",
-        coverArt: "https://f4.bcbits.com/img/a2478433017_10.jpg"
-    },
+    albumID: 6,
     src: TheSoundofNoOneListeningFile,
     lyricsObj:
     {
@@ -964,6 +983,78 @@ export const TheSoundofNoOneListening: Track =
     }
 }
 
-const tracksArray: Track[] = [SoulSeeker, Harridan, HotelCalifornia, MoonloopCoda, AllThatYouveGot, FendForYourself, TheSoundofNoOneListening]
+export const Lazarus: Track =
+{
+    id: 7,
+    name: "Lazarus",
+    band: "Porcupine Tree",
+    albumID: 7,
+    src: LazarusFile,
+    lyricsObj:
+    {
+        status: "unavailable",
+        lyrics: []
+    }
+}
+
+
+export const TheRemedy: Track =
+{
+    id: 8,
+    name: "The Remedy",
+    band: "Abandoned Pools",
+    albumID: 8,
+    src: TheRemedyFile,
+    lyricsObj:
+    {
+        status: "unavailable",
+        lyrics: []
+    }
+}
+
+export const CharacterSelect: Track =
+{
+    id: 9,
+    name: "Character Select",
+    band: "Bandai Music",
+    albumID: 9,
+    src: CharacterSelectFile,
+    lyricsObj:
+    {
+        status: "instrumental",
+        lyrics: []
+    }
+}
+
+export const OpeningMovie: Track =
+{
+    id: 10,
+    name: "Opening Movie",
+    band: "Bandai Music",
+    albumID: 10,
+    src: OpeningMovieFile,
+    lyricsObj:
+    {
+        status: "instrumental",
+        lyrics: []
+    }
+}
+
+
+export const FarBelow: Track =
+{
+    id: 11,
+    name: "Far Below",
+    band: "The Pineapple Thief",
+    albumID: 4,
+    src: FarBelowFile,
+    lyricsObj:
+    {
+        status: "unavailable",
+        lyrics: []
+    }
+}
+
+const tracksArray: Track[] = [SoulSeeker, Harridan, HotelCalifornia, MoonloopCoda, AllThatYouveGot, FendForYourself, TheSoundofNoOneListening, Lazarus, TheRemedy, CharacterSelect, OpeningMovie, FarBelow]
 
 export default tracksArray;

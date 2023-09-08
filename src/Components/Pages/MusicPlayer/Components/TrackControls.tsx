@@ -1,15 +1,16 @@
 import { IconType } from "react-icons";
 import ButtonIcon from "../../../Atoms/ButtonIcon"
 import { FaPause, FaPlay, FaStepBackward, FaStepForward } from "react-icons/fa";
-import { GoTriangleDown, GoTriangleUp } from 'react-icons/go'
 import SeekBar from "../../../Molecules/SeekBar";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Album, SeekLineFunctionType, Track } from "../../../../Utils/types";
 import CoverArt from "../../../Atoms/CoverArt";
 import useOverlay from "../../../../Utils/hooks/useOverlay";
 import TrackOverlay from "../TrackOverlay";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import ToggleTriangle from "../../../Atoms/ToggleTriangle";
+import AlbumsObj from "../../../../Utils/dummyData/albums";
+import useTimestamp from "../../../../Utils/hooks/useTimestamp";
 
 interface TimeInfoProps
 {
@@ -47,16 +48,10 @@ const TimeInfo = (props: TimeInfoProps) =>
 interface Props
 {
     track: Track,
-    timestamp:
-    {
-        value: number,
-        update: (targetTimestamp: number) => void,
-        reset: () => void
-    },
-
     lyrics:
     {
         seekLine: SeekLineFunctionType | null,
+        setSeekLine: (seekLineFunction: SeekLineFunctionType) => void
     }
 }
 
@@ -174,7 +169,9 @@ enum PlayerState
 
 const TrackControls = (props: Props) =>
 {
-    const { track, lyrics, timestamp } = props;
+    const { track, lyrics } = props;
+
+    const timestamp = useTimestamp();
 
     const songOverlayControls = useOverlay();
 
@@ -198,7 +195,7 @@ const TrackControls = (props: Props) =>
     {
         setPlayerState(PlayerState.STOPPED)
         timestamp.reset();
-        setDuration(0)
+        // setDuration(0)
     }
 
     const seek = (percentage: number) =>
@@ -241,10 +238,7 @@ const TrackControls = (props: Props) =>
                         play()
                     }
                 }}
-                onTimeUpdate={e => 
-                {                    
-                    timestamp.update(e.currentTarget.currentTime)
-                }}
+                onTimeUpdate={e => timestamp.update(e.currentTarget.currentTime)}
                 onPlay={() => setPlayerState(PlayerState.PLAYING)}
                 onPause={() => setPlayerState(PlayerState.PAUSED)}
                 onEnded={reset}
@@ -255,7 +249,11 @@ const TrackControls = (props: Props) =>
                     {
                         songOverlayControls.isShown
                     && 
-                        <TrackOverlay timestamp={timestamp.value} track={track} />
+                        <TrackOverlay 
+                            timestamp={timestamp.value} 
+                            track={track} 
+                            setSeekLine={lyrics.setSeekLine}
+                        />
                     }
                 </AnimatePresence>
 
@@ -278,7 +276,7 @@ const TrackControls = (props: Props) =>
                         <div className="grid grid-cols-3 content-center w-full h-full  px-20">
                             <SongInformation 
                                 className="justify-self-start flex gap-5"
-                                album={track.album}
+                                album={AlbumsObj[track.albumID]}
                                 songName={track.name} 
                                 bandName={track.band} 
                             />

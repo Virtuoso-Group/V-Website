@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import CoverArt from '../Atoms/CoverArt';
 import Marquee from 'react-fast-marquee';
 import { Track } from '../../Utils/types';
+
+import AlbumsObj from '../../Utils/dummyData/albums';
 
 type Props = 
 { 
     song: Track, 
     select: (song: Track) => void 
 }
+
+
 
 const TrackCard = (props: Props) => {
     const { song, select } = props;
@@ -25,10 +29,10 @@ const TrackCard = (props: Props) => {
             <CoverArt 
                 className={`rounded-lg`}
                 name={song.name + " by "+song.band}
-                coverArt={song.album.coverArt} 
+                coverArt={AlbumsObj[song.albumID].coverArt} 
             />
 
-            <p className='text-white flex flex-col overflow-hidden whitespace-nowrap'>
+            <div className='text-white flex flex-col overflow-hidden whitespace-nowrap'>
                 <Marquee 
                     key={""+isHover}
                     play={isHover}
@@ -38,7 +42,7 @@ const TrackCard = (props: Props) => {
                 </Marquee>
 
                 <span className='text-md'>{song.band}</span>
-            </p>
+            </div>
         </article>
     )
 }

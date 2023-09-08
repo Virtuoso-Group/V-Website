@@ -1,9 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
-import TrackOverlay from './Components/Pages/MusicPlayer/TrackOverlay';
 
 import WebsiteLayout from './Components/Organisms/WebsiteLayout';
-import TrackContextContainer from './Components/SongContext';
 import TracksPage from './Components/Pages/Tracks/TracksPage';
 
 /* TODO: 
@@ -12,6 +10,7 @@ import TracksPage from './Components/Pages/Tracks/TracksPage';
 
     Each area should encompass a collection of related pages.
 */
+
 const router = createBrowserRouter(
 [
   {
@@ -22,14 +21,6 @@ const router = createBrowserRouter(
 ])
 
 
-const App = () => 
-{
-  return (
-    <TrackContextContainer>
-      <RouterProvider router={router}/>
-    </TrackContextContainer>
-  )
-  
-};
+const App = () => <RouterProvider router={router}/>;
 
 export default App;
