@@ -29,7 +29,7 @@ const TrackCard = forwardRef<HTMLElement, Props>((props, ref) =>
         >
             <CoverArt 
                 className={`rounded-lg`}
-                name={song.name + " by "+song.artistID}
+                name={song.name + " by "+ArtistsObject[song.artistID].name}
                 coverArt={AlbumsObj[song.albumID].coverArt} 
             />
 

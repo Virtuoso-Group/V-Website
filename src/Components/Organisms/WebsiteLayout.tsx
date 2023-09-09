@@ -42,7 +42,7 @@ const WebsiteLayout = () =>
                         </span>
 
                         <span className='cursor-pointer'> 
-                            <span className="text-5xl font-semibold text-[#990000]">V</span>
+                            <span className="text-5xl font-semibold text-[#EE4B2B]">V</span>
                             <span className="text-3xl text-[#11B4D4]">irtuoso</span>
                         </span>
                     </p>

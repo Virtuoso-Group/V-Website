@@ -189,7 +189,7 @@ export const useLyricsReader = (trackID: number, timestamp: number, lyrics: Lyri
                 index.goBack();
             }
         }
-    }, [chosenLine?.value, timestamp])
+    }, [timestamp])
       
     return {  
         line: line.value?? "",
