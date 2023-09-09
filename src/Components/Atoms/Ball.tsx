@@ -16,16 +16,9 @@ const Ball = (props: BallProps) =>
         isDragging,
         ballPosition, 
 
-        release, 
-        hold  
+        release, hold  
     } = props;  
         
-    
-    // TODO: this stupid ball is baggy! I have no idea why!
-    // It's initially stuck unless you change the key!
-
-    // The cause? ballPosition is initially NAN, which messes everything up!
-    // This component can 
     return (
         <motion.div
             layout
@@ -45,7 +38,7 @@ const Ball = (props: BallProps) =>
             `}
             
             animate={{ x: ballPosition, rotate: 0.04 }}
-            transition={{  duration: 0.25 }}
+            transition={{ type: "keyframes" }}
 
             onClick={e => e.stopPropagation()}
         

@@ -10,14 +10,17 @@ import TheRemedyFile from '../../assets/music/TheRemedy.mp3'
 import CharacterSelectFile from '../../assets/music/CharacterSelect.mp3'
 import OpeningMovieFile from '../../assets/music/OpeningMovie.mp3'
 import FarBelowFile from '../../assets/music/FarBelow.mp3'
+import TheFinalThingOnMyMindFile from '../../assets/music/TheFinalThingOnMyMind.mp3'
+import LazyMindFile from '../../assets/music/LazyMind.mp3'
+
 
 import { Track } from '../types'
 
-export const Harridan: Track = 
+const Harridan: Track = 
 {
     id: 0,
     name: "Harridan",
-    band: "Porcupine Tree",
+    artistID: 0,
     albumID: 0,
     src: HarridanFile,
     lyricsObj:
@@ -277,11 +280,11 @@ export const Harridan: Track =
     }
 }
 
-export const SoulSeeker: Track = 
+const SoulSeeker: Track = 
 {
     id: 1,
     name: "Soul Seeker",
-    band: "Crossfaith",
+    artistID: 1,
     albumID: 1,
     src: SoulSeekerFile,
 
@@ -578,13 +581,12 @@ export const SoulSeeker: Track =
 }
 }
 
-
-export const HotelCalifornia: Track = 
+const HotelCalifornia: Track = 
 {
     id: 2,
     name: "Hotel California",
-    band: "Eagles",
-    albumID: 2 ,
+    artistID: 2,
+    albumID: 2,
     src: HotelCaliforniaFile,
 
     lyricsObj:
@@ -880,12 +882,11 @@ export const HotelCalifornia: Track =
     }
 }
 
-
-export const MoonloopCoda: Track =
+const MoonloopCoda: Track =
 {
     id: 3,
     name: "Moonloop (Coda)",
-    band: "Porcupine Tree",
+    artistID: 0,
     albumID: 3,
     src: MoonloopCodaFile,
     lyricsObj:
@@ -896,11 +897,11 @@ export const MoonloopCoda: Track =
 }
 
 
-export const AllThatYouveGot: Track =
+const AllThatYouveGot: Track =
 {
     id: 4,
     name: "All That You've Got",
-    band: "The Pineapple Thief",
+    artistID: 3,
     albumID: 4,
     src: AllThatYouveGotFile,
     lyricsObj:
@@ -911,11 +912,11 @@ export const AllThatYouveGot: Track =
 }
 
 
-export const FendForYourself: Track =
+const FendForYourself: Track =
 {
     id: 5,
     name: "Fend for Yourself",
-    band: "The Pineapple Thief",
+    artistID: 3,
     albumID: 5,
     src: FendForYourselfFile,
     lyricsObj:
@@ -969,11 +970,11 @@ export const FendForYourself: Track =
 }
 
 
-export const TheSoundofNoOneListening: Track =
+const TheSoundofNoOneListening: Track =
 {
     id: 6,
     name: "The Sound of No-One Listening",
-    band: "Porcupine Tree",
+    artistID: 0,
     albumID: 6,
     src: TheSoundofNoOneListeningFile,
     lyricsObj:
@@ -983,11 +984,11 @@ export const TheSoundofNoOneListening: Track =
     }
 }
 
-export const Lazarus: Track =
+const Lazarus: Track =
 {
     id: 7,
     name: "Lazarus",
-    band: "Porcupine Tree",
+    artistID: 0,
     albumID: 7,
     src: LazarusFile,
     lyricsObj:
@@ -998,11 +999,11 @@ export const Lazarus: Track =
 }
 
 
-export const TheRemedy: Track =
+const TheRemedy: Track =
 {
     id: 8,
     name: "The Remedy",
-    band: "Abandoned Pools",
+    artistID: 4,
     albumID: 8,
     src: TheRemedyFile,
     lyricsObj:
@@ -1012,11 +1013,11 @@ export const TheRemedy: Track =
     }
 }
 
-export const CharacterSelect: Track =
+const CharacterSelect: Track =
 {
     id: 9,
     name: "Character Select",
-    band: "Bandai Music",
+    artistID: 5,
     albumID: 9,
     src: CharacterSelectFile,
     lyricsObj:
@@ -1026,11 +1027,11 @@ export const CharacterSelect: Track =
     }
 }
 
-export const OpeningMovie: Track =
+const OpeningMovie: Track =
 {
     id: 10,
     name: "Opening Movie",
-    band: "Bandai Music",
+    artistID: 5,
     albumID: 10,
     src: OpeningMovieFile,
     lyricsObj:
@@ -1041,11 +1042,11 @@ export const OpeningMovie: Track =
 }
 
 
-export const FarBelow: Track =
+const FarBelow: Track =
 {
     id: 11,
     name: "Far Below",
-    band: "The Pineapple Thief",
+    artistID: 3,
     albumID: 4,
     src: FarBelowFile,
     lyricsObj:
@@ -1055,6 +1056,44 @@ export const FarBelow: Track =
     }
 }
 
-const tracksArray: Track[] = [SoulSeeker, Harridan, HotelCalifornia, MoonloopCoda, AllThatYouveGot, FendForYourself, TheSoundofNoOneListening, Lazarus, TheRemedy, CharacterSelect, OpeningMovie, FarBelow]
+
+const TheFinalThingOnMyMind: Track =
+{
+    id: 12,
+    name: "The Final Thing On My Mind",
+    artistID: 3,
+    albumID: 5,
+    src: TheFinalThingOnMyMindFile,
+    lyricsObj:
+    {
+        status: "unavailable",
+        lyrics: []
+    }
+}
+
+const LazyMind: Track =
+{
+    id: 13,
+    name: "Lazy Mind",
+    albumID: 11,
+    artistID: 6,
+    src: LazyMindFile,
+    lyricsObj: 
+    {
+        status: "unavailable",
+        lyrics: []
+    }
+}
+
+
+
+
+const tracksArray: Track[] = 
+[
+    SoulSeeker, Harridan, HotelCalifornia, MoonloopCoda, 
+    AllThatYouveGot, FendForYourself, TheSoundofNoOneListening, 
+    Lazarus, TheRemedy, CharacterSelect, OpeningMovie, FarBelow,
+    TheFinalThingOnMyMind, LazyMind
+]
 
 export default tracksArray;

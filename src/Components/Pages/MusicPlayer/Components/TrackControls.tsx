@@ -12,6 +12,8 @@ import ToggleTriangle from "../../../Atoms/ToggleTriangle";
 import AlbumsObj from "../../../../Utils/dummyData/albums";
 import useTimestamp from "../../../../Utils/hooks/useTimestamp";
 
+import ArtistsObject from "../../../../Utils/dummyData/artists";
+
 interface TimeInfoProps
 {
     className?: string,
@@ -61,13 +63,13 @@ interface SongInfoProps
 
     songName: string, 
     album: Album,  
-    bandName: string,
+    artistName: string,
 }
 
 
 const SongInformation = (props: SongInfoProps) =>
 {
-    const { className, songName, bandName, album } = props;
+    const { className, songName, artistName: bandName, album } = props;
 
     return (
         <div className={className}>
@@ -278,7 +280,7 @@ const TrackControls = (props: Props) =>
                                 className="justify-self-start flex gap-5"
                                 album={AlbumsObj[track.albumID]}
                                 songName={track.name} 
-                                bandName={track.band} 
+                                artistName={ArtistsObject[track.artistID].name} 
                             />
 
                             <PlayerControls 

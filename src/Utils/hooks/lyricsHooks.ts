@@ -133,7 +133,7 @@ export const useLyricsReader = (trackID: number, timestamp: number, lyrics: Lyri
     const [chosenLine, setChosenLine] = useState<Line | null>(index.value > -1? lyrics[index.value]: null);
 
 
-    console.log("LOG: ",
+    console.log("LYRICS LOG: ",
     {
         timestamp,
         chosenLine:
@@ -189,7 +189,7 @@ export const useLyricsReader = (trackID: number, timestamp: number, lyrics: Lyri
                 index.goBack();
             }
         }
-    }, [ timestamp])
+    }, [chosenLine?.value, timestamp])
       
     return {  
         line: line.value?? "",

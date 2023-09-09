@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { forwardRef, useState } from 'react'
 import CoverArt from '../Atoms/CoverArt';
 import Marquee from 'react-fast-marquee';
 import { Track } from '../../Utils/types';
 
 import AlbumsObj from '../../Utils/dummyData/albums';
+import ArtistsObject from '../../Utils/dummyData/artists';
 
 type Props = 
 { 
@@ -11,24 +12,24 @@ type Props =
     select: (song: Track) => void 
 }
 
-
-
-const TrackCard = (props: Props) => {
+const TrackCard = forwardRef<HTMLElement, Props>((props, ref) => 
+{
     const { song, select } = props;
 
     const [isHover, setIsHover] = useState<boolean>(false)
 
     return (
         <article 
-            className='flex  cursor-pointer flex-col w-[150px] gap-2'
-            onClick={() => select(song) }
+            ref={ref}
+            className='flex cursor-pointer flex-col w-[150px] gap-2'
+            onClick={() => select(song)}
 
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
         >
             <CoverArt 
                 className={`rounded-lg`}
-                name={song.name + " by "+song.band}
+                name={song.name + " by "+song.artistID}
                 coverArt={AlbumsObj[song.albumID].coverArt} 
             />
 
@@ -41,10 +42,10 @@ const TrackCard = (props: Props) => {
                     <span className='text-lgn font-extrabold pe-10'>{song.name}</span>
                 </Marquee>
 
-                <span className='text-md'>{song.band}</span>
+                <span className='text-md'>{ArtistsObject[song.artistID].name}</span>
             </div>
         </article>
     )
-}
+})
 
 export default TrackCard

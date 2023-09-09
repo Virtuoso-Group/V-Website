@@ -77,7 +77,8 @@ const TrackOverlay = (props: { track: Track, timestamp: number, setSeekLine: (se
                         trackID={track.id} 
                         lyricsObject={track.lyricsObj} 
                         setSeekLine={setSeekLine}
-                    />}
+                    />
+                }
             </section>   
         </motion.div>       
     )

@@ -3,14 +3,10 @@ import WebsiteHeader from "./WebsiteHeader";
 import { useEffect, useState } from "react";
 import TrackControls from "../Pages/MusicPlayer/Components/TrackControls";
 import useTrack from "../../Utils/hooks/useTrack";
-import useTimestamp from "../../Utils/hooks/useTimestamp";
 import { SeekLineFunctionType, Track } from "../../Utils/types";
 
 
-type WebsiteContext = 
-{
-    selectTrack: (track: Track) => void
-}
+type WebsiteContext = { selectTrack: (track: Track) => void }
 
 // TODO: what should the semantic html tag be for this component?
 const WebsiteLayout = () =>
@@ -40,13 +36,14 @@ const WebsiteLayout = () =>
                 className="z-[50] self-start fixed"
                 start=
                 {
-                    <p className='flex items-center gap-2 text-center'>
+                    <p className='flex items-center gap-1 text-center italic select-none'>
                         <span className='text-white self-end text-2xl'>
                             Project
                         </span>
 
-                        <span className='cursor-pointer text-5xl text-[#EE4B2B]'> 
-                            Virtuoso
+                        <span className='cursor-pointer'> 
+                            <span className="text-5xl font-semibold text-[#990000]">V</span>
+                            <span className="text-3xl text-[#11B4D4]">irtuoso</span>
                         </span>
                     </p>
                 }
@@ -61,7 +58,7 @@ const WebsiteLayout = () =>
             &&
                 <TrackControls 
                     track={track.value}
-                    lyrics={{ seekLine, setSeekLine: setSeekLineWrapper}}            
+                    lyrics={{ seekLine, setSeekLine: setSeekLineWrapper }}            
                 />
             }
         </main>

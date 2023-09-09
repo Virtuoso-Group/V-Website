@@ -17,15 +17,16 @@ export type LyricsObject =
 export type Album = 
 { 
     id: number,
+    artistID: number,
     name: string, 
-    coverArt: string 
+    coverArt: string,
 }
 
 export type Track =
 {
     id: number,
     name: string,
-    band: string,
+    artistID: number,
     albumID: number,
     src: string,
     lyricsObj: LyricsObject
@@ -39,5 +40,6 @@ export enum PlayerState
     SEEKING = "SEEKING" 
 };
 
-
 export type SeekLineFunctionType = (timestamp: number) => void;
+
+export type Category = { id: string, label: string }
