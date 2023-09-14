@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Ball from "../Atoms/Ball";
 
 import { motion } from "framer-motion";
@@ -50,9 +50,8 @@ const SeekBar = (props: SeekBarProps) =>
     
     }, [currentPercentage, barWidth])
     
-    const seekWrapper = (clientX: number) =>
+    const seekWrapper = useCallback((clientX: number) =>
     {
-
         const boundingRect = barContainerRef.current?.getBoundingClientRect();
 
         if (boundingRect) 
@@ -65,19 +64,19 @@ const SeekBar = (props: SeekBarProps) =>
                         
             props.controls.seek(percentage)
         }     
-    }
+    }, [props.controls])
 
-    const hold = () =>
+    const hold = useCallback(() =>
     {        
         setIsDragging(true);
         props.controls.pause();
-    }
+    }, [props.controls])
 
-    const release = (xPoint: number) =>
+    const release = useCallback((xPoint: number) =>
     {
         setIsDragging(false)
         seekWrapper(xPoint)
-    }    
+    }, [])
     
     return (
     <div 

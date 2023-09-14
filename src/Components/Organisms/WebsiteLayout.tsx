@@ -1,6 +1,6 @@
 import { Outlet, useOutletContext } from "react-router-dom";
 import WebsiteHeader from "./WebsiteHeader";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import TrackControls from "../Pages/MusicPlayer/Components/TrackControls";
 import useTrack from "../../Utils/hooks/useTrack";
 import { SeekLineFunctionType, Track } from "../../Utils/types";
@@ -26,7 +26,7 @@ const WebsiteLayout = () =>
 
     const [seekLine, setSeekLine] = useState<SeekLineFunctionType | null>(null)
 
-    const setSeekLineWrapper = (seekLineFunction: SeekLineFunctionType) => setSeekLine(seekLineFunction);
+    const setSeekLineWrapper = useCallback((seekLineFunction: SeekLineFunctionType) => setSeekLine(seekLineFunction), []);
 
     useEffect(() => { return () => { track.reset() }}, []);
     

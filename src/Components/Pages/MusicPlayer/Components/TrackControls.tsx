@@ -2,7 +2,7 @@ import { IconType } from "react-icons";
 import ButtonIcon from "../../../Atoms/ButtonIcon"
 import { FaPause, FaPlay, FaStepBackward, FaStepForward } from "react-icons/fa";
 import SeekBar from "../../../Molecules/SeekBar";
-import { useRef, useState } from "react";
+import { memo, useCallback, useRef, useState } from "react";
 import { Album, SeekLineFunctionType, Track } from "../../../../Utils/types";
 import CoverArt from "../../../Atoms/CoverArt";
 import useOverlay from "../../../../Utils/hooks/useOverlay";
@@ -67,7 +67,7 @@ interface SongInfoProps
 }
 
 
-const SongInformation = (props: SongInfoProps) =>
+const SongInformation = memo((props: SongInfoProps) =>
 {
     const { className, songName, artistName: bandName, album } = props;
 
@@ -90,7 +90,7 @@ const SongInformation = (props: SongInfoProps) =>
             </p>
         </div>
     )
-}
+})
 
 interface PlayerControlsProps 
 {
@@ -103,12 +103,19 @@ interface PlayerControlsProps
 }
 
 
-const PlayerControls = (props: PlayerControlsProps) =>
+const PlayerControls = memo((props: PlayerControlsProps) =>
 {
     const { className, isPlaying, stepBackwards, togglePlay, stepForwards } = props;
 
     const PlayPauseIcon: IconType = isPlaying? FaPause: FaPlay;
 
+
+    const object = 
+    {
+        className, isPlaying, stepBackwards, togglePlay, stepForwards
+    }
+    console.log("PlayerControls", object);
+    
     return (
         <div className={`${className}`}>
             <ButtonIcon 
@@ -157,7 +164,7 @@ const PlayerControls = (props: PlayerControlsProps) =>
             />
         </div>
     )
-}
+})
 
 
 
@@ -187,20 +194,31 @@ const TrackControls = (props: Props) =>
 
     const timeInfo = { duration, timestamp: timestamp.value }    
 
-    const play = () => audioPlayerRef.current?.play();
+    const play = useCallback(() => audioPlayerRef.current?.play(), []);
 
-    const pause = () => audioPlayerRef.current?.pause();
+    const pause = useCallback(() => audioPlayerRef.current?.pause(),[]);
 
-    const togglePlay = () => playerState === PlayerState.PLAYING? pause() : play();
+    const togglePlay =  useCallback(() => playerState === PlayerState.PLAYING? pause() : play(),[playerState, play, pause]);
 
-    const reset = () => 
+
+    const stepBackwards = useCallback(() =>
+    {
+        console.log("Backwards!") 
+    }, [])
+
+    const stepForwards = useCallback(() =>
+    {
+        console.log("Forwards!") 
+    }, [])
+
+    const reset = useCallback(() => 
     {
         setPlayerState(PlayerState.STOPPED)
         timestamp.reset();
         // setDuration(0)
-    }
+    }, [timestamp])
 
-    const seek = (percentage: number) =>
+    const seek = useCallback((percentage: number) =>
     { 
         const canSeek = metaDataLoaded.current && 0 <= percentage && percentage <= 1;
 
@@ -217,7 +235,8 @@ const TrackControls = (props: Props) =>
 
             play()
         }
-    }
+    }, [duration, lyrics])
+
 
     return (
         <>
@@ -267,15 +286,15 @@ const TrackControls = (props: Props) =>
                     />
 
                     <div className="w-full flex items-center justify-between h-[75px]  py-[25px]">
-                        <div className="absolute flex items-center cursor-pointer ">
-                            <ToggleTriangle 
-                                isOn={songOverlayControls.isShown}
+                        {/* TODO: Memoize */}
+                        <ToggleTriangle 
+                            isOn={songOverlayControls.isShown}
 
-                                toggle={songOverlayControls.toggle}
-                            />
-                        </div>
+                            toggle={songOverlayControls.toggle}
+                        />
 
                         <div className="grid grid-cols-3 content-center w-full h-full  px-20">
+                            {/* TODO: Memoize */}
                             <SongInformation 
                                 className="justify-self-start flex gap-5"
                                 album={AlbumsObj[track.albumID]}
@@ -283,15 +302,17 @@ const TrackControls = (props: Props) =>
                                 artistName={ArtistsObject[track.artistID].name} 
                             />
 
+                            {/* TODO: Memoize */}
                             <PlayerControls 
                                 className="flex items-center gap-10  justify-self-center h-full"
                                 isPlaying={playerState === PlayerState.PLAYING} 
 
-                                stepBackwards={() => { console.log("Backwards!") }}
+                                stepBackwards={stepBackwards}
                                 togglePlay={togglePlay}
-                                stepForwards={() => { console.log("Forwards!") }}
+                                stepForwards={stepForwards}
                             />
                         
+
                             <TimeInfo 
                                 className=
                                 {`

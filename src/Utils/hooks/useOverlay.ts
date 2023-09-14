@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 const useOverlay = () =>
 {
     const [isShown, setShown] = useState<boolean>(false)
     
-    const show = () => setShown(true)
-    const hide = () => setShown(false);
+    const show = useCallback(() => setShown(true), [])
+    const hide =  useCallback(() => setShown(false), []);
 
-    const toggle = () => isShown? hide(): show();
+    const toggle = useCallback(() => setShown(value => !value), []);
 
     return (
         {

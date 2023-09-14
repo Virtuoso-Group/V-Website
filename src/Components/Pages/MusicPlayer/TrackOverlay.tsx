@@ -7,9 +7,12 @@ import { Album, LyricsObject, SeekLineFunctionType, Track } from '../../../Utils
 import { motion } from 'framer-motion'
 
 import AlbumsObj from '../../../Utils/dummyData/albums'
+import { memo, useMemo } from 'react'
 
-const Background = (props: { coverArt: string }) =>
+const Background = memo((props: { coverArt: string }) =>
 {
+    console.log("Background");
+    
     return (
         <div className='z-[-1] absolute h-full w-full'>
             <img 
@@ -22,12 +25,14 @@ const Background = (props: { coverArt: string }) =>
             <div className='z-[2] absolute h-full w-full backdrop-blur-sm' />
         </div>
     )
-}
+})
 
-const CoverArtContainer = (props: { album: Album }) =>
+const CoverArtContainer = memo((props: { album: Album }) =>
 {
     const { album } = props;
 
+    console.log("CoverArtContainer");
+    
     return ( 
         <div className='flex justify-center'>
             <CoverArt 
@@ -37,7 +42,7 @@ const CoverArtContainer = (props: { album: Album }) =>
             />
         </div>
     )
-}
+})
 
 const LyricsContainer = (props: { timestamp: number, trackID: number, lyricsObject: LyricsObject, setSeekLine: (seekLineFunction: SeekLineFunctionType) => void}) =>
 {
@@ -48,13 +53,15 @@ const LyricsContainer = (props: { timestamp: number, trackID: number, lyricsObje
     )
 }
 
-const TrackOverlay = (props: { track: Track, timestamp: number, setSeekLine: (seekLineFunction: SeekLineFunctionType) => void }) => 
+const TrackOverlay = memo((props: { track: Track, timestamp: number, setSeekLine: (seekLineFunction: SeekLineFunctionType) => void }) => 
 {
     const { track, timestamp, setSeekLine } = props;
 
-    const areLyricsAvailable = track.lyricsObj.status === "available";
+    console.log("TrackOverlay");
+    
+    const areLyricsAvailable = useMemo(() => track.lyricsObj.status === "available", [track.lyricsObj.status])
 
-    const album = AlbumsObj[track.albumID];
+    const album = useMemo(() => AlbumsObj[track.albumID], [track.albumID])
 
     return (
         <motion.div 
@@ -82,6 +89,6 @@ const TrackOverlay = (props: { track: Track, timestamp: number, setSeekLine: (se
             </section>   
         </motion.div>       
     )
-}
+})
 
 export default TrackOverlay
