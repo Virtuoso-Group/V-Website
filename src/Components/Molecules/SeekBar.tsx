@@ -61,10 +61,10 @@ const SeekBar = (props: SeekBarProps) =>
             const actualClientX =  clientX - x ;
 
             const percentage = (actualClientX / width);
-                        
+                                    
             props.controls.seek(percentage)
         }     
-    }, [props.controls])
+    }, [props.controls.seek])
 
     const hold = useCallback(() =>
     {        
@@ -74,9 +74,11 @@ const SeekBar = (props: SeekBarProps) =>
 
     const release = useCallback((xPoint: number) =>
     {
+        console.log("xPoint: ", xPoint);
+        
         setIsDragging(false)
         seekWrapper(xPoint)
-    }, [])
+    }, [seekWrapper])
     
     return (
     <div 

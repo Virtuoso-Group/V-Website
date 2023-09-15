@@ -102,22 +102,43 @@ const RockmanX7OriginalSoundtrack: Album =
 }
 
 
-const AlbumsObj: { [index: number]: Album } =
+const OnTheSunDayofLife: Album =
 {
-    0: CLOSURE_CONTINUATION,
-    1: SOULSEEKER,
-    2: HotelCalifornia,
-    3: TheSkyMovesSideways,
-    4: Dissolution,
-    5: YourWilderness,
-    6: StarsDieTheDeleriumYears,
-    7: Deadwing,
-    8: Humanistic,
-    9: TekkenTagTournamentOriginalSoundtrack,
-    10: TekkenTagTournamentDirectAudio,
-    11: RockmanX7OriginalSoundtrack
+    id: 12,
+    artistID: 0,
+    name: "On the Sunday of Life...",
+    coverArt: "https://f4.bcbits.com/img/a0898233795_10.jpg"
 }
 
-export const AlbumsArray: Album[] = Object.values(AlbumsObj);
+
+const CrisisCoreOST: Album =
+{
+    id: 13,
+    artistID: 7,
+    name: "Crisis Core - FINAL FANTASY VII (Original Soundtrack)",
+    coverArt: "https://is1-ssl.mzstatic.com/image/thumb/Features6/v4/fe/57/8e/fe578ed5-eaae-f052-5aab-db17a020d7f4/dj.ianrqufk.jpg/1200x1200bf-60.jpg"
+}
+
+const AlbumsObj: { [index: number]: Album } = { }
+
+export const AlbumsArray:  Album[] = 
+[
+    CLOSURE_CONTINUATION,
+    SOULSEEKER,
+    HotelCalifornia,
+    TheSkyMovesSideways,
+    Dissolution,
+    YourWilderness,
+    StarsDieTheDeleriumYears,
+    Deadwing,
+    Humanistic,
+    TekkenTagTournamentOriginalSoundtrack,
+    TekkenTagTournamentDirectAudio,
+    RockmanX7OriginalSoundtrack,
+    OnTheSunDayofLife,
+    CrisisCoreOST
+]
+
+AlbumsArray.forEach(album => { AlbumsObj[album.id] = album })
 
 export default AlbumsObj

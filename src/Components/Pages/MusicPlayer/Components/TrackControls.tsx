@@ -72,7 +72,7 @@ const SongInformation = memo((props: SongInfoProps) =>
     const { className, songName, artistName: bandName, album } = props;
 
     return (
-        <div className={className}>
+        <div className={`flex items-center whitespace-nowrap ${className}`}>
             <CoverArt
                 className={`h-[50px] bg-blue-800 rounded-sm`}
                 name={album.name}
@@ -167,8 +167,6 @@ const PlayerControls = memo((props: PlayerControlsProps) =>
 })
 
 
-
-
 enum PlayerState 
 {
     PLAYING = "Playing",
@@ -211,20 +209,35 @@ const TrackControls = (props: Props) =>
         console.log("Forwards!") 
     }, [])
 
-    const reset = useCallback(() => 
-    {
+    const reset = () => 
+    {        
         setPlayerState(PlayerState.STOPPED)
         timestamp.reset();
-        // setDuration(0)
-    }, [timestamp])
+    }
 
     const seek = useCallback((percentage: number) =>
     { 
-        const canSeek = metaDataLoaded.current && 0 <= percentage && percentage <= 1;
-
-        if (audioPlayerRef.current  && canSeek) 
+        const clipPercentage = (percentage: number): number =>
         {
-            const newTimeStamp = (duration * percentage);
+            if (percentage < 0) 
+            {
+                return 0
+            }
+            else if (percentage > 1) 
+            {
+                return 1
+            }
+            else
+            {
+                return percentage
+            }
+        }
+
+        const clippedPercentage = clipPercentage(percentage);
+
+        if (audioPlayerRef.current  && metaDataLoaded.current) 
+        {
+            const newTimeStamp = (duration * clippedPercentage);
 
             if (lyrics.seekLine)
             {
@@ -235,7 +248,7 @@ const TrackControls = (props: Props) =>
 
             play()
         }
-    }, [duration, lyrics])
+    }, [duration, lyrics, play])
 
 
     return (

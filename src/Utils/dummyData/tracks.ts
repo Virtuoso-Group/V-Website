@@ -12,7 +12,8 @@ import OpeningMovieFile from '../../assets/music/OpeningMovie.mp3'
 import FarBelowFile from '../../assets/music/FarBelow.mp3'
 import TheFinalThingOnMyMindFile from '../../assets/music/TheFinalThingOnMyMind.mp3'
 import LazyMindFile from '../../assets/music/LazyMind.mp3'
-
+import RadioactiveToyFile from '../../assets/music/Radioactive Toy.mp3'
+import HowlingAbominiationsFile from '../../assets/music/HowlingAbominations.mp3'
 
 import { Track } from '../types'
 
@@ -953,7 +954,7 @@ const FendForYourself: Track =
 
             {
                 value: "You will find me frozen in stone",
-                range: { start: 72500, end: 73000 + 8000 }
+                range: { start: 73000, end: 73000 + 8000 }
             },
 
             {
@@ -961,10 +962,10 @@ const FendForYourself: Track =
                 range: { start: 83000, end: 96000 }
             },
 
-            // {
-            //     value: "And never looked back",
-            //     range: { start: 32000, end: 35500 }
-            // }
+            {
+                value: "And never looked back",
+                range: { start: 96100, end: 100100 }
+            }
         ]
     }
 }
@@ -1086,6 +1087,35 @@ const LazyMind: Track =
 }
 
 
+const RadioactiveToy: Track =
+{
+    id: 14,
+    name: "Radioactive Toy",
+    albumID: 12,
+    artistID: 0,
+    src: RadioactiveToyFile,
+    lyricsObj: 
+    {
+        status: "unavailable",
+        lyrics: []
+    }
+}
+
+
+const HowlingAbominations: Track =
+{
+    id: 15,
+    name: "Howling Abominations",
+    albumID: 13,
+    artistID: 0,
+    src: HowlingAbominiationsFile,
+    lyricsObj: 
+    {
+        status: "unavailable",
+        lyrics: []
+    }
+}
+
 
 
 const tracksArray: Track[] = 
@@ -1093,7 +1123,9 @@ const tracksArray: Track[] =
     SoulSeeker, Harridan, HotelCalifornia, MoonloopCoda, 
     AllThatYouveGot, FendForYourself, TheSoundofNoOneListening, 
     Lazarus, TheRemedy, CharacterSelect, OpeningMovie, FarBelow,
-    TheFinalThingOnMyMind, LazyMind
+    TheFinalThingOnMyMind, LazyMind, RadioactiveToy,
+
+    HowlingAbominations
 ]
 
 export default tracksArray;

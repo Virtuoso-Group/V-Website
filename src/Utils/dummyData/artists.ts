@@ -10,8 +10,8 @@ const PorcupineTree: Artist =
 {
     id: 0,
     name: "Porcupine Tree",
-    image: "https://scontent.fruh4-5.fna.fbcdn.net/v/t39.30808-6/252230889_437061907781425_898070387270580468_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=tTTVtQbl4egAX_V2_4Y&_nc_ht=scontent.fruh4-5.fna&oh=00_AfDhQ4NeCb0cN7UdMjUuGEqdR1yCypl18BBPSth7s_uURQ&oe=650162BB",
-    albums: [0, 3, 6, 7]
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Porcupine_Tree_%282967150113%29.jpg",
+    albums: [0, 3, 6, 7, 12]
 }
 
 const CrossFaith: Artist =
@@ -61,26 +61,32 @@ const CapcomSoundTeam: Artist =
 {
     id: 6,
     name: "Capcom Sound Team",
-    image: "https://scontent.fruh4-2.fna.fbcdn.net/v/t39.30808-6/351319113_605855017983128_101916105842635120_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=5UVjrfjxtHQAX-FstPl&_nc_ht=scontent.fruh4-2.fna&oh=00_AfCWGoOFA26Lm4vVDsfCyziybAJWS4bomyBGcSbcSkXi6g&oe=6500BCFD",
+    image: "https://yt3.googleusercontent.com/ytc/AOPolaRVHm8yrIssqg7Y9kO59GqEHQh_I6qHUzC_k0ifzQ=s900-c-k-c0x00ffffff-no-rj",
     albums: [11]
 }
+
+
+const TakeharuIshimoto: Artist =
+{
+    id: 7,
+    name: "Takeharu Ishimoto",
+    image: "https://media.vgm.io/artists/67/776/776-1347913539.jpg",
+    albums: [13]
+}
+
+
+const ArtistsObject: { [index: number]: Artist } = {}
 
 export const Artists: Artist[] = 
 [
     PorcupineTree, CrossFaith, Eagles, 
     ThePineappleThief, AbandonedPools,
-    BandaiMusic, CapcomSoundTeam
+    BandaiMusic, CapcomSoundTeam,
+    TakeharuIshimoto
 ];
 
-const ArtistsObject: {[index: number]: Artist} =
-{
-    0: PorcupineTree,
-    1: CrossFaith,
-    2: Eagles,
-    3: ThePineappleThief,
-    4: AbandonedPools,
-    5: BandaiMusic,
-    6: CapcomSoundTeam
-}
+
+
+Artists.forEach(artist => { ArtistsObject[artist.id] = artist })
 
 export default ArtistsObject
