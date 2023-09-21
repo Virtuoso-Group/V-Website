@@ -3,7 +3,8 @@ import WebsiteHeader from "./WebsiteHeader";
 import { useCallback, useEffect, useState } from "react";
 import TrackControls from "../Pages/MusicPlayer/Components/TrackControls";
 import useTrack from "../../Utils/hooks/useTrack";
-import { SeekLineFunctionType, Track } from "../../Utils/types";
+import { SeekLineFunctionType } from "../../Utils/types";
+import { Track } from "../../Utils/types/track";
 
 
 type WebsiteContext = { selectTrack: (track: Track) => void }
@@ -12,17 +13,6 @@ type WebsiteContext = { selectTrack: (track: Track) => void }
 const WebsiteLayout = () =>
 {
     const track = useTrack();
-
-    /* 
-        TODO: useTimestamp() was here, but I moved it down to TrackControls component.
-        When the hook was here, it seemed to have caused the entire website to constantly rerender,
-        I got this information from the React profiler.
-
-        As soon as I moved the useTimestamp() hook down to the TrackControls component, only its children rerendered,
-        including the child components that have nothing to do with the timestamp.
-
-        I moved the useTimestamp hook down because it is exclusively used in the TrackControls.
-    */
 
     const [seekLine, setSeekLine] = useState<SeekLineFunctionType | null>(null)
 

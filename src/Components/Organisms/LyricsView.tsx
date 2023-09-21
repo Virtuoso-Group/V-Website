@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useLyricsReader } from "../../Utils/hooks/lyricsHooks";
-import { LyricsObject, SeekLineFunctionType } from "../../Utils/types";
+import { SeekLineFunctionType } from "../../Utils/types";
+import { LyricsObject, SyncedLyrics } from "../../Utils/types/lyrics";
 
 interface Props 
 { 
     trackID: number,
-    lyricsObject: LyricsObject,
+    lyricsObject: SyncedLyrics,
     timestamp: number,
 
     setSeekLine: (seekLineFunction: SeekLineFunctionType) => void

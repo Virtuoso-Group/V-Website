@@ -2,12 +2,14 @@ import LyricsView from '../../Organisms/LyricsView'
 
 import CoverArt from '../../Atoms/CoverArt'
 
-import { Album, LyricsObject, SeekLineFunctionType, Track } from '../../../Utils/types'
+import { SeekLineFunctionType } from '../../../Utils/types'
 
 import { motion } from 'framer-motion'
 
 import AlbumsObj from '../../../Utils/dummyData/albums'
 import { memo, useMemo } from 'react'
+import { Album, Track } from '../../../Utils/types/track'
+import { SyncedLyrics } from '../../../Utils/types/lyrics'
 
 const Background = memo((props: { coverArt: string }) =>
 {
@@ -20,6 +22,7 @@ const Background = memo((props: { coverArt: string }) =>
                 src={props.coverArt}
                 title={"Background"}
                 alt={"Background"}
+                loading='lazy'
             />
 
             <div className='z-[2] absolute h-full w-full backdrop-blur-sm' />
@@ -44,7 +47,7 @@ const CoverArtContainer = memo((props: { album: Album }) =>
     )
 })
 
-const LyricsContainer = (props: { timestamp: number, trackID: number, lyricsObject: LyricsObject, setSeekLine: (seekLineFunction: SeekLineFunctionType) => void}) =>
+const LyricsContainer = (props: { timestamp: number, trackID: number, lyricsObject: SyncedLyrics, setSeekLine: (seekLineFunction: SeekLineFunctionType) => void}) =>
 {
     return (
         <div className='flex justify-center h-[700px]'>
@@ -59,7 +62,7 @@ const TrackOverlay = memo((props: { track: Track, timestamp: number, setSeekLine
 
     console.log("TrackOverlay");
     
-    const areLyricsAvailable = useMemo(() => track.lyricsObj.status === "available", [track.lyricsObj.status])
+    const areLyricsSynced = useMemo(() => track.lyricsObj.status === "available" && track.lyricsObj.synced, [track.lyricsObj.status])
 
     const album = useMemo(() => AlbumsObj[track.albumID], [track.albumID])
 
@@ -73,16 +76,16 @@ const TrackOverlay = memo((props: { track: Track, timestamp: number, setSeekLine
         >
             <Background coverArt={album.coverArt} />
 
-            <section className={`${areLyricsAvailable? "grid grid-cols-2  auto-cols-max": "flex justify-center"} w-full items-center`}>
+            <section className={`${areLyricsSynced? "grid grid-cols-2  auto-cols-max": "flex justify-center"} w-full items-center`}>
                 <CoverArtContainer album={album} />
 
                 {
-                    areLyricsAvailable 
+                    track.lyricsObj.status === "available" && track.lyricsObj.synced 
                 && 
                     <LyricsContainer 
                         timestamp={timestamp} 
                         trackID={track.id} 
-                        lyricsObject={track.lyricsObj} 
+                        lyricsObject={track.lyricsObj } 
                         setSeekLine={setSeekLine}
                     />
                 }

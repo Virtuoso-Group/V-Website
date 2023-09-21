@@ -1,7 +1,8 @@
 import { AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
-import { Artist, Artists } from '../../../../Utils/dummyData/artists';
+import { Artists } from '../../../../Utils/dummyData/artists';
 import ArtistCard from '../../../Molecules/ArtistCard';
+import { Artist } from '../../../../Utils/types/track';
 
 const ArtistsSection = () => 
 {

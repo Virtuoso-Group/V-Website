@@ -23,6 +23,7 @@ const CoverArt = (props: Props) =>
             `}
             title={name} alt={name}
             src={coverArt}
+            loading={"lazy"}
         />
 )
 }

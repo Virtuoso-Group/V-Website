@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Line, Lyrics, LyricsObject, PlayerState } from "../types";
+import { Line, Lyrics } from "../types/lyrics";
 
 export const isWithinRange = (line: Line, timestamp: number) =>
 {

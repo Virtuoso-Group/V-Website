@@ -1,10 +1,10 @@
 
 import { useState } from 'react'
-import { Album } from '../../Utils/types'
 import CoverArt from '../Atoms/CoverArt'
 import Marquee from 'react-fast-marquee'
 
 import ArtistsObject from '../../Utils/dummyData/artists'
+import { Album } from '../../Utils/types/track'
 
 type Props = 
 {

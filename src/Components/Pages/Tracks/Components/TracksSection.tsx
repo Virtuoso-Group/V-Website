@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Track } from '../../../../Utils/types';
 import TrackCard from '../../../Molecules/TrackCard';
 import { useWebsiteContext } from '../../../Organisms/WebsiteLayout';
 import tracksArray from '../../../../Utils/dummyData/tracks';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Track } from '../../../../Utils/types/track';
 
 const MotionTrackCard = motion(TrackCard);
 

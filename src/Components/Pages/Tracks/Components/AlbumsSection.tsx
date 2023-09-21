@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Album } from '../../../../Utils/types'
 import { AlbumsArray } from '../../../../Utils/dummyData/albums'
 import AlbumCard from '../../../Molecules/AlbumCard'
+import { Album } from '../../../../Utils/types/track'
 
 
 const AlbumsSection = () => 

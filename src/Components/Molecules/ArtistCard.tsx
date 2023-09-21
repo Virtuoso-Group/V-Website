@@ -1,6 +1,7 @@
 import { forwardRef, useState } from 'react'
-import { Artist } from '../../Utils/dummyData/artists'
+
 import Marquee from 'react-fast-marquee'
+import { Artist } from '../../Utils/types/track'
 
 type Props = 
 {
@@ -24,13 +25,13 @@ const ArtistCard = forwardRef<HTMLElement, Props>((props, ref) =>
             onMouseLeave={() => setIsHover(false)}
         >
             <img 
-                className={`rounded-full aspect-square`}
+                className={`rounded-full aspect-square w-full`}
                 src={artist.image}
                 title={artist.name}
                 alt={artist.name}
+                loading='lazy'
             />
 
-            
             <p className='text-lg text-center text-white font-extrabold w-full'>
                 {artist.name}
             </p>

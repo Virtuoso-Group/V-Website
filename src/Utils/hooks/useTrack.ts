@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Track } from "../types";
+import { Track } from "../types/track";
+// import { Track } from "../types";
 
 
 const useTrack = () =>

@@ -1,7 +1,7 @@
 import { forwardRef, useState } from 'react'
 import CoverArt from '../Atoms/CoverArt';
 import Marquee from 'react-fast-marquee';
-import { Track } from '../../Utils/types';
+import { Track } from '../../Utils/types/track';
 
 import AlbumsObj from '../../Utils/dummyData/albums';
 import ArtistsObject from '../../Utils/dummyData/artists';

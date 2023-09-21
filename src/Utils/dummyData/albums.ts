@@ -1,6 +1,6 @@
-import type { Album } from "../types"
 
 import TekkenArtworkFile from '../../assets/albumCovers/Tekken_Tag_Tournament_Direct_Audio.jpg'
+import { Album } from '../types/track'
 
 
 const CLOSURE_CONTINUATION: Album =

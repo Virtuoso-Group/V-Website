@@ -1,10 +1,5 @@
-export type Artist =
-{
-    id: number
-    name: string,
-    image: string,
-    albums: number[]
-}
+import { Artist } from "../types/track"
+
 
 const PorcupineTree: Artist =
 {

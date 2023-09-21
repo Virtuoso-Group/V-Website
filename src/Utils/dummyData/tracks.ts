@@ -14,8 +14,8 @@ import TheFinalThingOnMyMindFile from '../../assets/music/TheFinalThingOnMyMind.
 import LazyMindFile from '../../assets/music/LazyMind.mp3'
 import RadioactiveToyFile from '../../assets/music/Radioactive Toy.mp3'
 import HowlingAbominiationsFile from '../../assets/music/HowlingAbominations.mp3'
+import { Track } from '../types/track'
 
-import { Track } from '../types'
 
 const Harridan: Track = 
 {
@@ -27,6 +27,7 @@ const Harridan: Track =
     lyricsObj:
     {
         status: "available",
+        synced: true,
         lyrics:
         [
             // 0
@@ -292,292 +293,278 @@ const SoulSeeker: Track =
     lyricsObj:
     {
         status: "available",
+        synced: true,
         lyrics: 
-    [
-        {
-            value: "Let's go!",
-            range: { start: 10000, end: 10750 }
-        },
-        {
-            value: "Standing in a line",
-            range: { start: 22750, end: 24500 }
-        },
-        {
-            value: "Wait for the enemy",
-            range: { start: 24550, end: 27000 }
-        },
-        {
-            value: "Don't know the reason that I fight",
-            range: { start: 28000, end: 31500 }
-        },
-        {
-            value: "I've lost the fear of pain",
-            range: { start: 33500, end: 35800 }
-        },
-        {
-            value: "Anxiety is cure",
-            range: { start: 36000, end: 38500 }
-        },
-        {
-            value: "I don't want to be a mannequin",
-            range: { start: 38800, end: 44000 }
-        },
-
-
-
-
-        {
-            value: "If the sky is falling down",
-            range: { start: 44375, end: 47250 }
-        },
-        {
-            value: "Then hold your fist in the air",
-            range: { start: 47200, end: 49900 }
-        },
-        {
-            value: "We'll fight this all along the road",
-            range: { start: 50000, end: 54500 }
-        },
-
-
-
-        // CHORUS
-        {
-            value: "Tell me what we're fighting for",
-            range: { start: 54800, end: 59000 }
-        },
-
-        {
-            value: "Do I really feel that pain now?",
-            range: { start: 59250, end: 62400 }
-        },
-
-        {
-            value: "Is this real?",
-            range: { start: 62500, end: 65500 }
-        },
-
-        {
-            value: "Come find me, come save me",
-            range: { start: 66250, end: 68900 }
-        },
-
-        {
-            value: "So I can say it's over",
-            range: { start: 69000, end: 73900 }
-        },
-
-        {
-            value: "Is it over?",
-            range: { start: 74000, end: 76000 }
-        },
-
-        {
-            value: "Am I still without soul?",
-            range: { start: 76000, end: 80000 }
-        },
-
-
-
-
-        {
-            value: "Wake at the line",
-            range: { start: 89250, end: 91250 }
-        },
-        {
-            value: "I'm tired of everything",
-            range: { start: 91250, end: 94500 }
-        },
-        {
-            value: "Is there a reason that I fight",
-            range: { start: 94550, end: 98100 }
-        },
-
-
-
-        {
-            value: "I've lost the fear of pain",
-            range: { start: 100250, end: 102500 }
-        },
-        {
-            value: "Anxiety is cure",
-            range: { start: 102500, end: 105500 }
-        },
-        {
-            value: "I don't want to be a mannequin",
-            range: { start: 105600, end: 109500 }
-        },
-
-        {
-            value: "NO!",
-            range: { start: 109550, end: 110850 }
-        },
-
-
-
-
-        // CHORUS
-        {
-            value: "Tell me what we're fighting for",
-            range: { start: 113000, end: 117250 }
-        },
-
-        {
-            value: "Do I really feel that pain now?",
-            range: { start: 117500, end: 120550 }
-        },
-
-        {
-            value: "Is this real?",
-            range: { start: 120600, end: 123500 }
-        },
-
-        {
-            value: "Come find me, come save me",
-            range: { start: 124250, end: 127200 }
-        },
-
-        {
-            value: "So I can say it's over",
-            range: { start: 127250, end: 132150 }
-        },
-
-        {
-            value: "Is it over?",
-            range: { start: 132165, end: 134075 }
-        },
-
-        {
-            value: "Am I still without soul?",
-            range: { start: 134175, end: 138500 }
-        },
-
-
-
-
-
-        {
-            value: "Burn me alive",
-            range: { start: 146250, end: 147650 }
-        },
-
-        {
-            value: "To prove what's inside of me",
-            range: { start: 147750, end: 151750 }
-        },
-
-        {
-            value: "It's time again to raise so that I can kill",
-            range: { start: 151900, end: 157250 }
-        },
-
-
-        {
-            value: "Burn me alive",
-            range: { start: 157300, end: 159000 }
-        },
-
-        {
-            value: "To prove what's inside of me",
-            range: { start: 159150, end: 162750 }
-        },
-
-        {
-            value: "It's time against the dark of myself",
-            range: { start: 162800, end: 172000 }
-        },
-
-
-
-        {
-            value: "Yo, I'm afraid that I'm tied to my fate",
-            range: { start: 179150, end: 182000 }
-        },
-
-        {
-            value: "Is this real? I can't remember how I feel",
-            range: { start: 182100, end: 185250 }
-        },
-
-        {
-            value: "I'm in front of the door",
-            range: { start: 186000, end: 187950 }
-        },
-
-        {
-            value: "But your face is tellin' me I shouldn't knock",
-            range: { start: 188000, end: 190750 }
-        },
-
-        {
-            value: "Light knows the darkness",
-            range: { start: 191500, end: 193500 }
-        },
-
-        {
-            value: "and the darkness needs the light",
-            range: { start: 193600, end: 196250 }
-        },
-
-
-        {
-            value: "I could never be the same",
-            range: { start: 196300, end: 198750 }
-        },
-
-        {
-            value: "if you tell me what's inside of me",
-            range: { start: 199250, end: 202550 }
-        },
-
-
-
-
-         // CHORUS
-         {
-            value: "Tell me what we're fighting for",
-            range: { start: 203150, end: 207250 }
-        },
-
-        {
-            value: "Do I really feel that pain now?",
-            range: { start: 207700, end: 210500 }
-        },
-
-        {
-            value: "Is this real?",
-            range: { start: 210550, end: 213550 }
-        },
-
-        {
-            value: "Come find me, come save me",
-            range: { start: 214375, end: 217250 }
-        },
-
-        {
-            value: "So I can say it's over",
-            range: { start: 217350, end: 222350 }
-        },
-
-        {
-            value: "Is it over?",
-            range: { start: 222375, end: 224500 }
-        },
-
-        {
-            value: "Am I still without soul?",
-            range: { start: 224525, end: 226850 }
-        },
-
-        {
-            value: "Am I still without soul?",
-            range: { start: 235500, end: 239500 }
-        },
-
-        {
-            value: "Am I still without soul?",
-            range: { start: 246500, end: 251750 }
-        },
+        [
+            {
+                value: "Let's go!",
+                range: { start: 10000, end: 10750 }
+            },
+            {
+                value: "Standing in a line",
+                range: { start: 22750, end: 24500 }
+            },
+            {
+                value: "Wait for the enemy",
+                range: { start: 24550, end: 27000 }
+            },
+            {
+                value: "Don't know the reason that I fight",
+                range: { start: 28000, end: 31500 }
+            },
+            {
+                value: "I've lost the fear of pain",
+                range: { start: 33500, end: 35800 }
+            },
+            {
+                value: "Anxiety is cure",
+                range: { start: 36000, end: 38500 }
+            },
+            {
+                value: "I don't want to be a mannequin",
+                range: { start: 38800, end: 44000 }
+            },
+
+
+
+
+            {
+                value: "If the sky is falling down",
+                range: { start: 44375, end: 47250 }
+            },
+            {
+                value: "Then hold your fist in the air",
+                range: { start: 47200, end: 49900 }
+            },
+            {
+                value: "We'll fight this all along the road",
+                range: { start: 50000, end: 54500 }
+            },
+
+
+
+            // CHORUS
+            {
+                value: "Tell me what we're fighting for",
+                range: { start: 54800, end: 59000 }
+            },
+
+            {
+                value: "Do I really feel that pain now?",
+                range: { start: 59250, end: 62400 }
+            },
+
+            {
+                value: "Is this real?",
+                range: { start: 62500, end: 65500 }
+            },
+
+            {
+                value: "Come find me, come save me",
+                range: { start: 66250, end: 68900 }
+            },
+
+            {
+                value: "So I can say it's over",
+                range: { start: 69000, end: 73900 }
+            },
+
+            {
+                value: "Is it over?",
+                range: { start: 74000, end: 76000 }
+            },
+
+            {
+                value: "Am I still without soul?",
+                range: { start: 76000, end: 80000 }
+            },
+
+
+
+
+            {
+                value: "Wake at the line",
+                range: { start: 89250, end: 91250 }
+            },
+            {
+                value: "I'm tired of everything",
+                range: { start: 91250, end: 94500 }
+            },
+            {
+                value: "Is there a reason that I fight",
+                range: { start: 94550, end: 98100 }
+            },
+
+            {
+                value: "I've lost the fear of pain",
+                range: { start: 100250, end: 102500 }
+            },
+            {
+                value: "Anxiety is cure",
+                range: { start: 102500, end: 105500 }
+            },
+            {
+                value: "I don't want to be a mannequin",
+                range: { start: 105600, end: 109500 }
+            },
+            {
+                value: "NO!",
+                range: { start: 109550, end: 110850 }
+            },
+
+            // CHORUS
+            {
+                value: "Tell me what we're fighting for",
+                range: { start: 113000, end: 117250 }
+            },
+
+            {
+                value: "Do I really feel that pain now?",
+                range: { start: 117500, end: 120550 }
+            },
+
+            {
+                value: "Is this real?",
+                range: { start: 120600, end: 123500 }
+            },
+
+            {
+                value: "Come find me, come save me",
+                range: { start: 124250, end: 127200 }
+            },
+
+            {
+                value: "So I can say it's over",
+                range: { start: 127250, end: 132150 }
+            },
+
+            {
+                value: "Is it over?",
+                range: { start: 132165, end: 134075 }
+            },
+
+            {
+                value: "Am I still without soul?",
+                range: { start: 134175, end: 138500 }
+            },
+
+            {
+                value: "Burn me alive",
+                range: { start: 146250, end: 147650 }
+            },
+
+            {
+                value: "To prove what's inside of me",
+                range: { start: 147750, end: 151750 }
+            },
+
+            {
+                value: "It's time again to raise so that I can kill",
+                range: { start: 151900, end: 157250 }
+            },
+
+            {
+                value: "Burn me alive",
+                range: { start: 157300, end: 159000 }
+            },
+
+            {
+                value: "To prove what's inside of me",
+                range: { start: 159150, end: 162750 }
+            },
+
+            {
+                value: "It's time against the dark of myself",
+                range: { start: 162800, end: 172000 }
+            },
+
+
+            {
+                value: "Yo, I'm afraid that I'm tied to my fate",
+                range: { start: 179150, end: 182000 }
+            },
+
+            {
+                value: "Is this real? I can't remember how I feel",
+                range: { start: 182100, end: 185250 }
+            },
+
+            {
+                value: "I'm in front of the door",
+                range: { start: 186000, end: 187950 }
+            },
+
+            {
+                value: "But your face is tellin' me I shouldn't knock",
+                range: { start: 188000, end: 190750 }
+            },
+
+            {
+                value: "Light knows the darkness",
+                range: { start: 191500, end: 193500 }
+            },
+
+            {
+                value: "and the darkness needs the light",
+                range: { start: 193600, end: 196250 }
+            },
+
+
+            {
+                value: "I could never be the same",
+                range: { start: 196300, end: 198750 }
+            },
+
+            {
+                value: "if you tell me what's inside of me",
+                range: { start: 199250, end: 202550 }
+            },
+
+            // CHORUS
+            {
+                value: "Tell me what we're fighting for",
+                range: { start: 203150, end: 207250 }
+            },
+
+            {
+                value: "Do I really feel that pain now?",
+                range: { start: 207700, end: 210500 }
+            },
+
+            {
+                value: "Is this real?",
+                range: { start: 210550, end: 213550 }
+            },
+
+            {
+                value: "Come find me, come save me",
+                range: { start: 214375, end: 217250 }
+            },
+
+            {
+                value: "So I can say it's over",
+                range: { start: 217350, end: 222350 }
+            },
+
+            {
+                value: "Is it over?",
+                range: { start: 222375, end: 224500 }
+            },
+
+            {
+                value: "Am I still without soul?",
+                range: { start: 224525, end: 226850 }
+            },
+
+            {
+                value: "Am I still without soul?",
+                range: { start: 235500, end: 239500 }
+            },
+
+            {
+                value: "Am I still without soul?",
+                range: { start: 246500, end: 251750 }
+            },
     ]
 }
 }
@@ -593,6 +580,7 @@ const HotelCalifornia: Track =
     lyricsObj:
     {
         status: "available",
+        synced: true,
         lyrics: 
         [
             // VERSE 1
@@ -890,11 +878,7 @@ const MoonloopCoda: Track =
     artistID: 0,
     albumID: 3,
     src: MoonloopCodaFile,
-    lyricsObj:
-    {
-        status: "instrumental",
-        lyrics: []
-    }
+    lyricsObj: { status: "instrumental" }
 }
 
 
@@ -905,13 +889,8 @@ const AllThatYouveGot: Track =
     artistID: 3,
     albumID: 4,
     src: AllThatYouveGotFile,
-    lyricsObj:
-    {
-        status: "unavailable",
-        lyrics: []
-    }
+    lyricsObj: { status: "unavailable" }
 }
-
 
 const FendForYourself: Track =
 {
@@ -923,6 +902,7 @@ const FendForYourself: Track =
     lyricsObj:
     {
         status: "available",
+        synced: true,
         lyrics: 
         [
             {
@@ -970,7 +950,6 @@ const FendForYourself: Track =
     }
 }
 
-
 const TheSoundofNoOneListening: Track =
 {
     id: 6,
@@ -978,11 +957,7 @@ const TheSoundofNoOneListening: Track =
     artistID: 0,
     albumID: 6,
     src: TheSoundofNoOneListeningFile,
-    lyricsObj:
-    {
-        status: "instrumental",
-        lyrics: []
-    }
+    lyricsObj: { status: "instrumental" }
 }
 
 const Lazarus: Track =
@@ -992,10 +967,39 @@ const Lazarus: Track =
     artistID: 0,
     albumID: 7,
     src: LazarusFile,
-    lyricsObj:
-    {
-        status: "unavailable",
-        lyrics: []
+    lyricsObj: 
+    { 
+        status: "available",
+        synced: false,
+        lyrics: 
+        `
+            As the cheerless towns pass my window
+            I can see a washed out moon through the fog
+            And then a voice inside my head, breaks the analogue
+            And says
+
+            "Follow me down to the valley below You know
+            Moonlight is bleeding from out of your soul"
+
+            I survived against the will of my twisted folk
+            But in the deafness of my world the silence broke
+            And said
+
+            "Follow me down to the valley below You know
+            Moonlight is bleeding from out of your soul"
+
+            "My David don't you worry
+            This cold world is not for you
+            So rest your head upon me
+            I have strength to carry you"
+
+            (Ghosts of the twenties rising Golden summers just holding you)
+
+            "Follow me down to the valley below You know
+            Moonlight is bleeding from out of your soul
+            Come to us, Lazarus
+            It's time for you to go"
+        ` 
     }
 }
 
@@ -1007,11 +1011,7 @@ const TheRemedy: Track =
     artistID: 4,
     albumID: 8,
     src: TheRemedyFile,
-    lyricsObj:
-    {
-        status: "unavailable",
-        lyrics: []
-    }
+    lyricsObj: { status: "unavailable" }
 }
 
 const CharacterSelect: Track =
@@ -1021,11 +1021,7 @@ const CharacterSelect: Track =
     artistID: 5,
     albumID: 9,
     src: CharacterSelectFile,
-    lyricsObj:
-    {
-        status: "instrumental",
-        lyrics: []
-    }
+    lyricsObj: { status: "instrumental" }
 }
 
 const OpeningMovie: Track =
@@ -1035,11 +1031,7 @@ const OpeningMovie: Track =
     artistID: 5,
     albumID: 10,
     src: OpeningMovieFile,
-    lyricsObj:
-    {
-        status: "instrumental",
-        lyrics: []
-    }
+    lyricsObj: { status: "instrumental" }
 }
 
 
@@ -1050,11 +1042,7 @@ const FarBelow: Track =
     artistID: 3,
     albumID: 4,
     src: FarBelowFile,
-    lyricsObj:
-    {
-        status: "unavailable",
-        lyrics: []
-    }
+    lyricsObj: { status: "unavailable" }
 }
 
 
@@ -1065,11 +1053,7 @@ const TheFinalThingOnMyMind: Track =
     artistID: 3,
     albumID: 5,
     src: TheFinalThingOnMyMindFile,
-    lyricsObj:
-    {
-        status: "unavailable",
-        lyrics: []
-    }
+    lyricsObj: { status: "unavailable" }
 }
 
 const LazyMind: Track =
@@ -1079,11 +1063,7 @@ const LazyMind: Track =
     albumID: 11,
     artistID: 6,
     src: LazyMindFile,
-    lyricsObj: 
-    {
-        status: "unavailable",
-        lyrics: []
-    }
+    lyricsObj: { status: "unavailable" }
 }
 
 
@@ -1094,29 +1074,18 @@ const RadioactiveToy: Track =
     albumID: 12,
     artistID: 0,
     src: RadioactiveToyFile,
-    lyricsObj: 
-    {
-        status: "unavailable",
-        lyrics: []
-    }
+    lyricsObj: { status: "unavailable" }
 }
-
 
 const HowlingAbominations: Track =
 {
     id: 15,
     name: "Howling Abominations",
     albumID: 13,
-    artistID: 0,
+    artistID: 7,
     src: HowlingAbominiationsFile,
-    lyricsObj: 
-    {
-        status: "unavailable",
-        lyrics: []
-    }
+    lyricsObj: { status: "unavailable" }
 }
-
-
 
 const tracksArray: Track[] = 
 [

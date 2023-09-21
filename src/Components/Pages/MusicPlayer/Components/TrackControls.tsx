@@ -3,7 +3,7 @@ import ButtonIcon from "../../../Atoms/ButtonIcon"
 import { FaPause, FaPlay, FaStepBackward, FaStepForward } from "react-icons/fa";
 import SeekBar from "../../../Molecules/SeekBar";
 import { memo, useCallback, useRef, useState } from "react";
-import { Album, SeekLineFunctionType, Track } from "../../../../Utils/types";
+import { SeekLineFunctionType } from "../../../../Utils/types";
 import CoverArt from "../../../Atoms/CoverArt";
 import useOverlay from "../../../../Utils/hooks/useOverlay";
 import TrackOverlay from "../TrackOverlay";
@@ -13,6 +13,7 @@ import AlbumsObj from "../../../../Utils/dummyData/albums";
 import useTimestamp from "../../../../Utils/hooks/useTimestamp";
 
 import ArtistsObject from "../../../../Utils/dummyData/artists";
+import { Album, Track } from "../../../../Utils/types/track";
 
 interface TimeInfoProps
 {
