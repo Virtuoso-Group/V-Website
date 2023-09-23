@@ -22,7 +22,6 @@ const SyncedLyricsView = (props: Props) =>
     {                
         if (seekLine) 
         {
-            seekLine(timestamp)
             setSeekLine(seekLine);
         }
         

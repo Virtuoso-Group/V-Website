@@ -37,15 +37,11 @@ const CoverArtContainer = memo((props: { album: Album, areLyricsUnavailable: boo
     return ( 
         <motion.div 
             layout
-            className='relative h-full flex justify-center'
-
-            transition=
-            {{
-                duration: 0.25
-            }}
+            className='relative h-full flex justify-end aspect-square object-fit drop-shadow-2xl'
+            transition={{ duration: 0.25 }}
         >
             <CoverArt 
-                className={`  rounded-lg drop-shadow-2xl`}
+                className={`z-[0] absolute h-full w-full rounded-lg `}
                 name={album.name}
                 coverArt={album.coverArt} 
                 loading={"eager"}
@@ -54,14 +50,14 @@ const CoverArtContainer = memo((props: { album: Album, areLyricsUnavailable: boo
             {
                 !props.areLyricsUnavailable 
             &&
+
+                
                 <ButtonIcon 
                     className=
                     {`
-                        absolute
-                        
-                        top-[2.5%] right-[2.5%]
-
+                        z-[1]
                         h-[35px] 
+                        m-4
                         aspect-square 
                         rounded-full bg-slate-300
 

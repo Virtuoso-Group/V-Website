@@ -13,8 +13,7 @@ const CoverArt = (props: Props) =>
     const { className, name, coverArt, loading } = props;
 
     return (
-        <motion.img
-            layout
+        <img
             className=
             {`
                 aspect-square 

@@ -21,7 +21,7 @@ const WebsiteLayout = () =>
     useEffect(() => { return () => { track.reset() }}, []);
     
     return (
-        <main className="relative min-h-screen w-screen bg-[#11B4D4] pb-20">
+        <main className="relative min-h-screen w-screen bg-[#11B4D4] pb-[64px]">
             <WebsiteHeader 
                 className="z-[50] self-start fixed"
                 start=

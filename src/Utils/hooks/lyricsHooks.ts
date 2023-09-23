@@ -148,7 +148,9 @@ export const useLyricsReader = (trackID: number, timestamp: number, lyrics: Lyri
 
     const resetState = () =>
     {
-        setChosenLine(index.value > -1? lyrics[index.value]: null)
+        
+        index.seek(timestamp)
+        // setChosenLine(index.value > -1? lyrics[index.value]: null)
         line.hide();
         index.reset();
     }
@@ -163,7 +165,6 @@ export const useLyricsReader = (trackID: number, timestamp: number, lyrics: Lyri
 
     useEffect(() =>
     {       
-           
         if (index.value > -1) 
         {
             setChosenLine(lyrics[index.value])
