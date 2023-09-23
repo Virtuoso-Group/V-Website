@@ -1,15 +1,15 @@
-import LyricsView from '../../Organisms/LyricsView'
-
 import CoverArt from '../../Atoms/CoverArt'
-
 import { SeekLineFunctionType } from '../../../Utils/types'
 
-import { motion } from 'framer-motion'
+import { MdLyrics } from 'react-icons/md'
+
+import { AnimatePresence, motion } from 'framer-motion'
 
 import AlbumsObj from '../../../Utils/dummyData/albums'
-import { memo, useMemo } from 'react'
+import { memo, useMemo, useState } from 'react'
 import { Album, Track } from '../../../Utils/types/track'
-import { SyncedLyrics } from '../../../Utils/types/lyrics'
+import LyricsView from '../../Organisms/Lyrics/LyricsView'
+import ButtonIcon from '../../Atoms/ButtonIcon'
 
 const Background = memo((props: { coverArt: string }) =>
 {
@@ -22,7 +22,7 @@ const Background = memo((props: { coverArt: string }) =>
                 src={props.coverArt}
                 title={"Background"}
                 alt={"Background"}
-                loading='lazy'
+                loading='eager'
             />
 
             <div className='z-[2] absolute h-full w-full backdrop-blur-sm' />
@@ -30,45 +30,66 @@ const Background = memo((props: { coverArt: string }) =>
     )
 })
 
-const CoverArtContainer = memo((props: { album: Album }) =>
+const CoverArtContainer = memo((props: { album: Album, areLyricsUnavailable: boolean , toggleLyrics: () => void }) =>
 {
     const { album } = props;
-
-    console.log("CoverArtContainer");
     
     return ( 
-        <div className='flex justify-center'>
+        <motion.div 
+            layout
+            className='relative h-full flex justify-center'
+
+            transition=
+            {{
+                duration: 0.25
+            }}
+        >
             <CoverArt 
-                className={`min-w-[300px] w-[550px] rounded-lg drop-shadow-2xl`}
+                className={`  rounded-lg drop-shadow-2xl`}
                 name={album.name}
                 coverArt={album.coverArt} 
+                loading={"eager"}
             />
-        </div>
+
+            {
+                !props.areLyricsUnavailable 
+            &&
+                <ButtonIcon 
+                    className=
+                    {`
+                        absolute
+                        
+                        top-[2.5%] right-[2.5%]
+
+                        h-[35px] 
+                        aspect-square 
+                        rounded-full bg-slate-300
+
+                        flex items-center justify-center
+                    `}
+                    name='showLyrics'
+                    icon={<MdLyrics />}
+
+                    onClick={props.toggleLyrics}
+                />
+            }
+        </motion.div>
     )
 })
-
-const LyricsContainer = (props: { timestamp: number, trackID: number, lyricsObject: SyncedLyrics, setSeekLine: (seekLineFunction: SeekLineFunctionType) => void}) =>
-{
-    return (
-        <div className='flex justify-center h-[700px]'>
-            <LyricsView  {...props} />
-        </div>
-    )
-}
 
 const TrackOverlay = memo((props: { track: Track, timestamp: number, setSeekLine: (seekLineFunction: SeekLineFunctionType) => void }) => 
 {
     const { track, timestamp, setSeekLine } = props;
 
-    console.log("TrackOverlay");
-    
-    const areLyricsSynced = useMemo(() => track.lyricsObj.status === "available" && track.lyricsObj.synced, [track.lyricsObj.status])
+    const [areLyricsVisible, setLyricsVisibility] = useState(false);
 
+    const toggleLyrics = () => setLyricsVisibility(value => !value);
+    
     const album = useMemo(() => AlbumsObj[track.albumID], [track.albumID])
 
     return (
         <motion.div 
-            className={`z-[40] fixed grid w-screen bottom-10 min-h-screen`}
+            className={`z-[40] fixed grid w-screen bottom-10 min-h-screen jutsfiy-center items-center`}
             initial={{  opacity: 0 }}
             animate={{  opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -76,19 +97,26 @@ const TrackOverlay = memo((props: { track: Track, timestamp: number, setSeekLine
         >
             <Background coverArt={album.coverArt} />
 
-            <section className={`${areLyricsSynced? "grid grid-cols-2  auto-cols-max": "flex justify-center"} w-full items-center`}>
-                <CoverArtContainer album={album} />
+            <section className={`h-[550px] flex w-full justify-center items-center gap-10 `}>
+                <CoverArtContainer 
+                    album={album} 
+                    areLyricsUnavailable={track.lyricsObj.status === "unavailable"}
+                    toggleLyrics={toggleLyrics} 
+                />
 
-                {
-                    track.lyricsObj.status === "available" && track.lyricsObj.synced 
-                && 
-                    <LyricsContainer 
-                        timestamp={timestamp} 
-                        trackID={track.id} 
-                        lyricsObject={track.lyricsObj } 
-                        setSeekLine={setSeekLine}
-                    />
-                }
+                <AnimatePresence>
+                    {
+                        track.lyricsObj.status !== "unavailable" && areLyricsVisible
+                    && 
+                        <LyricsView 
+                            timestamp={timestamp}
+                            trackID={track.id}
+                            lyricsObj={track.lyricsObj}
+
+                            setSeekLine={setSeekLine}
+                        />
+                    }
+                </AnimatePresence>
             </section>   
         </motion.div>       
     )

@@ -14,6 +14,15 @@ import TheFinalThingOnMyMindFile from '../../assets/music/TheFinalThingOnMyMind.
 import LazyMindFile from '../../assets/music/LazyMind.mp3'
 import RadioactiveToyFile from '../../assets/music/Radioactive Toy.mp3'
 import HowlingAbominiationsFile from '../../assets/music/HowlingAbominations.mp3'
+import WetRibbonFile from '../../assets/music/WetRibbon.mp3'
+import OxygenFile from '../../assets/music/Oxygen.mp3'
+import InvisibleWoundsFile from '../../assets/music/InvisibleWounds.mp3'
+import NoPartOfMeFile from '../../assets/music/NoPartOfMe.mp3'
+import LastOrderFile from '../../assets/music/LastOrder.mp3'
+import OpeningMovie3File from '../../assets/music/OpeningMovie3.mp3'
+import CharacterSelect3File from '../../assets/music/CharacterSelect3.mp3'
+import HarmonyKorineFile from '../../assets/music/HarmonyKorine.mp3'
+
 import { Track } from '../types/track'
 
 
@@ -27,7 +36,7 @@ const Harridan: Track =
     lyricsObj:
     {
         status: "available",
-        synced: true,
+        isSynced: true,
         lyrics:
         [
             // 0
@@ -293,7 +302,7 @@ const SoulSeeker: Track =
     lyricsObj:
     {
         status: "available",
-        synced: true,
+        isSynced: true,
         lyrics: 
         [
             {
@@ -580,7 +589,7 @@ const HotelCalifornia: Track =
     lyricsObj:
     {
         status: "available",
-        synced: true,
+        isSynced: true,
         lyrics: 
         [
             // VERSE 1
@@ -889,7 +898,39 @@ const AllThatYouveGot: Track =
     artistID: 3,
     albumID: 4,
     src: AllThatYouveGotFile,
-    lyricsObj: { status: "unavailable" }
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics:
+        `
+            You are sick and tired
+            Tired of everyone
+            Yeah everyone
+
+            And you are
+            Old and tired
+            You're older now
+            Yeah you're older now
+
+            You just can't just open fire on everyone
+
+            Oh only if you knew what you put us through
+            Why did you put us through all that you've got?
+
+            Why can't you just stop all this madness?
+            Just look us in the eye?
+            Come on just look us in the eye.
+
+            You just can't just open fire on everyone
+
+            Oh only if you knew what you put us through
+            Why did you put us through all that you've got?
+
+            So tell me that you've had enough.
+        `
+
+    }
 }
 
 const FendForYourself: Track =
@@ -902,7 +943,7 @@ const FendForYourself: Track =
     lyricsObj:
     {
         status: "available",
-        synced: true,
+        isSynced: true,
         lyrics: 
         [
             {
@@ -970,7 +1011,7 @@ const Lazarus: Track =
     lyricsObj: 
     { 
         status: "available",
-        synced: false,
+        isSynced: false,
         lyrics: 
         `
             As the cheerless towns pass my window
@@ -1011,7 +1052,36 @@ const TheRemedy: Track =
     artistID: 4,
     albumID: 8,
     src: TheRemedyFile,
-    lyricsObj: { status: "unavailable" }
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics:
+        `
+            I could use
+            A shot
+            Your novocaine
+            My soul's a fuse
+            Blows away your name
+
+            Then you can be the remedy
+            And I can be the enemy
+            And he can go and live as nothing
+            They you can be the want to be
+            And I can be the remedy
+            And he can go to hell for all I care
+
+            Say this world is not so shallow
+            When you can't beg steal or borrow
+            Save your breath your soul is hollow
+            And it's all too much to swallow
+            
+            Take this souvenir
+            They can't deny you were here
+            This scar always there
+            To medicate your fear
+        ` 
+    }
 }
 
 const CharacterSelect: Track =
@@ -1042,7 +1112,48 @@ const FarBelow: Track =
     artistID: 3,
     albumID: 4,
     src: FarBelowFile,
-    lyricsObj: { status: "unavailable" }
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics: 
+        `
+            Don't look back
+            You know there's no way back
+            For you
+
+            You make your pact
+            With a life of railing back
+            And the one's who tried in vain to help
+
+            You left your heart
+            Fading down below
+            You're holding on
+            You just can't let go
+
+            You've got your back
+            You never needed that
+            Oh, but look at you
+
+            Just don't push back
+            Oh, we just want you back
+            From the life that claimed the life of
+
+            You left your heart
+            Beating far below
+            You're holding on
+            You just can't let go
+            You can't let go
+            You can't let go
+            
+            You left your heart
+            Waiting down below
+            You left your heart
+            Beating far below
+            You left your heart
+            You can't let go
+        ` 
+    }
 }
 
 
@@ -1053,7 +1164,47 @@ const TheFinalThingOnMyMind: Track =
     artistID: 3,
     albumID: 5,
     src: TheFinalThingOnMyMindFile,
-    lyricsObj: { status: "unavailable" }
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics:
+        `
+            Road has broken dawn light
+            When my shooting feels right
+            There's just one final thing on my mind
+
+            All the mist of this dawn
+            The mist of a different dawn
+            The final thing on my mind
+
+            Every waking dawn it's you I see
+            Coming back to me
+
+            Everything you did is a part of me
+            Ripped apart from me
+
+            How did we get to be this cold?
+            How did I let you get so far from me?
+            We got it so wrong, so wrong
+            How did we let it get this cold?
+
+            Every waking dawn it's you I see
+            Coming back to me
+            Everything you did was a part of me
+            Ripped apart from me
+
+            How did we get to be this cold?
+            How did I let you get so far from me?
+            We got it so wrong, so wrong
+            How did we let it get this cold?
+
+            How did we get to be this cold?
+            How did I let you get so far from me?
+            We got it so wrong, so wrong
+            How did we let it get this cold?
+        ` 
+    }
 }
 
 const LazyMind: Track =
@@ -1063,7 +1214,43 @@ const LazyMind: Track =
     albumID: 11,
     artistID: 6,
     src: LazyMindFile,
-    lyricsObj: { status: "unavailable" }
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics:
+        `
+            Kizukanai ma ni kui arasarete katamari dashita ashimoto no kage
+            Tachiagaru koto wa dekiru ka? Atarashī hikari e to aruki dasou
+
+            Akuma wa nemuru ogori no naka ni gizensha ga warau yasuragi no hibi
+            Shinkirō no yō na sekai no naka de shinjirareru mono hitotsu tashikame ni yukou
+
+            Break it! Break it away!　This is really only my way
+            Break it! Break it out now!
+            I never give way to "Lazy Mind" yeah!!
+
+            Yuragu kokoro wa haki sutereba ī kurayami naraba tesaguri demo ī
+            Osoreru mono ga aru to sureba mezame o matsu uirusu ga kono mune no naka ni
+
+            Break it! Break it away!　This is really only my way
+            Break it! Break it out now!
+            I never give way to "Lazy Mind" yeah!!
+
+            Break it out! Break it out! Break it out now!!
+            Kui tsukusareru mae ni Break it out!!
+            Kurikaesareru jimonjitō no hibi kono te de uchikome piriodo
+            Bring it on! Bring it on! Bring it on now!!
+            Yuruginai kokoro o Bring it on!!
+            Dare no mono demo nai My way kono te de kizuku sa My days
+
+            Break it! Break it away!　This is really only my way
+            Break it! Break it out now! I never give way to "Lazy Mind" yeah!!
+            Break it! Break it away!　This is really only my way
+            Break it! Break it out now! I never give way to "Lazy Mind" yeah!!
+        `
+        
+    }
 }
 
 
@@ -1074,7 +1261,33 @@ const RadioactiveToy: Track =
     albumID: 12,
     artistID: 0,
     src: RadioactiveToyFile,
-    lyricsObj: { status: "unavailable" }
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics:
+        `
+            Run through forests on a hot Summer day
+            Trying to break down walls of numbing pain
+            Give me the freedom to destroy
+            Give me radioactive toy
+
+            Taste the water from a stream of running death
+            Eat the apple and cough a dying breath
+            Give me the freedom to destroy
+            Give me radioactive toy
+
+            Feel the sun burning through your black skin
+            Pour me into a hole, inform my next of kin
+            Give me the freedom to destroy
+            Give me radioactive toy
+            
+            Run through graveyards on a dusty Winter day
+            Spit the dirt out and try to say
+            Give me the freedom to destroy
+            Give me radioactive toy
+        `
+    }
 }
 
 const HowlingAbominations: Track =
@@ -1084,7 +1297,244 @@ const HowlingAbominations: Track =
     albumID: 13,
     artistID: 7,
     src: HowlingAbominiationsFile,
-    lyricsObj: { status: "unavailable" }
+    lyricsObj: { status: "instrumental" }
+}
+
+const WetRibbon: Track =
+{
+    id: 16,
+    name: "Wet Ribbon",
+    albumID: 14,
+    artistID: 0,
+    src: WetRibbonFile,
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics:
+        `
+            Cut ribbon from your hair
+            Round your neck
+            It's only... it's only nature's way
+            Cause and effect
+            Always select
+            
+            Collapse the light into the earth
+            Uncoil, reset the universe
+            
+            You are so very pure
+            My child... my star
+            Hands in your dress
+            Always select
+            
+            Collapse the light into the earth
+            Uncoil, reset the universe
+        `
+    }
+}
+
+const Oxygen: Track =
+{
+    id: 17,
+    name: "Oxygen",
+    albumID: 15,
+    artistID: 8,
+    src: OxygenFile,
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics:
+        `
+            Oxygen, amen!
+            Oxygen, amen!
+            I can breathe again.
+            I can breathe again.
+            Oxygen come in!
+            Oxygen come in!
+            Amen! Amen! Amen! Amen!
+            Black oil smoke
+            Thick blue sky
+            Dead red eye
+            Hear me cry
+            Eat my throat
+            Feed my mind
+            Yellow eye, feel me cry
+            Take me now
+            Peel my skin
+            Scrape my vein
+            Seal me in
+            Break my bones
+            Dance and spin
+            Cut a hole
+            Feed me now!
+
+            I'll steal all the oxygen!
+
+            Hey there Dog Man, now I drink from your bowl
+            Hey there Mr Skull, I'm not scared of your cull
+            Oxygen! Amen! Oxygen! Amen!
+            Breathe in! Breathe in!
+        `
+    }
+}
+
+const InvisibleWounds: Track =
+{
+    id: 18,
+    name: "Invisible Wounds (Dark Bodies)",
+    albumID: 16,
+    artistID: 9,
+    src: InvisibleWoundsFile,
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics:
+        `
+            Dark bodies floating in darkness
+            No sign of light ever given
+            Imprisoned in a world without a memory
+
+            Unconscious or am I conscious?
+            Cut from the heart I am part of
+            Sometimes I feel as though I'm frozen in Heaven
+
+            And I saw my own face
+            In the dark and loneliness
+            And I saw my own face
+            Like a spark frozen in Heaven
+
+            In dreams, I see myself flying
+            Closer to the sun and I'm climbing
+            Tried to touch the sun
+            But the brightness burned my eyes
+
+            Unconscious or am I conscious?
+            Fell from the sky like a star
+            Sometimes I feel as though I'm frozen in Heaven
+
+            And I saw my own face
+            In the dark and loneliness
+            And I saw my own face like a spark
+
+            Dark! Dark! Dark!
+            My life was so Dark! Dark! Dark!
+            Mind was so Dark! Dark! Dark!
+            My life was so Dark! Dark! Dark!
+            Everything was (dark)
+
+            Unconscious or am I conscious?
+            Fell from the sky like a star
+            Sometimes I feel as though I'm frozen in Heaven
+
+            And I saw my own face
+            In the dark and loneliness
+            And I saw my own face
+            Like a spark frozen in Heaven
+
+            Dark bodies floating in darkness
+            Dark bodies floating in darkness
+            Dark bodies floating in darkness
+            Dark bodies floating in darkness
+            Dark bodies floating in darkness
+            Dark bodies floating in darkness
+            Dark bodies floating in darkness
+        `
+    }
+}
+
+const NoPartOfMe: Track =
+{
+    id: 19,
+    name: "No Part Of Me",
+    albumID: 17,
+    artistID: 10,
+    src: NoPartOfMeFile,
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics:
+        `
+            I feel worn out
+            There's no point drinking
+            When life slows right down
+            And holds you up above the water line
+            So sleep will never come
+
+            One last time, then
+            Before I lose you
+            You don't have to pretend
+            I know that love for you was just security
+            There's no part of me in you
+        ` 
+    }
+}
+
+const LastOrder: Track =
+{
+    id: 19,
+    name: "Last Order-Crisis Mix",
+    albumID: 13,
+    artistID: 7,
+    src: LastOrderFile,
+    lyricsObj: { status: "instrumental" }
+}
+
+const OpeningMovie3: Track =
+{
+    id: 20,
+    name: "Opening Movie",
+    albumID: 18,
+    artistID: 5,
+    src: OpeningMovie3File,
+    lyricsObj: { status: "instrumental" }
+}
+
+const CharacterSelect3: Track =
+{
+    id: 21,
+    name: "Character Select",
+    albumID: 18,
+    artistID: 5,
+    src: CharacterSelect3File,
+    lyricsObj: { status: "instrumental" }
+}
+
+const HarmonyKorine: Track =
+{
+    id: 22,
+    name: "Harmony Korine",
+    albumID: 19,
+    artistID: 10,
+    src: HarmonyKorineFile,
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics:
+        `
+            Rain, come down, and fall forever
+            Drain, the dirt, into the wasteland
+            Pray, for sound, to quiet the howling
+
+            Feel, no shame, too brave
+            Feel, afraid, to wait forever
+
+            Kneel, to fade, the day's corrosion
+            Crawl, depart, towards perdition
+            Gray, the part, the bruise within you
+
+            Feel, no shame, too brave
+            Feel, afraid, to wait forever
+
+            Forever
+
+            Feel, no shame, too brave
+            Feel, afraid, to wait forever
+        ` 
+    }
 }
 
 const tracksArray: Track[] = 
@@ -1094,7 +1544,11 @@ const tracksArray: Track[] =
     Lazarus, TheRemedy, CharacterSelect, OpeningMovie, FarBelow,
     TheFinalThingOnMyMind, LazyMind, RadioactiveToy,
 
-    HowlingAbominations
+    HowlingAbominations,
+    WetRibbon, Oxygen, InvisibleWounds,
+    NoPartOfMe, LastOrder, OpeningMovie3, CharacterSelect3,
+
+    HarmonyKorine
 ]
 
 export default tracksArray;

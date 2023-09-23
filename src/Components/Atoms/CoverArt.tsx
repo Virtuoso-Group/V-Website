@@ -4,16 +4,17 @@ interface Props
 {
     className?: string, 
     name: string, 
-    coverArt: string
+    coverArt: string,
+    loading?: "eager" | "lazy"
 }
 
 const CoverArt = (props: Props) =>
 {
-    const { className, name, coverArt } = props;
+    const { className, name, coverArt, loading } = props;
 
     return (
         <motion.img
-            layout="size"
+            layout
             className=
             {`
                 aspect-square 
@@ -23,7 +24,7 @@ const CoverArt = (props: Props) =>
             `}
             title={name} alt={name}
             src={coverArt}
-            loading={"lazy"}
+            loading={loading?? "lazy"}
         />
 )
 }

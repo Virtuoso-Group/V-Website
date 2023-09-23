@@ -119,6 +119,55 @@ const CrisisCoreOST: Album =
     coverArt: "https://is1-ssl.mzstatic.com/image/thumb/Features6/v4/fe/57/8e/fe578ed5-eaae-f052-5aab-db17a020d7f4/dj.ianrqufk.jpg/1200x1200bf-60.jpg"
 }
 
+const OutAbsentia: Album =
+{
+    id: 14,
+    artistID: 0,
+    name: "Out Absentia",
+    coverArt: "https://i.discogs.com/yhkoZnUmIEn6xq0pxaNzo-sDakWODOhERya0N7Rguwg/rs:fit/g:sm/q:90/h:525/w:527/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEzMDQ1/MDA2LTE1NDcwNTkx/NzgtMTM3My5qcGVn.jpeg"
+}
+
+
+const ToBeKind: Album =
+{
+    id: 15,
+    artistID: 8,
+    name: "To Be Kind",
+    coverArt: "https://t2.genius.com/unsafe/1714x0/https%3A%2F%2Fimages.genius.com%2Fe8d76131317cc18b6e542a6811537b5b.1000x1000x1.jpg"
+}
+
+const Digimortal: Album =
+{
+    id: 16,
+    artistID: 9,
+    name: "Digimortal",
+    coverArt: "https://m.media-amazon.com/images/I/81V-oGRZjfL._SL1428_.jpg"
+}
+
+const GraceForDrowning: Album =
+{
+    id: 17,
+    artistID: 10,
+    name: "Grace For Drowning",
+    coverArt: "https://f4.bcbits.com/img/a3461226926_10.jpg"
+}
+
+const Tekken3: Album =
+{
+    id: 18,
+    artistID: 5,
+    name: "TEKKEN 3 PlayStation Soundtrack 002",
+    coverArt: "https://vgmsite.com/soundtracks/tekken-3-playstation-soundtrack-002/Booklet%20Front.jpg"
+}
+
+const Insurgentes: Album =
+{
+    id: 19,
+    artistID: 10,
+    name: "Insurgentes",
+    coverArt: "https://f4.bcbits.com/img/a3258147407_10.jpg"
+}
+
 const AlbumsObj: { [index: number]: Album } = { }
 
 export const AlbumsArray:  Album[] = 
@@ -136,7 +185,13 @@ export const AlbumsArray:  Album[] =
     TekkenTagTournamentDirectAudio,
     RockmanX7OriginalSoundtrack,
     OnTheSunDayofLife,
-    CrisisCoreOST
+    CrisisCoreOST,
+    OutAbsentia,
+    ToBeKind,
+    Digimortal,
+    GraceForDrowning,
+    Tekken3,
+    Insurgentes
 ]
 
 AlbumsArray.forEach(album => { AlbumsObj[album.id] = album })

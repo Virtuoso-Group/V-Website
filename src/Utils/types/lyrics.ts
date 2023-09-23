@@ -9,15 +9,15 @@ export type Lyrics = Line[]
 export type SyncedLyrics =
 {
     status: "available",
-    synced: true, 
+    isSynced: true, 
     lyrics: Lyrics
 }
 
 export type UnsyncedLyrics =
 {
     status: "available",
-    synced: false, 
+    isSynced: false, 
     lyrics: string
 }
 
-export type LyricsObject = SyncedLyrics | UnsyncedLyrics |{ status: "unavailable" | "instrumental" }
+export type LyricsObject = SyncedLyrics | UnsyncedLyrics | { status: "unavailable" | "instrumental" }

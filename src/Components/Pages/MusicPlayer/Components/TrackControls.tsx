@@ -1,6 +1,7 @@
 import { IconType } from "react-icons";
 import ButtonIcon from "../../../Atoms/ButtonIcon"
 import { FaPause, FaPlay, FaStepBackward, FaStepForward } from "react-icons/fa";
+import { IoIosClose } from 'react-icons/io'
 import SeekBar from "../../../Molecules/SeekBar";
 import { memo, useCallback, useRef, useState } from "react";
 import { SeekLineFunctionType } from "../../../../Utils/types";
@@ -55,7 +56,8 @@ interface Props
     {
         seekLine: SeekLineFunctionType | null,
         setSeekLine: (seekLineFunction: SeekLineFunctionType) => void
-    }
+    },
+    close: () => void
 }
 
 interface SongInfoProps
@@ -263,8 +265,11 @@ const TrackControls = (props: Props) =>
                     if (audioPlayerRef.current?.duration) 
                     {
                         reset() 
+
                         songOverlayControls.show();
+
                         metaDataLoaded.current = true;
+                        
                         const songDuration = audioPlayerRef.current?.duration;
                         const adjustedDuration = songDuration? songDuration * 1000:0;
                         
@@ -300,7 +305,6 @@ const TrackControls = (props: Props) =>
                     />
 
                     <div className="w-full flex items-center justify-between h-[75px]  py-[25px]">
-                        {/* TODO: Memoize */}
                         <ToggleTriangle 
                             isOn={songOverlayControls.isShown}
 
@@ -338,6 +342,18 @@ const TrackControls = (props: Props) =>
                                 timeInfo={timeInfo} 
                             />
                         </div>
+
+                        <div className="right-0 absolute flex items-center cursor-pointer">
+                            <div
+                                className='me-5 w-fit h-fit flex items-center justify-center'
+                                onClick={props.close}
+                            >
+                                <IoIosClose 
+                                    className={`fill-white`}
+                                    size={35}
+                                />
+                            </div>
+                    </div>
                     </div>
                 </div>
             </div>

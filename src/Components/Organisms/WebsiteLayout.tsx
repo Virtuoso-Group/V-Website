@@ -21,7 +21,7 @@ const WebsiteLayout = () =>
     useEffect(() => { return () => { track.reset() }}, []);
     
     return (
-        <main className="relative min-h-screen w-screen">
+        <main className="relative min-h-screen w-screen bg-[#11B4D4] pb-20">
             <WebsiteHeader 
                 className="z-[50] self-start fixed"
                 start=
@@ -31,9 +31,9 @@ const WebsiteLayout = () =>
                             Project
                         </span>
 
-                        <span className='cursor-pointer'> 
-                            <span className="text-5xl font-semibold text-[#EE4B2B]">V</span>
-                            <span className="text-3xl text-[#11B4D4]">irtuoso</span>
+                        <span className='cursor-pointer text-white'> 
+                            <span className="text-5xl font-semibold text-[#11B4D4]">V</span>
+                            <span className="text-3xl">irtuoso</span>
                         </span>
                     </p>
                 }
@@ -48,6 +48,7 @@ const WebsiteLayout = () =>
             &&
                 <TrackControls 
                     track={track.value}
+                    close={track.reset}
                     lyrics={{ seekLine, setSeekLine: setSeekLineWrapper }}            
                 />
             }

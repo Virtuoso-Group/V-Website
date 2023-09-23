@@ -48,7 +48,6 @@ const MainPage = () =>
                 gap-10
                 pt-[calc(64px+25px)]
                 px-20 
-                bg-[#11B4D4]
             `}
         >
             <div className='flex gap-5 '>
@@ -56,7 +55,8 @@ const MainPage = () =>
                     Categories.map((category, index) =>  
                     {
                         return (
-                            <Chip 
+                            <Chip
+                                isSelected={selectedCategory.id === category.id} 
                                 key={category.id} 
                                 text={category.label} 
 

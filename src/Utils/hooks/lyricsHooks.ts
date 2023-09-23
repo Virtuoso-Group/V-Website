@@ -153,6 +153,7 @@ export const useLyricsReader = (trackID: number, timestamp: number, lyrics: Lyri
         index.reset();
     }
 
+
     useEffect(() =>
     {
         // console.log("trackID: ", trackID);

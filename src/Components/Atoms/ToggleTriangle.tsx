@@ -14,13 +14,12 @@ const ToggleTriangle = memo((props: Props) =>
     const { isOn, toggle } = props;
     
     return (
-        <div className="absolute flex items-center cursor-pointer ">
+        <div className="absolute flex items-center cursor-pointer">
             <motion.div
                 className='ms-5 w-fit h-fit flex items-center justify-center'
                 animate={{ rotate: isOn? 180: 0 }}
                 transition={{ duration: 0.125 }}
                 onClick={toggle}
-
             >
                 <GoTriangleDown 
                     className={`fill-white`}

@@ -27,12 +27,21 @@ const AlbumCard = (props: Props) =>
 
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
-        >
-            <CoverArt 
-                className={`rounded-lg`}
-                name={album.name}
-                coverArt={album.coverArt} 
-            />
+        >  
+            <div className='relative'>
+                <CoverArt 
+                    className={`absolute right-5 z-[0] rounded-lg scale-[0.9] bg-blend-darken`}
+                    name={album.name}
+                    coverArt={album.coverArt} 
+                />
+
+                <CoverArt 
+                    className={`relative z-[5] rounded-lg drop-shadow-2xl `}
+                    name={album.name}
+                    coverArt={album.coverArt} 
+                />
+            </div>
+            
 
             <div className='text-white flex flex-col overflow-hidden whitespace-nowrap'>
                 <Marquee 
@@ -45,7 +54,6 @@ const AlbumCard = (props: Props) =>
 
                 <span className='text-md'>{ArtistsObject[album.artistID].name}</span>
             </div>
-
         </article>
     )
 }
