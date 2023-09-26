@@ -44,27 +44,9 @@ const seekLineIndex = (lyrics: Lyrics, selectedTimestamp: number, lowIndex: numb
     } 
 }
 
-const useLineString = () =>
-{
-    const [value, setValue] = useState<string>("");
-
-    const show = (value: string) => setValue(value);
-
-    const hide = () => setValue("");
-
-    const isVisible = (): boolean => !!value
-
-    return { value, show, hide, isVisible }
-}
-
 const useLineIndex = (lyrics: Lyrics) =>
 {
     const [value, setValue] = useState<number>(-1);
-
-    // useEffect(() => 
-    // {
-    //     console.log("new Index: ", value);  
-    // }, [value])
 
     useEffect( () =>
     {
@@ -72,7 +54,7 @@ const useLineIndex = (lyrics: Lyrics) =>
         {
             setValue(0)
         }
-    }, [lyrics]);
+    }, []);
 
 
     const goForward = () => 
@@ -98,7 +80,7 @@ const useLineIndex = (lyrics: Lyrics) =>
     const seek = (timestamp: number) => 
     {
        const newIndex = seekLineIndex(lyrics, timestamp, 0, lyrics.length);
-       
+              
        setValue(newIndex)
     }
 
@@ -114,87 +96,29 @@ const useLineIndex = (lyrics: Lyrics) =>
     }
 }
 
-const useLine = (lyrics: Lyrics) =>
-{
-    // This is about visibility
-    const line = useLineString();
-
-    // This is the index of the selected line that is played or will be played
-    const lineIndex = useLineIndex(lyrics);
-
-    return { line, index: lineIndex }
-}
-
-
-// TODO: we should look into whether to stick with useState or use useReducer for this hook
 export const useLyricsReader = (trackID: number, timestamp: number, lyrics: Lyrics) =>
 {    
-    const { line, index } = useLine(lyrics);
-    const [chosenLine, setChosenLine] = useState<Line | null>(index.value > -1? lyrics[index.value]: null);
+    const index = useLineIndex(lyrics);
 
+    const visibleLine = isWithinRange(lyrics[index.value], timestamp)? lyrics[index.value].value: "";
 
-    console.log("LYRICS LOG: ",
-    {
-        timestamp,
-        chosenLine:
-        {
-            value: lyrics[index.value],
-            index: index.value,
-        },
-        
-        visibleLine: line.value
-    });
-
-
-    const resetState = () =>
-    {
-        
-        index.seek(timestamp)
-        // setChosenLine(index.value > -1? lyrics[index.value]: null)
-        line.hide();
-        index.reset();
-    }
-
+    useEffect(() => { index.seek(timestamp) }, [trackID])
 
     useEffect(() =>
-    {
-        // console.log("trackID: ", trackID);
-        resetState()
-        
-    }, [trackID])
+    {   
+        const chosenLine = lyrics[index.value];
 
-    useEffect(() =>
-    {       
-        if (index.value > -1) 
-        {
-            setChosenLine(lyrics[index.value])
-        }
-    }, [index.value])
-
-
-    useEffect(() =>
-    {
         if (chosenLine) 
         {
-            if (isWithinRange(chosenLine, timestamp)) 
+            if (timestamp > chosenLine.range.end) 
             {
-                line.show(chosenLine.value)
-            }
-            else if (chosenLine.range.end < timestamp) 
-            {
-                line.hide()
                 index.goForward();
             }
-            else
-            {
-                line.hide()
-                index.goBack();
-            }
         }
-    }, [timestamp])
+    }, [index, timestamp, lyrics])
       
     return {  
-        line: line.value?? "",
+        line: visibleLine,
         seekLine: index.seek
     }
 }

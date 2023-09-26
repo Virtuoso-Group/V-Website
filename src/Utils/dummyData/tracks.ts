@@ -22,6 +22,8 @@ import LastOrderFile from '../../assets/music/LastOrder.mp3'
 import OpeningMovie3File from '../../assets/music/OpeningMovie3.mp3'
 import CharacterSelect3File from '../../assets/music/CharacterSelect3.mp3'
 import HarmonyKorineFile from '../../assets/music/HarmonyKorine.mp3'
+import KingInCrimsonFile from '../../assets/music/KingInCrimson.mp3'
+import TryAsIMightFile from '../../assets/music/TryAsIMight.mp3'
 
 import { Track } from '../types/track'
 
@@ -1474,7 +1476,7 @@ const NoPartOfMe: Track =
 
 const LastOrder: Track =
 {
-    id: 19,
+    id: 20,
     name: "Last Order-Crisis Mix",
     albumID: 13,
     artistID: 7,
@@ -1484,7 +1486,7 @@ const LastOrder: Track =
 
 const OpeningMovie3: Track =
 {
-    id: 20,
+    id: 21,
     name: "Opening Movie",
     albumID: 18,
     artistID: 5,
@@ -1494,7 +1496,7 @@ const OpeningMovie3: Track =
 
 const CharacterSelect3: Track =
 {
-    id: 21,
+    id: 22,
     name: "Character Select",
     albumID: 18,
     artistID: 5,
@@ -1504,7 +1506,7 @@ const CharacterSelect3: Track =
 
 const HarmonyKorine: Track =
 {
-    id: 22,
+    id: 23,
     name: "Harmony Korine",
     albumID: 19,
     artistID: 10,
@@ -1512,28 +1514,220 @@ const HarmonyKorine: Track =
     lyricsObj: 
     { 
         status: "available",
-        isSynced: false,
+        isSynced: true,
         lyrics:
+        [
+            {
+                value: "Rain, come down, and fall forever",
+                range: { start: 41000, end: 54000 }
+            },
+            {
+                value: "Drain, the dirt, into the wasteland",
+                range: { start: 55000, end: 68000 }
+            },
+            {
+                value: "Pray, for sound, to quiet the howling",
+                range: { start: 68500, end: 81500 }
+            },
+
+
+            {
+                value: "Feel, no shame, too brave",
+                range: { start: 82350, end: 90500 }
+            },
+
+            {
+                value: "Feel, afraid, to wait forever",
+                range: { start: 96000, end: 109500 }
+            },
+
+
+            {
+                value: "Kneel, to fade, the day's corrosion",
+                range: { start: 109750, end: 123050 }
+            },
+
+            {
+                value: "Crawl, depart, towards perdition",
+                range: { start: 123500, end: 136500 }
+            },
+
+            {
+                value: "Gray, the part, the bruise within you",
+                range: { start: 137000, end: 150000 }
+            },
+
+
+            {
+                value: "Feel, no shame, too brave",
+                range: { start: 151000, end: 159000 }
+            },
+            {
+                value: "Feel, afraid, to wait forever",
+                range: { start: 164500, end: 178000 }
+            },
+
+
+            {
+                value: "Forever",
+                range: { start: 202000, end: 215000 }
+            },
+
+
+            {
+                value: "Feel, no shame, too brave",
+                range: { start: 260500, end: 268000 }
+            },
+            {
+                value: "Feel, afraid, to wait forever",
+                range: { start: 274000, end: 301000 }
+            }
+        ]
+    }
+}
+
+
+const KingInCrimson: Track =
+{
+    id: 24,
+    name: "King in Crimson",
+    albumID: 20,
+    artistID: 11,
+    src: KingInCrimsonFile,
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics: 
         `
-            Rain, come down, and fall forever
-            Drain, the dirt, into the wasteland
-            Pray, for sound, to quiet the howling
+            In the darkness, the raven's head
+            In the courtyard clothed in fear
+            I see gates that are opening
+            There's only one way out of here
 
-            Feel, no shame, too brave
-            Feel, afraid, to wait forever
+            Daylight has come
+            The night has come
 
-            Kneel, to fade, the day's corrosion
-            Crawl, depart, towards perdition
-            Gray, the part, the bruise within you
+            See his twisted sons and daughters
+            Writhing slowly in Satan's mire
+            If you only could see the visions
+            The trembling world I now despise
 
-            Feel, no shame, too brave
-            Feel, afraid, to wait forever
+            As the veil reveals the outer darkness
+            I am sucked into the walls of flame
 
-            Forever
+            Arise, awake
 
-            Feel, no shame, too brave
-            Feel, afraid, to wait forever
-        ` 
+            The King in Crimson comes
+
+            Arise awake
+
+            The King in Crimson, crimson comes
+            He knows the weakness that you can't fight
+            The stone of night that weighs you down
+            If only you could see the visions
+            His hand is death if you take it now
+
+            As you scream into the web of silence
+            There is nothing that can save you now
+
+            Arise, awake
+
+            The King in Crimson comes
+
+            Arise, awake
+
+            The King in Crimson comes
+
+            Arise, awake
+
+            The King in Crimson comes
+
+            Arise, awake
+
+            The King in Crimson, crimson comes
+            As you scream into the web of silence
+            There is nothing that can save you now
+
+            Arise, awake
+
+            The King in Crimson comes
+
+            Arise, awake
+
+            The King in Crimson comes
+
+            Arise, awake
+
+            The King in Crimson, crimson comes
+
+            To your window he comes
+
+            At your window I come
+        `
+    }
+}
+
+const TryAsIMight: Track =
+{
+    id: 25,
+    name: "Try as I Might",
+    albumID: 4,
+    artistID: 3,
+    src: TryAsIMightFile,
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics: 
+        `
+            And I don′t want you looking in
+            Don't want you over here
+            Don′t want you asking
+            What is wrong with me
+            What is wrong
+         
+            And I
+            I've got this open wound
+            So put through all of you
+            To come on in and
+         
+            Tell me what is wrong
+            So what is wrong?
+            With everything I ever did with you
+            Has blown to pieces
+            With everything and everyone we knew
+         
+            And all I need is
+            To make a stand and try as I might
+            I don't want you asking
+         
+            I don′t want you asking me
+            What is wrong
+            And I
+            My head is caving in
+            The whole world is looking in
+         
+            And telling me what is wrong
+            Well what is wrong
+         
+            With all of you
+            Don′t want you looking in
+            Just what is wrong
+            With everything I ever had with you
+            Has been torn to pieces
+            And everything and everyone we knew
+         
+            Knows what we did
+            So I'll make a stand and try as I might
+            Give up on you
+            And everything I ever had with you
+            Has been torn to pieces
+            And everything and everyone we knew
+            Knows what we did
+            So I′ll make a stand and try as I might
+            Give up on you
+        `
     }
 }
 
@@ -1548,7 +1742,7 @@ const tracksArray: Track[] =
     WetRibbon, Oxygen, InvisibleWounds,
     NoPartOfMe, LastOrder, OpeningMovie3, CharacterSelect3,
 
-    HarmonyKorine
+    HarmonyKorine, KingInCrimson, TryAsIMight
 ]
 
 export default tracksArray;

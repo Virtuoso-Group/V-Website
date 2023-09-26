@@ -19,11 +19,8 @@ const SyncedLyricsView = (props: Props) =>
     const { line, seekLine } = useLyricsReader(trackID, timestamp, lyrics);
 
     useEffect(() => 
-    {                
-        if (seekLine) 
-        {
-            setSeekLine(seekLine);
-        }
+    {                                
+        setSeekLine(() => seekLine);
         
         return () => { }
     }, [])

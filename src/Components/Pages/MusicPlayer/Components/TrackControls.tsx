@@ -15,6 +15,7 @@ import useTimestamp from "../../../../Utils/hooks/useTimestamp";
 
 import ArtistsObject from "../../../../Utils/dummyData/artists";
 import { Album, Track } from "../../../../Utils/types/track";
+import useAudioPlayer from "../../../../Utils/hooks/usePlayerControls";
 
 interface TimeInfoProps
 {
@@ -52,11 +53,6 @@ const TimeInfo = (props: TimeInfoProps) =>
 interface Props
 {
     track: Track,
-    lyrics:
-    {
-        seekLine: SeekLineFunctionType | null,
-        setSeekLine: (seekLineFunction: SeekLineFunctionType) => void
-    },
     close: () => void
 }
 
@@ -179,28 +175,18 @@ enum PlayerState
 
 const TrackControls = (props: Props) =>
 {
-    const { track, lyrics } = props;
+    const { track } = props;
 
-    const timestamp = useTimestamp();
-
+    // TODO: we need to find a cleaner way to handle propagating functions upwards
+    const [seekLine, setSeekLine] = useState<SeekLineFunctionType | null>(null)
+    
     const songOverlayControls = useOverlay();
 
-    const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
-    const metaDataLoaded = useRef<boolean>(false);
-
-    // TODO: We probably don't need this to be state, because it updates once and only once.
+    const audioPlayer = useAudioPlayer();
+    // TODO: We probably don't need this to be state, because it updates only once.
     const [duration, setDuration] = useState<number>(0);
-    const [playerState, setPlayerState] = useState<PlayerState>(PlayerState.STOPPED)
-
-
+    const timestamp = useTimestamp();
     const timeInfo = { duration, timestamp: timestamp.value }    
-
-    const play = useCallback(() => audioPlayerRef.current?.play(), []);
-
-    const pause = useCallback(() => audioPlayerRef.current?.pause(),[]);
-
-    const togglePlay =  useCallback(() => playerState === PlayerState.PLAYING? pause() : play(),[playerState, play, pause]);
-
 
     const stepBackwards = useCallback(() =>
     {
@@ -211,12 +197,6 @@ const TrackControls = (props: Props) =>
     {
         console.log("Forwards!") 
     }, [])
-
-    const reset = () => 
-    {        
-        setPlayerState(PlayerState.STOPPED)
-        timestamp.reset();
-    }
 
     const seek = useCallback((percentage: number) =>
     { 
@@ -238,49 +218,60 @@ const TrackControls = (props: Props) =>
 
         const clippedPercentage = clipPercentage(percentage);
 
-        if (audioPlayerRef.current  && metaDataLoaded.current) 
+        if (audioPlayer.ref.current  && audioPlayer.metaDataLoaded.current) 
         {
             const newTimeStamp = (duration * clippedPercentage);
 
-            if (lyrics.seekLine)
+            audioPlayer.ref.current.currentTime = newTimeStamp / 1000;
+
+            /* 
+                Due to the absence of this line, a race condition was caused in the lyrics reader
+                Between the timestamp and index, causing the lyrics reader to be buggy.
+            */
+            timestamp.update(newTimeStamp / 1000)
+
+            if (seekLine)
             {
-                lyrics.seekLine(newTimeStamp)
-            }            
+                seekLine(newTimeStamp)
+            }    
 
-            audioPlayerRef.current.currentTime = newTimeStamp / 1000;
-
-            play()
+            audioPlayer.play()
         }
-    }, [duration, lyrics, play])
+    }, [duration, audioPlayer.play, seekLine])
 
+    const reset = () => 
+    {        
+        audioPlayer.reset()
+        timestamp.reset();
+    }
 
     return (
         <>
             <audio 
                 key={track.id}
-                ref={audioPlayerRef}
+                ref={audioPlayer.ref}
                 src={track.src}
                 onLoadedMetadata={e =>
                 {
-                    if (audioPlayerRef.current?.duration) 
+                    if (audioPlayer.ref.current?.duration) 
                     {
                         reset() 
 
                         songOverlayControls.show();
 
-                        metaDataLoaded.current = true;
+                        audioPlayer.metaDataLoaded.current = true;
                         
-                        const songDuration = audioPlayerRef.current?.duration;
+                        const songDuration = audioPlayer.ref.current?.duration;
                         const adjustedDuration = songDuration? songDuration * 1000:0;
                         
                         setDuration(adjustedDuration);
 
-                        play()
+                        audioPlayer.play()
                     }
                 }}
                 onTimeUpdate={e => timestamp.update(e.currentTarget.currentTime)}
-                onPlay={() => setPlayerState(PlayerState.PLAYING)}
-                onPause={() => setPlayerState(PlayerState.PAUSED)}
+                onPlay={audioPlayer.setToPlay}
+                onPause={audioPlayer.setToPause}
                 onEnded={reset}
             />
 
@@ -292,7 +283,7 @@ const TrackControls = (props: Props) =>
                         <TrackOverlay 
                             timestamp={timestamp.value} 
                             track={track} 
-                            setSeekLine={lyrics.setSeekLine}
+                            setSeekLine={setSeekLine}
                         />
                     }
                 </AnimatePresence>
@@ -301,7 +292,7 @@ const TrackControls = (props: Props) =>
                     <SeekBar
                         trackID={track.id}
                         timeInfo={timeInfo}
-                        controls={{ pause, seek }}
+                        controls={{ pause: audioPlayer.pause, seek }}
                     />
 
                     <div className="w-full flex items-center justify-between h-[75px]  py-[25px]">
@@ -312,7 +303,6 @@ const TrackControls = (props: Props) =>
                         />
 
                         <div className="grid grid-cols-3 content-center w-full h-full  px-20">
-                            {/* TODO: Memoize */}
                             <SongInformation 
                                 className="justify-self-start flex gap-5"
                                 album={AlbumsObj[track.albumID]}
@@ -320,17 +310,15 @@ const TrackControls = (props: Props) =>
                                 artistName={ArtistsObject[track.artistID].name} 
                             />
 
-                            {/* TODO: Memoize */}
                             <PlayerControls 
                                 className="flex items-center gap-10  justify-self-center h-full"
-                                isPlaying={playerState === PlayerState.PLAYING} 
+                                isPlaying={audioPlayer.playerState === PlayerState.PLAYING} 
 
                                 stepBackwards={stepBackwards}
-                                togglePlay={togglePlay}
+                                togglePlay={audioPlayer.togglePlay}
                                 stepForwards={stepForwards}
                             />
                         
-
                             <TimeInfo 
                                 className=
                                 {`

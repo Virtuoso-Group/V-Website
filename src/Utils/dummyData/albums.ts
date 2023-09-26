@@ -168,6 +168,14 @@ const Insurgentes: Album =
     coverArt: "https://f4.bcbits.com/img/a3258147407_10.jpg"
 }
 
+const TheChemicalWedding: Album =
+{
+    id: 20,
+    artistID: 11,
+    name: "The Chemical Wedding ",
+    coverArt: "https://m.media-amazon.com/images/I/910SovLV8EL._SL1500_.jpg"
+}
+
 const AlbumsObj: { [index: number]: Album } = { }
 
 export const AlbumsArray:  Album[] = 
@@ -191,7 +199,8 @@ export const AlbumsArray:  Album[] =
     Digimortal,
     GraceForDrowning,
     Tekken3,
-    Insurgentes
+    Insurgentes,
+    TheChemicalWedding
 ]
 
 AlbumsArray.forEach(album => { AlbumsObj[album.id] = album })

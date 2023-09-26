@@ -93,6 +93,14 @@ const StevenWilson: Artist =
     albums: [17]
 }
 
+const BruceDickinson: Artist =
+{
+    id: 11,
+    name: "Bruce Dickinson",
+    image: "https://pyxis.nymag.com/v1/imgs/53b/83b/39a314589ae7cba30f5d331d1ccb0971ad-05-bruce-dickinson-iron-maiden.rsquare.w700.jpg",
+    albums: [30]
+}
+
 
 const ArtistsObject: { [index: number]: Artist } = {}
 
@@ -102,7 +110,7 @@ export const Artists: Artist[] =
     ThePineappleThief, AbandonedPools,
     BandaiMusic, CapcomSoundTeam,
     TakeharuIshimoto, Swans,
-    FearFactory, StevenWilson
+    FearFactory, StevenWilson, BruceDickinson
 ];
 
 

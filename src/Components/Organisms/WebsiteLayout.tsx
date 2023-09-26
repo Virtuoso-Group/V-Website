@@ -14,10 +14,6 @@ const WebsiteLayout = () =>
 {
     const track = useTrack();
 
-    const [seekLine, setSeekLine] = useState<SeekLineFunctionType | null>(null)
-
-    const setSeekLineWrapper = useCallback((seekLineFunction: SeekLineFunctionType) => setSeekLine(seekLineFunction), []);
-
     useEffect(() => { return () => { track.reset() }}, []);
     
     return (
@@ -49,7 +45,6 @@ const WebsiteLayout = () =>
                 <TrackControls 
                     track={track.value}
                     close={track.reset}
-                    lyrics={{ seekLine, setSeekLine: setSeekLineWrapper }}            
                 />
             }
         </main>

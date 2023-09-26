@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TrackCard from '../../../Molecules/TrackCard';
 import { useWebsiteContext } from '../../../Organisms/WebsiteLayout';
 import tracksArray from '../../../../Utils/dummyData/tracks';
@@ -11,8 +11,29 @@ const TracksSection = () =>
 {
     const { selectTrack } = useWebsiteContext();
 
-    const [tracks, setTracks] = useState<Track[]>(tracksArray);
+    const [tracks, setTracks] = useState<Track[]>([]);
 
+    useEffect(() => 
+    {
+      
+        const sortedTracks = tracksArray.sort((trackA, trackB) => 
+        {
+            if (trackA.artistID === trackB.artistID) 
+            {
+                if (trackA.albumID === trackB.albumID) 
+                {
+                    return trackA.name.localeCompare(trackB.name) 
+                } 
+
+                return trackA.albumID - trackB.albumID
+            }
+
+            return trackA.artistID - trackB.artistID
+        })
+    
+        setTracks(sortedTracks)
+    }, []);
+    
     return (
         <AnimatePresence>
             {tracks.map((track, index) => 

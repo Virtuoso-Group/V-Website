@@ -34,26 +34,11 @@ const LyricsView = (props: Props) =>
                 select-none
             `}
 
-            initial=
-            {{
-                height: 0,
-                opacity: 0
-            }}
-            animate=
-            {{
-                height: "100%",
-                opacity: [0,1]
-            }}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "100%", opacity: [0,1] }}
 
-            exit=
-            {{
-                height: 0,
-                opacity: 0
-            }}
-            transition=
-            {{
-                duration: 0.2
-            }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
         >
             {
                 lyricsObj.status === "available"
