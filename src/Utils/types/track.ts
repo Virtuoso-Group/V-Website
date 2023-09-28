@@ -23,13 +23,7 @@ export type Track =
     artistID: number,
     albumID: number,
     src: string,
-    lyricsObj: LyricsObject
-}
+    lyricsObj: LyricsObject,
 
-export enum PlayerState 
-{ 
-    STOPPED = "STOPPED", 
-    PLAYING = "PLAYING", 
-    PAUSED = "PAUSED", 
-    SEEKING = "SEEKING" 
-};
+    backgroundVideoSrc?: string
+}

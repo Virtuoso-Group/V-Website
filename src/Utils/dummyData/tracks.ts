@@ -1,31 +1,32 @@
-import HarridanFile from '../../assets/music/Harridan.mp3'
-import SoulSeekerFile from '../../assets/music/SoulSeeker.mp3'
-import HotelCaliforniaFile from '../../assets/music/HotelCalifornia.mp3'
-import MoonloopCodaFile from '../../assets/music/Moonloop_Coda.mp3'
-import AllThatYouveGotFile from '../../assets/music/AllThatYouveGot.mp3'
-import FendForYourselfFile from '../../assets/music/FendForYourself.mp3'
-import TheSoundofNoOneListeningFile from '../../assets/music/TheSoundofNo-OneListening.mp3'
-import LazarusFile from '../../assets/music/Lazarus.mp3'
-import TheRemedyFile from '../../assets/music/TheRemedy.mp3'
-import CharacterSelectFile from '../../assets/music/CharacterSelect.mp3'
-import OpeningMovieFile from '../../assets/music/OpeningMovie.mp3'
-import FarBelowFile from '../../assets/music/FarBelow.mp3'
-import TheFinalThingOnMyMindFile from '../../assets/music/TheFinalThingOnMyMind.mp3'
-import LazyMindFile from '../../assets/music/LazyMind.mp3'
-import RadioactiveToyFile from '../../assets/music/Radioactive Toy.mp3'
-import HowlingAbominiationsFile from '../../assets/music/HowlingAbominations.mp3'
-import WetRibbonFile from '../../assets/music/WetRibbon.mp3'
-import OxygenFile from '../../assets/music/Oxygen.mp3'
-import InvisibleWoundsFile from '../../assets/music/InvisibleWounds.mp3'
-import NoPartOfMeFile from '../../assets/music/NoPartOfMe.mp3'
-import LastOrderFile from '../../assets/music/LastOrder.mp3'
-import OpeningMovie3File from '../../assets/music/OpeningMovie3.mp3'
-import CharacterSelect3File from '../../assets/music/CharacterSelect3.mp3'
-import HarmonyKorineFile from '../../assets/music/HarmonyKorine.mp3'
-import KingInCrimsonFile from '../../assets/music/KingInCrimson.mp3'
-import TryAsIMightFile from '../../assets/music/TryAsIMight.mp3'
-
+import HarridanFile from '../../assets/tracks/Harridan.mp3'
+import SoulSeekerFile from '../../assets/tracks/SoulSeeker.mp3'
+import HotelCaliforniaFile from '../../assets/tracks/HotelCalifornia.mp3'
+import MoonloopCodaFile from '../../assets/tracks/Moonloop_Coda.mp3'
+import AllThatYouveGotFile from '../../assets/tracks/AllThatYouveGot.mp3'
+import FendForYourselfFile from '../../assets/tracks/FendForYourself.mp3'
+import TheSoundofNoOneListeningFile from '../../assets/tracks/TheSoundofNo-OneListening.mp3'
+import LazarusFile from '../../assets/tracks/Lazarus.mp3'
+import TheRemedyFile from '../../assets/tracks/TheRemedy.mp3'
+import CharacterSelectFile from '../../assets/tracks/CharacterSelect.mp3'
+import OpeningMovieFile from '../../assets/tracks/OpeningMovie.mp3'
+import FarBelowFile from '../../assets/tracks/FarBelow.mp3'
+import TheFinalThingOnMyMindFile from '../../assets/tracks/TheFinalThingOnMyMind.mp3'
+import LazyMindFile from '../../assets/tracks/LazyMind.mp3'
+import RadioactiveToyFile from '../../assets/tracks/Radioactive Toy.mp3'
+import HowlingAbominiationsFile from '../../assets/tracks/HowlingAbominations.mp3'
+import WetRibbonFile from '../../assets/tracks/WetRibbon.mp3'
+import OxygenFile from '../../assets/tracks/Oxygen.mp3'
+import InvisibleWoundsFile from '../../assets/tracks/InvisibleWounds.mp3'
+import NoPartOfMeFile from '../../assets/tracks/NoPartOfMe.mp3'
+import LastOrderFile from '../../assets/tracks/LastOrder.mp3'
+import OpeningMovie3File from '../../assets/tracks/OpeningMovie3.mp3'
+import CharacterSelect3File from '../../assets/tracks/CharacterSelect3.mp3'
+import HarmonyKorineFile from '../../assets/tracks/HarmonyKorine.mp3'
+import KingInCrimsonFile from '../../assets/tracks/KingInCrimson.mp3'
+import TryAsIMightFile from '../../assets/tracks/TryAsIMight.mp3'
 import { Track } from '../types/track'
+
+const FarBelowVideo = require("../../assets/videos/FarBelow.mp4");
 
 
 const Harridan: Track = 
@@ -1114,47 +1115,167 @@ const FarBelow: Track =
     artistID: 3,
     albumID: 4,
     src: FarBelowFile,
+    backgroundVideoSrc: FarBelowVideo,
     lyricsObj: 
     { 
         status: "available",
-        isSynced: false,
+        isSynced: true,
         lyrics: 
-        `
-            Don't look back
-            You know there's no way back
-            For you
+        [
+            //     Don't look back
+            //     You know there's no way back
+            //     For you
+            {
+                value: "Don't look back",
+                range: { start: 21250, end: 24000 }
+            },
+            {
+                value: "You know there's no way back",
+                range: { start: 24500, end: 28000 }
+            },
+            {
+                value: "For you",
+                range: { start: 28500, end: 31000 }
+            }, 
 
-            You make your pact
-            With a life of railing back
-            And the one's who tried in vain to help
+            //     You make your pact
+            //     With a life of railing back
+            //     And the one's who tried in vain to help
+            {
+                value: "You make your pact",
+                range: { start: 36250, end: 40000 }
+            },
+            {
+                value: "With a life of railing back",
+                range: { start: 40250, end: 43500 }
+            },
+            {
+                value: "And the one's who tried in vain to help",
+                range: { start: 44000, end: 48000 }
+            },
 
-            You left your heart
-            Fading down below
-            You're holding on
-            You just can't let go
 
-            You've got your back
-            You never needed that
-            Oh, but look at you
+            //     You left your heart
+            //     Fading down below
+            //     You're holding on
+            //     You just can't let go
+            {
+                value: "You left your heart",
+                range: { start: 48250, end: 54000 }
+            },
+            {
+                value: "Fading down below",
+                range: { start: 54350, end: 59200 }
+            },
+            {
+                value: "You're holding on",
+                range: { start: 59325, end: 65000 }
+            },
+            {
+                value: "You just can't let go",
+                range: { start: 65350, end: 70000 }
+            },
 
-            Just don't push back
-            Oh, we just want you back
-            From the life that claimed the life of
+            //     You've got your back
+            //     You never needed that
+            //     Oh, but look at you
+            {
+                value: "You've got your back",
+                range: { start: 70750, end: 73750 }
+            },
+            {
+                value: "You never needed that",
+                range: { start: 74325, end: 77500 }
+            },
+            {
+                value: "Oh, but look at you",
+                range: { start: 77950, end: 80500 }
+            },
 
-            You left your heart
-            Beating far below
-            You're holding on
-            You just can't let go
-            You can't let go
-            You can't let go
-            
-            You left your heart
-            Waiting down below
-            You left your heart
-            Beating far below
-            You left your heart
-            You can't let go
-        ` 
+
+            //     Just don't push back
+            //     Oh, we just want you back
+            //     From the life that claimed the life of
+            {
+                value: "Just don't push back",
+                range: { start: 86000, end: 89250 }
+            },
+
+            {
+                value: "Oh, we just want you back",
+                range: { start: 89625, end: 93250 }
+            },
+
+            {
+                value: "From the life that claimed the life of",
+                range: { start: 93625, end: 97600 }
+            },
+
+
+            //     You left your heart
+            //     Beating far below
+            //     You're holding on
+            //     You just can't let go
+            //     You can't let go
+            //     You can't let go
+            {
+                value: "You left your heart",
+                range: { start: 97750, end: 103500 }
+            },
+            {
+                value: "Beating far below",
+                range: { start: 103950, end: 108500 }
+            },
+            {
+                value: "You're holding on",
+                range: { start: 109000, end: 114750 }
+            },
+            {
+                value: "You just can't let go",
+                range: { start: 114950, end: 119250 }
+            },
+
+            {
+                value: "You can't let go",
+                range: { start: 120000, end: 122250 }
+            },
+            {
+                value: "You can't let go",
+                range: { start: 123250, end: 128750 }
+            },
+
+            //     You left your heart
+            //     Waiting down below
+            //     You left your heart
+            //     Beating far below
+            //     You left your heart
+            //     You can't let go
+            {
+                value: "You left your heart",
+                range: { start: 227750, end: 233500 }
+            },
+            {
+                value: "Waiting down below",
+                range: { start: 233850, end: 239000 }
+            },
+            {
+                value: "You left your heart",
+                range: { start: 239500, end: 245250 }
+            },
+            {
+                value: "Beating far below",
+                range: { start: 245500, end: 251000 }
+            },
+            {
+                value: "You left your heart",
+                range: { start: 251250, end: 257750 }
+            },
+            {
+                value: "You can't let go",
+                range: { start: 258250, end: 263000 }
+            },
+
+        ]
     }
 }
 

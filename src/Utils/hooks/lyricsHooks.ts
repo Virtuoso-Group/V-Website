@@ -100,12 +100,17 @@ export const useLyricsReader = (trackID: number, timestamp: number, lyrics: Lyri
 {    
     const index = useLineIndex(lyrics);
 
-    const visibleLine = isWithinRange(lyrics[index.value], timestamp)? lyrics[index.value].value: "";
+    const visibleLine = isWithinRange(lyrics[index.value], timestamp)? lyrics[index.value].value: "...";
 
     useEffect(() => { index.seek(timestamp) }, [trackID])
 
     useEffect(() =>
     {   
+        if (timestamp === 0) 
+        {
+            index.reset()
+        }
+
         const chosenLine = lyrics[index.value];
 
         if (chosenLine) 

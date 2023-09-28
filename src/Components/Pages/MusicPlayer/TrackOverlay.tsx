@@ -6,26 +6,73 @@ import { MdLyrics } from 'react-icons/md'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import AlbumsObj from '../../../Utils/dummyData/albums'
-import { memo, useMemo, useState } from 'react'
+import { memo, useEffect, useMemo, useRef, useState } from 'react'
 import { Album, Track } from '../../../Utils/types/track'
 import LyricsView from '../../Organisms/Lyrics/LyricsView'
 import ButtonIcon from '../../Atoms/ButtonIcon'
+import { PlayerState } from '../../../Utils/hooks/usePlayerControls'
 
-const Background = memo((props: { coverArt: string }) =>
+const Background = memo((props: { playerState: PlayerState, coverArt: string, video?: string }) =>
 {
+    const { playerState } = props;
     console.log("Background");
     
+    const videoRef = useRef<HTMLVideoElement | null>(null);
+
+    useEffect(() => 
+    {
+        console.log("playerState: ", playerState);
+        
+        if (playerState === PlayerState.PLAYING) 
+        {
+            console.log("Hello");
+            
+            videoRef.current?.play();
+        }
+        else if ([PlayerState.PAUSED, PlayerState.STOPPED].includes(playerState))
+        {
+            videoRef.current?.pause();
+        }
+    }, [playerState, videoRef.current?.duration])
+    
+
     return (
         <div className='z-[-1] absolute h-full w-full'>
-            <img 
-                className='z-[1] absolute  h-full w-full object-cover'
-                src={props.coverArt}
-                title={"Background"}
-                alt={"Background"}
-                loading='eager'
-            />
 
-            <div className='z-[2] absolute h-full w-full backdrop-blur-sm' />
+            {
+                props.video
+            ?
+                    <video
+                        ref={videoRef}
+                        onLoadedMetadata={e =>
+                            {
+                                if (videoRef.current?.duration) 
+                                {
+                                    videoRef.current.play()
+                                }
+                            }}
+                        className='z-[1] h-full w-full object-cover blur-sm'
+                        // autoPlay={true}
+                        src={props.video}
+                        typeof='video/mp4'
+                        controls={false}
+                        loop={true}
+                        muted={true}
+                />
+            :
+                <>
+                    <img 
+                        className='z-[1] absolute  h-full w-full object-cover'
+                        src={props.coverArt}
+                        title={"Background"}
+                        alt={"Background"}
+                        loading='eager'
+                    />
+
+                    <div className='z-[2] absolute h-full w-full backdrop-blur-sm' />
+                </>
+            }
+            
         </div>
     )
 })
@@ -73,9 +120,16 @@ const CoverArtContainer = memo((props: { album: Album, areLyricsUnavailable: boo
     )
 })
 
-const TrackOverlay = memo((props: { track: Track, timestamp: number, setSeekLine: (seekLineFunction: SeekLineFunctionType) => void }) => 
+interface Props
+{   
+    playerState: PlayerState,
+    track: Track, 
+    timestamp: number, 
+    setSeekLine: (seekLineFunction: SeekLineFunctionType) => void 
+}
+const TrackOverlay = memo((props: Props) => 
 {
-    const { track, timestamp, setSeekLine } = props;
+    const { playerState, track, timestamp, setSeekLine } = props;
 
     const [areLyricsVisible, setLyricsVisibility] = useState(false);
 
@@ -91,7 +145,11 @@ const TrackOverlay = memo((props: { track: Track, timestamp: number, setSeekLine
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
         >
-            <Background coverArt={album.coverArt} />
+            <Background 
+                playerState={playerState}
+                coverArt={album.coverArt} 
+                video={track.backgroundVideoSrc} 
+            />
 
             <section className={`h-[550px] flex w-full justify-center items-center gap-10 `}>
                 <CoverArtContainer 

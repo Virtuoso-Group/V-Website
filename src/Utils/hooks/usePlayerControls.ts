@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react"
 
-enum PlayerState 
+export enum PlayerState 
 {
     PLAYING = "Playing",
     PAUSED = "PAUSED",

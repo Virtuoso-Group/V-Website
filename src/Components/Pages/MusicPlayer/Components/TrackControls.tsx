@@ -281,6 +281,7 @@ const TrackControls = (props: Props) =>
                         songOverlayControls.isShown
                     && 
                         <TrackOverlay 
+                            playerState={audioPlayer.playerState}
                             timestamp={timestamp.value} 
                             track={track} 
                             setSeekLine={setSeekLine}
