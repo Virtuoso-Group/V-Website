@@ -24,10 +24,18 @@ import CharacterSelect3File from '../../assets/tracks/CharacterSelect3.mp3'
 import HarmonyKorineFile from '../../assets/tracks/HarmonyKorine.mp3'
 import KingInCrimsonFile from '../../assets/tracks/KingInCrimson.mp3'
 import TryAsIMightFile from '../../assets/tracks/TryAsIMight.mp3'
+import SublimeCurrencyFile from '../../assets/tracks/SublimeCurrency.mp3'
+import AirbagFile from '../../assets/tracks/Airbag.mp3'
+import ParanoidAndroidFile from '../../assets/tracks/Paranoid Android.mp3'
+import TrumpetsOfJerichoFile from '../../assets/tracks/Trumpets of Jericho.mp3'
+
 import { Track } from '../types/track'
 
 const FarBelowVideo = require("../../assets/videos/FarBelow.mp4");
-
+const TryAsIMightVideo = require("../../assets/videos/TryAsIMight.mp4");
+const HarmonyKorineVideo = require("../../assets/videos/HarmonyKorine.mp4");
+const SublimeCurrencyVideo = require("../../assets/videos/SublimeCurrency.mp4")
+const LazarusVideo = require("../../assets/videos/Lazarus.mp4")
 
 const Harridan: Track = 
 {
@@ -1011,6 +1019,7 @@ const Lazarus: Track =
     artistID: 0,
     albumID: 7,
     src: LazarusFile,
+    backgroundVideoSrc: LazarusVideo,
     lyricsObj: 
     { 
         status: "available",
@@ -1632,6 +1641,7 @@ const HarmonyKorine: Track =
     albumID: 19,
     artistID: 10,
     src: HarmonyKorineFile,
+    backgroundVideoSrc: HarmonyKorineVideo,
     lyricsObj: 
     { 
         status: "available",
@@ -1796,6 +1806,7 @@ const TryAsIMight: Track =
     albumID: 4,
     artistID: 3,
     src: TryAsIMightFile,
+    backgroundVideoSrc: TryAsIMightVideo,
     lyricsObj: 
     { 
         status: "available",
@@ -1852,6 +1863,270 @@ const TryAsIMight: Track =
     }
 }
 
+const SublimeCurrency: Track =
+{
+    id: 26,
+    name: "Sublime Currency",
+    artistID: 4,
+    albumID: 21,
+    src: SublimeCurrencyFile,
+    backgroundVideoSrc: SublimeCurrencyVideo,
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics:
+        `
+            I can push the buttons
+            I can wrestle with the phantoms
+            Till I see that all the best things happen naturally
+            There's nothing I can say to you
+            The facts and figures make it true
+            There's nothing else to figure out
+            The universe will fold in half for us
+        
+            C'mon
+            Sublime currency's enough for us
+            C'mon
+            It's bigger than the sum of us
+            There's nothing I can say to you
+            This sublime currency is true
+            Don't get excited
+            But I can't help myself
+        
+            I can learn the lessons
+            I can formulate the questions
+            I can dig and bring to light the heart of everything
+            There's nothing I can say to you
+            This sublime currency is true
+            There's nothing else to figure out
+            The universe will fold in half for us
+        
+            C'mon
+            Sublime currency's enough for us
+            C'mon
+            It's bigger than the sum of us
+            There's nothing I can say to you
+            This sublime currency is true
+            Don't get excited
+            But I can't help myself
+        
+            Why do you torture yourself for no one?
+            Why do you keep on the fight?
+            It's already won
+        
+            C'mon
+            Sublime currency's enough for us
+            C'mon
+            It's bigger than the sum of us
+            There's nothing I can say to you
+            This sublime currency is true
+            Don't get excited
+            But I can't help myself
+        ` 
+    }
+}
+
+const Airbag: Track =
+{
+    id: 27,
+    name: "Airbag",
+    artistID: 12,
+    albumID: 22,
+    src: AirbagFile,
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics:
+        `
+            In the next world war
+            In a jackknifed juggernaut
+            I am born again
+            In the neon sign scrolling up and down
+            I am born again
+
+            In an interstellar burst
+            I am back to save the universe
+
+            In a deep, deep sleep of the innocent
+            I am born again
+            In a fast German car
+            I'm amazed that I survived
+            An airbag saved my life
+
+            In an interstellar burst
+            I am back to save the universe
+
+            In an interstellar burst
+            I am back to save the universe
+
+            In an interstellar burst
+            I am back to save the universe
+        ` 
+    }
+}
+
+const ParanoidAndroid: Track =
+{
+    id: 28,
+    name: "Paranoid Android",
+    artistID: 12,
+    albumID: 22,
+    src: ParanoidAndroidFile,
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics:
+        `
+            Please could you stop the noise?
+            I'm tryna get some rest
+            From all the unborn chicken
+            Voices in my head
+
+            What's that? (I may be paranoid, but not an android)
+            What's that? (I may be paranoid, but not an android)
+
+            When I am king
+            You will be first against the wall
+            With your opinion
+            Which is of no consequence at all
+
+            What's that? (I may be paranoid, but no android)
+            What's that? (I may be paranoid, but no android)
+
+            La-la-la-la-la-la
+            La-la-la-la-la-la
+            La-la-la-la-la-la
+            La, la
+
+            Ambition makes you look pretty ugly
+            Kicking, squealing, Gucci little piggy
+
+            La-la-la-la-la-la
+            La-la-la-la-la-la
+            La-la-la-la-la-la
+            La-la-la
+
+            You don't remember, you don't remember
+            Why don't you remember my name?
+            Off with his head, man, off with his head, man
+            Why don't you remember my name?
+            I guess he does
+
+            Ah, oh, oh, oh
+            Oh, oh, oh, oh
+            Oh, oh
+            Oh, oh
+
+            Rain down, rain down
+            Come on, rain down on me
+            From a great height
+            From a great height, height
+            Rain down, rain down
+            Come on, rain down on me
+            From a great height
+            From a great height, height
+
+            that's it, sir, you're leaving
+            The crackle of pigskin (rain down)
+            (Come on rain down) the dust and the screaming
+            The yuppies networking
+            The panic, the vomit (from a great height)
+            The panic, the vomit (from a great height)
+            God loves his children
+            God loves his children, yeah
+        ` 
+    }
+}
+
+
+const TrumpetsOfJericho: Track =
+{
+    id: 29,
+    name: "Trumpets Of Jericho",
+    albumID: 20,
+    artistID: 11,
+    src: TrumpetsOfJerichoFile,
+    lyricsObj: 
+    { 
+        status: "available",
+        isSynced: false,
+        lyrics: 
+        `
+            This is the maze of life
+            This is the maze of death
+            This is the matrix of eternity
+
+            The demon never sleeps
+            The demon never lies
+            He beats my heart and leaves no echo
+
+            What heavy burden holds my back
+            Every step along the track
+            Fear that reaches deep inside of me
+
+            At the trumpets of Jericho
+            Still the walls remain
+            At the trumpets of Jericho
+            Avalon's in chains
+
+            This is the river of space
+            This is the river of time
+            Chase the dragons of infinity
+
+            Atlas stands and laughs
+            Throws his burden down
+            Rolls the Earth in the inferno
+
+            Fingers holding onto cracks
+            The howling wind that blows us back
+            Sucked into the grinding wheels of hell
+
+            At the trumpets of Jericho
+            Still the walls remain
+            Blow the trumpets of Jericho
+            Still the walls remain
+
+            At the end of the rainbow
+            There the grail remains
+            Sound the trumpets of Jericho
+            Avalon's in chains
+
+            As they drag you down
+            In your clothes of lead
+            See the golden light flashing overhead
+            Mocking you, ha-ha-ha-ha-ha
+
+            Do you know who you are
+            In your ropes of skin
+            How many creatures live inside you?
+
+            Man is born forever free
+            But is everywhere in chains
+            Trapped inside this Earthly prison cell
+
+            At the trumpets of Jericho
+            Still the walls remain
+            At the trumpets of Jericho
+            Avalon's in chains
+
+            At the trumpets of Jericho
+            There the grail remains
+            At the trumpets of Jericho
+            Still the walls remain
+            
+            Still the walls remain
+            Still the walls remain
+            Still the walls remain
+            Silence of the tomb
+            And the wheel of fortune round
+            Yeah
+        `
+    }
+}
+
 const tracksArray: Track[] = 
 [
     SoulSeeker, Harridan, HotelCalifornia, MoonloopCoda, 
@@ -1863,7 +2138,11 @@ const tracksArray: Track[] =
     WetRibbon, Oxygen, InvisibleWounds,
     NoPartOfMe, LastOrder, OpeningMovie3, CharacterSelect3,
 
-    HarmonyKorine, KingInCrimson, TryAsIMight
+    HarmonyKorine, KingInCrimson, TryAsIMight,
+
+    SublimeCurrency, Airbag, ParanoidAndroid,
+
+    TrumpetsOfJericho
 ]
 
 export default tracksArray;

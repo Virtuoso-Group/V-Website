@@ -2,6 +2,7 @@ import CoverArt from '../../Atoms/CoverArt'
 import { SeekLineFunctionType } from '../../../Utils/types'
 
 import { MdLyrics } from 'react-icons/md'
+import { VscDeviceCameraVideo} from 'react-icons/vsc'
 
 import { AnimatePresence, motion } from 'framer-motion'
 
@@ -12,9 +13,10 @@ import LyricsView from '../../Organisms/Lyrics/LyricsView'
 import ButtonIcon from '../../Atoms/ButtonIcon'
 import { PlayerState } from '../../../Utils/hooks/usePlayerControls'
 
-const Background = memo((props: { playerState: PlayerState, coverArt: string, video?: string }) =>
+
+const Background = memo((props: { isVideoOn: boolean, playerState: PlayerState, timestamp: number, coverArt: string, video?: string }) =>
 {
-    const { playerState } = props;
+    const { isVideoOn, playerState } = props;
     console.log("Background");
     
     const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -24,9 +26,7 @@ const Background = memo((props: { playerState: PlayerState, coverArt: string, vi
         console.log("playerState: ", playerState);
         
         if (playerState === PlayerState.PLAYING) 
-        {
-            console.log("Hello");
-            
+        {            
             videoRef.current?.play();
         }
         else if ([PlayerState.PAUSED, PlayerState.STOPPED].includes(playerState))
@@ -38,20 +38,24 @@ const Background = memo((props: { playerState: PlayerState, coverArt: string, vi
 
     return (
         <div className='z-[-1] absolute h-full w-full'>
-
             {
-                props.video
+                isVideoOn && props.video
             ?
                     <video
                         ref={videoRef}
                         onLoadedMetadata={e =>
+                        {
+                            if (videoRef.current?.duration) 
                             {
-                                if (videoRef.current?.duration) 
-                                {
-                                    videoRef.current.play()
+                                videoRef.current.currentTime = (props.timestamp / 1000) % videoRef.current.duration;
+
+                                if (playerState === PlayerState.PLAYING) 
+                                {            
+                                    videoRef.current?.play();
                                 }
-                            }}
-                        className='z-[1] h-full w-full object-cover blur-sm'
+                            }
+                        }}
+                        className='z-[1] h-full w-full object-cover'
                         // autoPlay={true}
                         src={props.video}
                         typeof='video/mp4'
@@ -93,29 +97,6 @@ const CoverArtContainer = memo((props: { album: Album, areLyricsUnavailable: boo
                 coverArt={album.coverArt} 
                 loading={"eager"}
             />
-
-            {
-                !props.areLyricsUnavailable 
-            &&
-
-                
-                <ButtonIcon 
-                    className=
-                    {`
-                        z-[1]
-                        h-[35px] 
-                        m-4
-                        aspect-square 
-                        rounded-full bg-slate-300
-
-                        flex items-center justify-center
-                    `}
-                    name='showLyrics'
-                    icon={<MdLyrics />}
-
-                    onClick={props.toggleLyrics}
-                />
-            }
         </motion.div>
     )
 })
@@ -132,31 +113,37 @@ const TrackOverlay = memo((props: Props) =>
     const { playerState, track, timestamp, setSeekLine } = props;
 
     const [areLyricsVisible, setLyricsVisibility] = useState(false);
+    const [isVideoOn, setIsVideoOn] = useState<boolean>(false);
 
     const toggleLyrics = () => setLyricsVisibility(value => !value);
+    const toggleVideo = () => setIsVideoOn(value => !value);
     
     const album = useMemo(() => AlbumsObj[track.albumID], [track.albumID])
 
+    const isVideoAvailable = !!track.backgroundVideoSrc;
+
     return (
         <motion.div 
-            className={`z-[40] fixed grid w-screen bottom-10 min-h-screen jutsfiy-center items-center`}
+            className={`bg-blue-600  z-[40] fixed grid w-screen bottom-10 min-h-screen jutsfiy-center items-center`}
             initial={{  opacity: 0 }}
             animate={{  opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
         >
             <Background 
+                isVideoOn={isVideoOn}
                 playerState={playerState}
+                timestamp={timestamp}
                 coverArt={album.coverArt} 
                 video={track.backgroundVideoSrc} 
             />
 
-            <section className={`h-[550px] flex w-full justify-center items-center gap-10 `}>
-                <CoverArtContainer 
+            <section className={`h-[550px] flex w-full justify-center items-center gap-10`}>
+                {!isVideoOn && <CoverArtContainer 
                     album={album} 
                     areLyricsUnavailable={track.lyricsObj.status === "unavailable"}
                     toggleLyrics={toggleLyrics} 
-                />
+                />}
 
                 <AnimatePresence>
                     {
@@ -171,7 +158,51 @@ const TrackOverlay = memo((props: Props) =>
                         />
                     }
                 </AnimatePresence>
-            </section>   
+
+                <div className='flex absolute top-[calc(64px+50px)] right-0 mx-20'>
+                    {
+                        track.lyricsObj.status !== "unavailable"
+                    &&
+                        <ButtonIcon 
+                            className=
+                            {`  
+                                z-[1]
+                                h-[35px] 
+                                m-4
+                                aspect-square 
+                                rounded-full bg-slate-300
+
+                                flex items-center justify-center
+                            `}
+                            name='showLyrics'
+                            icon={<MdLyrics />}
+
+                            onClick={toggleLyrics}
+                        />
+                    }
+
+                    {
+                        isVideoAvailable
+                    &&
+                        <ButtonIcon 
+                            className=
+                            {`  
+                                z-[1]
+                                h-[35px] 
+                                m-4
+                                aspect-square 
+                                rounded-full bg-slate-300
+
+                                flex items-center justify-center
+                            `}
+                            name='showVideo'
+                            icon={<VscDeviceCameraVideo />}
+
+                            onClick={toggleVideo}
+                        />
+                    }
+                </div>
+            </section>
         </motion.div>       
     )
 })

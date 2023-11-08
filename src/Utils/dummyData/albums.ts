@@ -176,6 +176,22 @@ const TheChemicalWedding: Album =
     coverArt: "https://m.media-amazon.com/images/I/910SovLV8EL._SL1500_.jpg"
 }
 
+const SublimeCurrency: Album =
+{
+    id: 21,
+    artistID: 4,
+    name: "Sublime Currency",
+    coverArt: "https://m.media-amazon.com/images/I/81dwOiwFzSL._SL1500_.jpg"
+}
+
+const OKComputer: Album =
+{
+    id: 22,
+    artistID: 12,
+    name: "OK Computer",
+    coverArt: "https://merchbar.imgix.net/product/4/1616/31036580/634904078126.jpg"
+}
+
 const AlbumsObj: { [index: number]: Album } = { }
 
 export const AlbumsArray:  Album[] = 
@@ -200,7 +216,9 @@ export const AlbumsArray:  Album[] =
     GraceForDrowning,
     Tekken3,
     Insurgentes,
-    TheChemicalWedding
+    TheChemicalWedding,
+    SublimeCurrency,
+    OKComputer
 ]
 
 AlbumsArray.forEach(album => { AlbumsObj[album.id] = album })

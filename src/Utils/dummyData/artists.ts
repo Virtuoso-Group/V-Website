@@ -101,6 +101,14 @@ const BruceDickinson: Artist =
     albums: [30]
 }
 
+const Radiohead: Artist =
+{
+    id: 12,
+    name: "Radiohead",
+    image: "https://kandyvinylshop.com/cdn/shop/products/57_b926a234-d2f6-4760-b294-d187fc4cb0a5_2048x2048.jpg?v=1646769533",
+    albums: [22]
+}
+
 
 const ArtistsObject: { [index: number]: Artist } = {}
 
@@ -110,7 +118,8 @@ export const Artists: Artist[] =
     ThePineappleThief, AbandonedPools,
     BandaiMusic, CapcomSoundTeam,
     TakeharuIshimoto, Swans,
-    FearFactory, StevenWilson, BruceDickinson
+    FearFactory, StevenWilson, BruceDickinson,
+    Radiohead
 ];
 
 
