@@ -37,6 +37,8 @@ const HarmonyKorineVideo = require("../../assets/videos/HarmonyKorine.mp4");
 const SublimeCurrencyVideo = require("../../assets/videos/SublimeCurrency.mp4")
 const LazarusVideo = require("../../assets/videos/Lazarus.mp4")
 
+const SNKRVideo = require("../../assets/videos/Souten no Ken Regenesis Season 2 OP.mp4")
+
 const Harridan: Track = 
 {
     id: 0,
@@ -309,6 +311,7 @@ const SoulSeeker: Track =
     artistID: 1,
     albumID: 1,
     src: SoulSeekerFile,
+    backgroundVideoSrc: SNKRVideo,
 
     lyricsObj:
     {
