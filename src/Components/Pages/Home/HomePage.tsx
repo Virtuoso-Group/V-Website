@@ -9,55 +9,50 @@ import ArtistsSection from './Components/ArtistsSection';
 
 const Categories: Category[] = 
 [
-    {
-        id: 'tracks',
-        label: "Tracks",
-    },
-    {
-        id: 'albums',
-        label: "Albums"
-    },
-    {
-        id: 'artists',
-        label: "Artists"
-    }
+    { id: 'tracks', label: "Tracks" },
+
+    { id: 'albums', label: "Albums" },
+
+    { id: 'artists', label: "Artists" }
 ]
 
 
-const MainPage = () => 
+const HomePage = () => 
 {   
     const [selectedCategory, setSelectedCategory] = useState<Category>(Categories[0])
     
     const selectCategory = (index: number) => setSelectedCategory(Categories[index]);
 
-    const Sections: { [index: string]: () => JSX.Element } = 
+    const HomeSections: { [index: string]: () => JSX.Element } = 
     {
         'tracks': TracksSection,
         'albums': AlbumsSection,
         'artists': ArtistsSection
     }
 
-    const ChosenSection: () => JSX.Element = Sections[selectedCategory.id];
+    const ChosenSection: () => JSX.Element = HomeSections[selectedCategory.id];
 
     return (
         <div 
             className=
             {`
-                min-h-screen w-screen 
                 flex flex-col 
                 gap-10
-                pt-[calc(64px+25px)]
-                px-20 
+                pt-[calc(64px)]
             `}
         >
-            <div className='flex gap-5 '>
+            
+            {/* TODO: check the calculations here for top and pt */}
+            {/* TODO: better yet: determine whether you should move this component to WebsiteLayout or not */}
+            <div className='pt-[65px] px-20 z-[49] top-[calc(25px)] fixed w-full flex gap-5 bg-primary'>
                 {
                     Categories.map((category, index) =>  
                     {
                         return (
                             <Chip
-                                isSelected={selectedCategory.id === category.id} 
                                 key={category.id} 
+
+                                isSelected={selectedCategory.id === category.id} 
                                 text={category.label} 
 
                                 select={() => selectCategory(index)}
@@ -66,12 +61,12 @@ const MainPage = () =>
                     })
                 }
             </div>
-
-            <div className='flex flex-wrap w-full gap-8 h-full'>
+            
+            <div className='px-20 mt-20 flex flex-wrap w-full gap-8 h-full'>
                 <ChosenSection />
             </div>
         </div>
     )
 }
 
-export default MainPage
+export default HomePage

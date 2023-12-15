@@ -13,9 +13,7 @@ type Props =
 }
 
 const AlbumCard = (props: Props) => 
-{
-    console.log("album: ", props.album);
-    
+{    
     const { album, onClick } = props;
 
     const [isHover, setIsHover] = useState<boolean>(false)

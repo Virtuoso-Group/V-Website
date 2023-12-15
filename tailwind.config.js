@@ -5,6 +5,7 @@ module.exports = {
   ],
   theme: {
 
+
     screens:
     {
       //  Standard
@@ -22,6 +23,12 @@ module.exports = {
 
     
     extend: {
+
+      colors:
+      {
+        "primary": "#11B4D4"
+      },
+      
       fontFamily:
       {
         'holyScript': ['Holy Script']

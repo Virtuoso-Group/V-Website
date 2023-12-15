@@ -2,7 +2,7 @@ import { LyricsObject } from "./lyrics"
 
 export type Artist =
 {
-    id: number
+    _id: string
     name: string,
     image: string,
     albums: number[]

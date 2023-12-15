@@ -1,7 +1,7 @@
 import { forwardRef, useState } from 'react'
 
-import Marquee from 'react-fast-marquee'
 import { Artist } from '../../Utils/types/track'
+import Avatar from '../Atoms/Avatar'
 
 type Props = 
 {
@@ -18,21 +18,15 @@ const ArtistCard = forwardRef<HTMLElement, Props>((props, ref) =>
     return (
         <article
             ref={ref}
-            className='flex cursor-pointer flex-col w-[150px] gap-4 items-center'
+            className='flex cursor-pointer flex-col w-[150px] gap-4 items-center '
             onClick={onClick}
 
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
         >
-            <img 
-                className={`rounded-full aspect-square w-full`}
-                src={artist.image}
-                title={artist.name}
-                alt={artist.name}
-                loading='lazy'
-            />
+            <Avatar className='w-full' src={artist.image} title={artist.name} />
 
-            <p className='text-lg text-center text-white font-extrabold w-full'>
+            <p className='max-w-full text-lg text-center text-white font-extrabold whitespace-nowrap  overflow-hidden'>
                 {artist.name}
             </p>
         </article>
