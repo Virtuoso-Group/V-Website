@@ -33,14 +33,7 @@ const HomePage = () =>
     const ChosenSection: () => JSX.Element = HomeSections[selectedCategory.id];
 
     return (
-        <div 
-            className=
-            {`
-                flex flex-col 
-                gap-10
-                pt-[calc(64px)]
-            `}
-        >
+        <div className={`flex flex-col gap-10 pt-[calc(64px)]`}>
             
             {/* TODO: check the calculations here for top and pt */}
             {/* TODO: better yet: determine whether you should move this component to WebsiteLayout or not */}

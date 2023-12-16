@@ -93,7 +93,7 @@ const CoverArtContainer = memo((props: { album: Album, areLyricsUnavailable: boo
         >
             <CoverArt 
                 className={`z-[0] absolute h-full w-full rounded-lg `}
-                name={album.name}
+                name={album.title}
                 coverArt={album.coverArt} 
                 loading={"eager"}
             />

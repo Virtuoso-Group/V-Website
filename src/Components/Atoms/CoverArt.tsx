@@ -14,13 +14,7 @@ const CoverArt = (props: Props) =>
 
     return (
         <img
-            className=
-            {`
-                aspect-square 
-                object-fit 
-                
-                ${className}
-            `}
+            className={`grow-0 shrink-0 aspect-square object-fit ${className}`}
             title={name} alt={name}
             src={coverArt}
             loading={loading?? "lazy"}

@@ -32,13 +32,8 @@ export const ArtistPage = () =>
     {
       fetchArtist(artistID);
     }
-    return () => 
-    {
-      
-    }
   }, [artistID])
   
-
   return (
     <div 
         className=

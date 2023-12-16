@@ -4,6 +4,7 @@ import './App.css';
 import WebsiteLayout from './Components/Organisms/WebsiteLayout';
 import HomePage from './Components/Pages/Home/HomePage';
 import ArtistPage from './Components/Pages/ArtistPage';
+import AlbumPage from './Components/Pages/AlbumPage';
 
 /* TODO: 
     once this array gets too large, it will be a good idea to split the website into 
@@ -27,7 +28,9 @@ const router = createBrowserRouter(
 
       {  path: "home", element: <HomePage /> },
 
-      { path: "/artist/:artistID" , element: <ArtistPage /> }
+      { path: "/artist/:artistID" , element: <ArtistPage /> },
+
+      { path: "/album/:albumID" , element: <AlbumPage /> }
     ]
   }
 ])

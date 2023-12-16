@@ -3,12 +3,12 @@ import { useState } from 'react'
 import CoverArt from '../Atoms/CoverArt'
 import Marquee from 'react-fast-marquee'
 
-import ArtistsObject from '../../Utils/dummyData/artists'
 import { Album } from '../../Utils/types/track'
 
 type Props = 
 {
     album: Album,
+    
     onClick: () => void
 }
 
@@ -29,13 +29,13 @@ const AlbumCard = (props: Props) =>
             <div className='relative'>
                 <CoverArt 
                     className={`absolute right-5 z-[0] rounded-lg scale-[0.9] bg-blend-darken`}
-                    name={album.name}
+                    name={album.title}
                     coverArt={album.coverArt} 
                 />
 
                 <CoverArt 
                     className={`relative z-[5] rounded-lg drop-shadow-2xl `}
-                    name={album.name}
+                    name={album.title}
                     coverArt={album.coverArt} 
                 />
             </div>
@@ -47,10 +47,10 @@ const AlbumCard = (props: Props) =>
                     play={isHover}
                     autoFill={false}
                 >
-                    <span className='text-lgn font-extrabold pe-10'>{album.name}</span>
+                    <span className='text-lgn font-extrabold pe-10'>{album.title}</span>
                 </Marquee>
 
-                <span className='text-md'>{ArtistsObject[album.artistID].name}</span>
+                <span className='text-md'>{album.artistID.name}</span>
             </div>
         </article>
     )

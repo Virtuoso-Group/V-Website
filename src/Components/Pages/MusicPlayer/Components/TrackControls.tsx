@@ -74,7 +74,7 @@ const SongInformation = memo((props: SongInfoProps) =>
         <div className={`flex items-center whitespace-nowrap ${className}`}>
             <CoverArt
                 className={`h-[50px] bg-blue-800 rounded-sm`}
-                name={album.name}
+                name={album.title}
                 coverArt={album.coverArt} 
             />
 
@@ -84,7 +84,7 @@ const SongInformation = memo((props: SongInfoProps) =>
                 </span>
 
                 <span className='text-sm font-light text-gray-300 align-middle text-slate-300'>
-                    {bandName} <span className="">•</span> {album.name}
+                    {bandName} <span className="">•</span> {album.title}
                 </span>
             </p>
         </div>

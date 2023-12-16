@@ -10,20 +10,24 @@ export type Artist =
 
 export type Album = 
 { 
-    id: number,
-    artistID: number,
-    name: string, 
+    _id: string,
+    artistID: 
+    {
+        _id: string,
+        name: string   
+    },
+    title: string, 
     coverArt: string,
 }
 
-export type Track =
-{
-    id: number,
-    name: string,
-    artistID: number,
-    albumID: number,
-    src: string,
-    lyricsObj: LyricsObject,
+export type Track = any
+// {
+//     id: number,
+//     name: string,
+//     artistID: number,
+//     albumID: number,
+//     src: string,
+//     lyricsObj: LyricsObject,
 
-    backgroundVideoSrc?: string
-}
+//     backgroundVideoSrc?: string
+// }
