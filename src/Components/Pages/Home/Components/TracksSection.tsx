@@ -4,6 +4,7 @@ import { useWebsiteContext } from '../../../Organisms/WebsiteLayout';
 import tracksArray from '../../../../Utils/dummyData/tracks';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Track } from '../../../../Utils/types/track';
+import axios from 'axios';
 
 const MotionTrackCard = motion(TrackCard);
 
@@ -13,26 +14,39 @@ const TracksSection = () =>
 
     const [tracks, setTracks] = useState<Track[]>([]);
 
-    useEffect(() => 
+    const fetchTracks= async () =>
     {
-      
-        const sortedTracks = tracksArray.sort((trackA, trackB) => 
+        try 
         {
-            if (trackA.artistID === trackB.artistID) 
+            const res = await axios.get(`http://localhost:4000/music/track/getAll`);
+
+            if (res.data && res.data.tracks) 
             {
-                if (trackA.albumID === trackB.albumID) 
+                const sortedTracks = res.data.tracks.sort((trackA: Track, trackB: Track) => 
                 {
-                    return trackA.name.localeCompare(trackB.name) 
-                } 
-
-                return trackA.albumID - trackB.albumID
-            }
-
-            return trackA.artistID - trackB.artistID
-        })
+                    if (trackA.artist._id === trackB.artist._id) 
+                    {
+                        if (trackA.release._id === trackB.release._id) 
+                        {
+                            return trackA.title.localeCompare(trackB.title) 
+                        } 
+        
+                        return trackA.release._id.localeCompare(trackB.release._id)
+                    }
+        
+                    return trackA.artist._id.localeCompare(trackB.artist._id)
+                })
     
-        setTracks(sortedTracks)
-    }, []);
+                setTracks(sortedTracks)
+            }
+        } 
+        catch (error) 
+        {
+            console.error(error)
+        }
+    }
+
+    useEffect(() => { fetchTracks()}, []);
     
     return (
         <AnimatePresence>
@@ -40,13 +54,13 @@ const TracksSection = () =>
                 {
                     return (
                         <MotionTrackCard 
-                            key={"track/"+track.id}
+                            key={"track/"+track._id}
                             initial={{ opacity: 0}}
 
                             animate={{ opacity: 1 }}
 
                             transition={{ duration: 0.05 * (index + 1)}}
-                            song={track} 
+                            track={track} 
                             select={selectTrack} 
                         />
                     )

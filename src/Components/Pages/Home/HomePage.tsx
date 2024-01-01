@@ -6,7 +6,6 @@ import TracksSection from './Components/TracksSection';
 import AlbumsSection from './Components/AlbumsSection';
 import ArtistsSection from './Components/ArtistsSection';
 
-
 const Categories: Category[] = 
 [
     { id: 'tracks', label: "Tracks" },

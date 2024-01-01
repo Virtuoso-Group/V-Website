@@ -96,31 +96,35 @@ const useLineIndex = (lyrics: Lyrics) =>
     }
 }
 
-export const useLyricsReader = (trackID: number, timestamp: number, lyrics: Lyrics) =>
+export const useLyricsReader = (trackID: string, timestamp: number, lyrics: Lyrics) =>
 {    
     const index = useLineIndex(lyrics);
 
-    const visibleLine = isWithinRange(lyrics[index.value], timestamp)? lyrics[index.value].value: "...";
+    const visibleLine: Line 
+    = 
+        isWithinRange(lyrics[index.value], timestamp)
+    ? 
+        lyrics[index.value]
+    : 
+        {
+            value: "",
+            range: { start: 0, end: 0 }
+        }
+    ;
 
     useEffect(() => { index.seek(timestamp) }, [trackID])
 
     useEffect(() =>
     {   
-        if (timestamp === 0) 
-        {
-            index.reset()
-        }
+        if (timestamp === 0) index.reset()
 
         const chosenLine = lyrics[index.value];
 
-        if (chosenLine) 
+        if (chosenLine && timestamp > chosenLine.range.end) 
         {
-            if (timestamp > chosenLine.range.end) 
-            {
-                index.goForward();
-            }
+            index.goForward();
         }
-    }, [index, timestamp, lyrics])
+    }, [timestamp, lyrics])
       
     return {  
         line: visibleLine,

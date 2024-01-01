@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react'
-import AlbumCard from '../../../Molecules/AlbumCard'
-import { Album } from '../../../../Utils/types/track'
+import ReleaseCard from '../../../Molecules/AlbumCard'
+import { Release } from '../../../../Utils/types/track'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-
 
 const AlbumsSection = () => 
 {
     const navigate = useNavigate();
 
-    const [albums, setAlbums] = useState<Album[]>([])
+    const [albums, setAlbums] = useState<Release[]>([])
     
     const fetchAlbums = async () =>
     {
@@ -19,14 +18,14 @@ const AlbumsSection = () =>
 
             if (res.data && res.data.albums) 
             {
-                const sortedAlbums = res.data.albums.sort((albumA: Album, albumB: Album) => 
+                const sortedAlbums = res.data.albums.sort((albumA: Release, albumB: Release) => 
                 {
-                    if (albumA.artistID === albumB.artistID) 
+                    if (albumA.artist === albumB.artist) 
                     {
                         return albumA.title.localeCompare(albumB.title)
                     }
 
-                    return albumA.artistID.name.localeCompare(albumB.artistID.name)
+                    return albumA.artist.name.localeCompare(albumB.artist.name)
                 })
     
                 setAlbums(sortedAlbums)
@@ -42,7 +41,7 @@ const AlbumsSection = () =>
 
     return (
         <>
-           {albums.map(album => <AlbumCard key={album._id} album={album} onClick={() => navigate(`/album/${album._id}`)} />)}
+           {albums.map(album => <ReleaseCard key={album._id} release={album} onClick={() => navigate(`/album/${album._id}`)} />)}
         </>
     )
 }

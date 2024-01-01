@@ -1,11 +1,10 @@
 import { Outlet, useNavigate, useOutletContext } from "react-router-dom";
 import WebsiteHeader from "./WebsiteHeader";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import TrackControls from "../Pages/MusicPlayer/Components/TrackControls";
 import useTrack from "../../Utils/hooks/useTrack";
-import { SeekLineFunctionType } from "../../Utils/types";
 import { Track } from "../../Utils/types/track";
-
+import { baseURL } from "../../API/config";
 
 const WebsiteLogo = () =>
 {
@@ -13,18 +12,28 @@ const WebsiteLogo = () =>
 
     return (
         <p 
-            className='cursor-pointer flex items-center gap-1 text-center italic select-none'
+            className=
+            {`
+                flex 
+                flex-col SD:flex-row
+
+                items-start
+                cursor-pointer 
+                SD:items-center 
+                SD:gap-1 
+                text-center italic select-none
+            `}
 
             onClick={() => navigate("/")}
         >
-            <span className='text-white self-end text-2xl'>
+            <span className='text-white SD:self-end text-xl SD:text-2xl'>
                 Project
             </span>
 
-            <span className='text-white'> 
-                <span className="text-5xl font-semibold text-primary">V</span>
+            <span className='ps-5 SD:ps-0 self-end text-white'> 
+                <span className="text-2xl SD:text-5xl font-semibold text-primary">V</span>
                 
-                <span className="text-3xl">irtuoso</span>
+                <span className="text-xl SD:text-2xl">irtuoso</span>
             </span>
         </p>
     )
@@ -36,20 +45,46 @@ const WebsiteLayout = () =>
 {
     const track = useTrack();
 
-    useEffect(() => { return () => { track.reset() }}, []);
+    const [areLyricsVisible, setLyricsVisibility] = useState(false);
+
+    const toggleLyrics = () => setLyricsVisibility(value => !value);
+    
+    useEffect(() => 
+    { 
+        // fetchSong()
+        return () => { track.reset() }
+    }, []);
+
     
     return (
         <main className="relative min-h-screen w-screen bg-primary pb-[128px]">
             <WebsiteHeader 
                 className="z-[50] self-start fixed"
-                start={ <WebsiteLogo />}
+                start={<WebsiteLogo />}
             />
 
             <div className="z-[10] min-h-screen min-w-screen">
                 <Outlet context={{ selectTrack: track.selectTrack } satisfies WebsiteContext} />
             </div>
 
-            {track.value && <TrackControls track={track.value} close={track.reset} />}
+            {
+                track.value 
+            && 
+                <TrackControls 
+                    track={track.value} 
+                    close={track.reset} 
+
+                    areLyricsVisible={areLyricsVisible}
+                    toggleLyrics={toggleLyrics}
+                />
+
+                // <audio 
+                //     key={track.value._id}
+                //     src={`${baseURL.local}/music/track/play/${track.value.release._id}/${track.value._id}`} 
+                //     controls={true}
+                //     controlsList="nodownload noplaybackrate"
+                // />
+            }
         </main>
     )
 }

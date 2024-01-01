@@ -5,7 +5,7 @@ import { Lyrics } from "../../../Utils/types/lyrics";
 
 interface Props 
 { 
-    trackID: number,
+    trackID: string,
     lyrics: Lyrics,
     timestamp: number,
 
@@ -26,8 +26,8 @@ const SyncedLyricsView = (props: Props) =>
     }, [])
     
     return (
-        <p className="font-bold text-white text-5xl h-fit text-center drop-shadow-5xl">
-            {line}
+        <p className="z-[50] font-bold text-white text-5xl h-fit text-center drop-shadow-5xl">
+            {line.value}
         </p>
     )
 }

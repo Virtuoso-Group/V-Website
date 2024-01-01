@@ -8,10 +8,10 @@ export type Artist =
     albums: number[]
 }
 
-export type Album = 
+export type Release = 
 { 
     _id: string,
-    artistID: 
+    artist: 
     {
         _id: string,
         name: string   
@@ -20,14 +20,20 @@ export type Album =
     coverArt: string,
 }
 
-export type Track = any
-// {
-//     id: number,
-//     name: string,
-//     artistID: number,
-//     albumID: number,
-//     src: string,
-//     lyricsObj: LyricsObject,
+export type Track =
+{
+    _id: string,
+    title: string,
+    artist: 
+    {
+        _id: string,
+        name: string,
+    },
+    release: 
+    {
+        _id: string
+       title: string,
+    },
 
-//     backgroundVideoSrc?: string
-// }
+    // lyrics: LyricsObject,
+}

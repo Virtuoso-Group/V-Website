@@ -17,7 +17,7 @@ type Controls =
 
 interface SeekBarProps
 {
-    trackID: number,
+    trackID: string,
     timeInfo: TimeInfo,
     controls: Controls,
 }

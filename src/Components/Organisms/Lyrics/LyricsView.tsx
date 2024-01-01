@@ -1,5 +1,6 @@
 import { SeekLineFunctionType } from '../../../Utils/types';
 import { LyricsObject } from '../../../Utils/types/lyrics'
+import ScrollableLyricsView from './ScrollableLyricsView';
 import SyncedLyricsView from './SyncedLyricsView';
 import UnsyncedLyricsView from './UnsyncedLyricsView';
 import { motion } from 'framer-motion';
@@ -8,15 +9,16 @@ type Props =
 {
     timestamp: number,
 
-    trackID: number,
+    trackID: string,
     lyricsObj: LyricsObject,
 
+    seek: (timestamp: number) => void,
     setSeekLine: (seekLineFunction: SeekLineFunctionType) => void
 }
 
 const LyricsView = (props: Props) => 
 {
-    const { timestamp, trackID,  lyricsObj, setSeekLine } = props;
+    const { timestamp, trackID,  lyricsObj, seek, setSeekLine } = props;
 
     return (
         <motion.div 
@@ -25,7 +27,7 @@ const LyricsView = (props: Props) =>
             {`
                 flex 
                 h-full 
-                w-[700px] px-4
+                w-[600px] px-4
                 justify-center 
 
                 items-center
@@ -41,19 +43,19 @@ const LyricsView = (props: Props) =>
             transition={{ duration: 0.2 }}
         >
             {
-                lyricsObj.status === "available"
-            ? 
-                
-                lyricsObj.isSynced
+                lyricsObj.status === "synced"
             ?
-                <SyncedLyricsView 
+                <ScrollableLyricsView 
                     timestamp={timestamp} 
                     trackID={trackID} 
-                    lyrics={lyricsObj.lyrics} 
+                    lyrics={lyricsObj.value} 
+                    seek={seek}
                     setSeekLine={setSeekLine}
                 />
             :
-                <UnsyncedLyricsView lyrics={lyricsObj.lyrics} />
+                lyricsObj.status === "unsynced"
+            ?
+                <UnsyncedLyricsView lyrics={lyricsObj.value} />
             :
                 lyricsObj.status === "instrumental"
             &&

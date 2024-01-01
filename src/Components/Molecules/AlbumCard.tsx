@@ -3,20 +3,23 @@ import { useState } from 'react'
 import CoverArt from '../Atoms/CoverArt'
 import Marquee from 'react-fast-marquee'
 
-import { Album } from '../../Utils/types/track'
+import { Release } from '../../Utils/types/track'
+import { AWS_URL } from '../../API/config'
 
 type Props = 
 {
-    album: Album,
+    release: Release,
     
     onClick: () => void
 }
 
-const AlbumCard = (props: Props) => 
+const ReleaseCard = (props: Props) => 
 {    
-    const { album, onClick } = props;
+    const { release, onClick } = props;
 
     const [isHover, setIsHover] = useState<boolean>(false)
+
+    const coverArtURL = `${AWS_URL.release.dev}/${release._id}/cover_art.jpeg`
 
     return (
         <article
@@ -29,14 +32,14 @@ const AlbumCard = (props: Props) =>
             <div className='relative'>
                 <CoverArt 
                     className={`absolute right-5 z-[0] rounded-lg scale-[0.9] bg-blend-darken`}
-                    name={album.title}
-                    coverArt={album.coverArt} 
+                    name={release.title}
+                    coverArt={coverArtURL} 
                 />
 
                 <CoverArt 
                     className={`relative z-[5] rounded-lg drop-shadow-2xl `}
-                    name={album.title}
-                    coverArt={album.coverArt} 
+                    name={release.title}
+                    coverArt={coverArtURL} 
                 />
             </div>
             
@@ -47,13 +50,13 @@ const AlbumCard = (props: Props) =>
                     play={isHover}
                     autoFill={false}
                 >
-                    <span className='text-lgn font-extrabold pe-10'>{album.title}</span>
+                    <span className='text-lgn font-extrabold pe-10'>{release.title}</span>
                 </Marquee>
 
-                <span className='text-md'>{album.artistID.name}</span>
+                <span className='text-md'>{release.artist.name}</span>
             </div>
         </article>
     )
 }
 
-export default AlbumCard
+export default ReleaseCard

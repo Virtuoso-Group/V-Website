@@ -10,12 +10,11 @@ import useOverlay from "../../../../Utils/hooks/useOverlay";
 import TrackOverlay from "../TrackOverlay";
 import { AnimatePresence } from "framer-motion";
 import ToggleTriangle from "../../../Atoms/ToggleTriangle";
-import AlbumsObj from "../../../../Utils/dummyData/albums";
 import useTimestamp from "../../../../Utils/hooks/useTimestamp";
 
-import ArtistsObject from "../../../../Utils/dummyData/artists";
-import { Album, Track } from "../../../../Utils/types/track";
+import { Track } from "../../../../Utils/types/track";
 import useAudioPlayer from "../../../../Utils/hooks/usePlayerControls";
+import { baseURL, releaseURL } from "../../../../API/config";
 
 interface TimeInfoProps
 {
@@ -53,7 +52,10 @@ const TimeInfo = (props: TimeInfoProps) =>
 interface Props
 {
     track: Track,
-    close: () => void
+    close: () => void,
+
+    areLyricsVisible: boolean,
+    toggleLyrics: () => void
 }
 
 interface SongInfoProps
@@ -61,21 +63,27 @@ interface SongInfoProps
     className?: string, 
 
     songName: string, 
-    album: Album,  
+    release: 
+    {
+        _id: string
+       title: string,
+    },  
     artistName: string,
 }
 
 
 const SongInformation = memo((props: SongInfoProps) =>
 {
-    const { className, songName, artistName: bandName, album } = props;
+    const { className, songName, artistName, release } = props;
+
+    const coverArt = `${releaseURL}/${release._id}/cover_art.jpeg`
 
     return (
         <div className={`flex items-center whitespace-nowrap ${className}`}>
             <CoverArt
                 className={`h-[50px] bg-blue-800 rounded-sm`}
-                name={album.title}
-                coverArt={album.coverArt} 
+                name={release.title}
+                coverArt={coverArt??""} 
             />
 
             <p className='flex flex-col'>
@@ -84,7 +92,7 @@ const SongInformation = memo((props: SongInfoProps) =>
                 </span>
 
                 <span className='text-sm font-light text-gray-300 align-middle text-slate-300'>
-                    {bandName} <span className="">•</span> {album.title}
+                    {artistName} <span className="">•</span> {release.title}
                 </span>
             </p>
         </div>
@@ -113,8 +121,7 @@ const PlayerControls = memo((props: PlayerControlsProps) =>
     {
         className, isPlaying, stepBackwards, togglePlay, stepForwards
     }
-    console.log("PlayerControls", object);
-    
+        
     return (
         <div className={`${className}`}>
             <ButtonIcon 
@@ -188,17 +195,11 @@ const TrackControls = (props: Props) =>
     const timestamp = useTimestamp();
     const timeInfo = { duration, timestamp: timestamp.value }    
 
-    const stepBackwards = useCallback(() =>
-    {
-        console.log("Backwards!") 
-    }, [])
+    const stepBackwards = useCallback(() => { console.log("Backwards!")  }, [])
 
-    const stepForwards = useCallback(() =>
-    {
-        console.log("Forwards!") 
-    }, [])
+    const stepForwards = useCallback(() => { console.log("Forwards!")  }, [])
 
-    const seek = useCallback((percentage: number) =>
+    const seek = (percentage: number) =>
     { 
         const clipPercentage = (percentage: number): number =>
         {
@@ -237,20 +238,22 @@ const TrackControls = (props: Props) =>
 
             audioPlayer.play()
         }
-    }, [duration, audioPlayer.play, seekLine])
+    }
 
     const reset = () => 
     {        
-        audioPlayer.reset()
+        audioPlayer.reset();
+
         timestamp.reset();
     }
 
     return (
         <>
             <audio 
-                key={track.id}
+                key={track._id}
                 ref={audioPlayer.ref}
-                src={track.src}
+                controlsList="nodownload noplaybackrate"
+                src={`${baseURL.local}/music/track/play/${track.release._id}/${track._id}`}
                 onLoadedMetadata={e =>
                 {
                     if (audioPlayer.ref.current?.duration) 
@@ -285,13 +288,18 @@ const TrackControls = (props: Props) =>
                             timestamp={timestamp.value} 
                             track={track} 
                             setSeekLine={setSeekLine}
+                            seek={(timestamp: number) => seek(timestamp/duration)}
+
+                            areLyricsVisible={props.areLyricsVisible}
+                            toggleLyrics={props.toggleLyrics}
+
                         />
                     }
                 </AnimatePresence>
 
                 <div className={`z-[50] fixed bottom-0 w-full bg-black`} >
                     <SeekBar
-                        trackID={track.id}
+                        trackID={track._id}
                         timeInfo={timeInfo}
                         controls={{ pause: audioPlayer.pause, seek }}
                     />
@@ -306,9 +314,9 @@ const TrackControls = (props: Props) =>
                         <div className="grid grid-cols-3 content-center w-full h-full  px-20">
                             <SongInformation 
                                 className="justify-self-start flex gap-5"
-                                album={AlbumsObj[track.albumID]}
-                                songName={track.name} 
-                                artistName={ArtistsObject[track.artistID].name} 
+                                release={track.release}
+                                songName={track.title} 
+                                artistName={track.artist.name} 
                             />
 
                             <PlayerControls 

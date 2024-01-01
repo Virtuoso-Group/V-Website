@@ -13,15 +13,15 @@ const useAudioPlayer = () =>
     const metaDataLoaded = useRef<boolean>(false);
     const [playerState, setPlayerState] = useState<PlayerState>(PlayerState.STOPPED)
 
-    const setToPlay = () => setPlayerState(PlayerState.PLAYING);
+    const setToPlay = useCallback(() => setPlayerState(PlayerState.PLAYING), []);
 
-    const setToPause = () => setPlayerState(PlayerState.PAUSED)
+    const setToPause = useCallback(() => setPlayerState(PlayerState.PAUSED), [])
 
     const play = useCallback(() => ref.current?.play(), []);
 
     const pause = useCallback(() => ref.current?.pause(),[]);
 
-    const reset = () =>  setPlayerState(PlayerState.STOPPED);
+    const reset = useCallback(() =>  setPlayerState(PlayerState.STOPPED), []);
 
     const togglePlay =  useCallback(() => playerState === PlayerState.PLAYING? pause() : play(),[playerState, play, pause]);
 
