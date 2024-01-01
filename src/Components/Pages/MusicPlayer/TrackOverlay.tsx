@@ -10,7 +10,7 @@ import { Track } from '../../../Utils/types/track'
 import LyricsView from '../../Organisms/Lyrics/LyricsView'
 import ButtonIcon from '../../Atoms/ButtonIcon'
 import { PlayerState } from '../../../Utils/hooks/usePlayerControls'
-import { releaseURL } from '../../../API/config'
+import { releaseURL } from '../../../config/config'
 
 
 const Background = memo((props: {  playerState: PlayerState, timestamp: number, coverArt: string, video?: string }) =>

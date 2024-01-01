@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import TrackControls from "../Pages/MusicPlayer/Components/TrackControls";
 import useTrack from "../../Utils/hooks/useTrack";
 import { Track } from "../../Utils/types/track";
-import { baseURL } from "../../API/config";
 
 const WebsiteLogo = () =>
 {

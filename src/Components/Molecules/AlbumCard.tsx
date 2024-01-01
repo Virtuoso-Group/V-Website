@@ -4,7 +4,7 @@ import CoverArt from '../Atoms/CoverArt'
 import Marquee from 'react-fast-marquee'
 
 import { Release } from '../../Utils/types/track'
-import { AWS_URL } from '../../API/config'
+import { AWS_URL } from '../../config/config'
 
 type Props = 
 {

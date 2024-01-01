@@ -1,40 +1,23 @@
 import { AnimatePresence } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import ArtistCard from '../../../Molecules/ArtistCard';
 import { Artist } from '../../../../Utils/types/track';
-import axios from 'axios';
 import { useNavigate } from 'react-router';
+import useAPI from '../../../../Utils/hooks/useAPI';
+
+// const sortedArtists = res.data.artists.sort((artistA: Artist, artistB: Artist) => artistA.name.localeCompare(artistB.name));
 
 const ArtistsSection = () => 
 {
     const navigate = useNavigate();
 
-    const [artists, setArtists] = useState<Artist[]>([]);
-    
-    const fetchArtists = async () =>
-    {
-        try 
-        {
-            const res = await axios.get(`http://localhost:4000/music/artist/getAll`);
+    const artists = useAPI<Artist[]>("music/artist/getAll", 'get', [])
 
-            if (res.data && res.data.artists) 
-            {
-                const sortedArtists = res.data.artists.sort((artistA: Artist, artistB: Artist) => artistA.name.localeCompare(artistB.name));
-
-                setArtists(sortedArtists)
-            }
-        } 
-        catch (error) 
-        {
-            console.error(error)
-        }
-    }
-
-    useEffect(() => { fetchArtists() }, []);
+    useEffect(() => { artists.execute() }, []);
 
     return (
         <AnimatePresence>
-            {artists.map(artist => 
+            {artists.data.map(artist => 
                 {
                     return (
                         <ArtistCard 

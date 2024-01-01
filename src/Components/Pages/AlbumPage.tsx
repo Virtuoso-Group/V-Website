@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Release } from '../../Utils/types/track';
 import axios from 'axios';
 import CoverArt from '../Atoms/CoverArt';
-import { AWS_URL } from '../../API/config';
+import { AWS_URL, baseURL } from '../../config/config';
 
 const AlbumPage = () => 
 {
@@ -15,7 +15,7 @@ const AlbumPage = () =>
     {
       try 
       {
-        const res = await axios.get(`http://localhost:4000/music/album/get?albumID=${albumID}`);
+        const res = await axios.get(`${baseURL}/music/album/get?albumID=${albumID}`);
 
         if (res.data && res.data.album) 
           {

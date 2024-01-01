@@ -14,7 +14,7 @@ import useTimestamp from "../../../../Utils/hooks/useTimestamp";
 
 import { Track } from "../../../../Utils/types/track";
 import useAudioPlayer from "../../../../Utils/hooks/usePlayerControls";
-import { baseURL, releaseURL } from "../../../../API/config";
+import { baseURL, releaseURL } from "../../../../config/config";
 
 interface TimeInfoProps
 {
@@ -253,7 +253,7 @@ const TrackControls = (props: Props) =>
                 key={track._id}
                 ref={audioPlayer.ref}
                 controlsList="nodownload noplaybackrate"
-                src={`${baseURL.local}/music/track/play/${track.release._id}/${track._id}`}
+                src={`${baseURL}/music/track/play/${track.release._id}/${track._id}`}
                 onLoadedMetadata={e =>
                 {
                     if (audioPlayer.ref.current?.duration) 

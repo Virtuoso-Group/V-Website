@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router"
 import { Artist } from "../../Utils/types/track";
 import Avatar from "../Atoms/Avatar";
+import { baseURL } from "../../config/config";
 
 export const ArtistPage = () => 
 {
@@ -13,7 +14,7 @@ export const ArtistPage = () =>
   {
     try 
     {
-      const res = await axios.get(`http://localhost:4000/music/artist/get?artistID=${artistID}`);
+      const res = await axios.get(`${baseURL}/music/artist/get?artistID=${artistID}`);
 
       if (res.data && res.data.artist) 
         {
