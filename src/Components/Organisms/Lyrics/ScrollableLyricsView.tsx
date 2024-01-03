@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useLyricsReader } from "../../../Utils/hooks/lyricsHooks";
-import { SeekLineFunctionType } from "../../../Utils/types";
+import { SeekFunctionType } from "../../../Utils/types";
 import { Lyrics } from "../../../Utils/types/lyrics";
 
 interface Props 
@@ -10,7 +10,7 @@ interface Props
     timestamp: number,
 
     seek: (timestamp: number) => void,
-    setSeekLine: (seekLineFunction: SeekLineFunctionType) => void
+    setSeekLine: (seekLineFunction: SeekFunctionType) => void
 }
 
 

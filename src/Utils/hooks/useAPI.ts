@@ -45,11 +45,11 @@ const useAPI = <Result>(url: string, method: 'get' | 'post', defaultValue: Resul
         {
             const error = e as AxiosError;
 
-            console.log("error: ", error);
+            // console.log("error: ", error);
 
             if (error.status === 400) 
             {
-                console.log("Bad request!");
+                // console.log("Bad request!");
             }
         }
     }

@@ -1,6 +1,14 @@
 import { useCallback, useState } from "react";
 
-const useTimestamp = () =>
+export type Timestamp =
+{
+    value: number,
+
+    update: (targetTimestamp: number) => void,
+    reset: () => void
+}
+
+const useTimestamp = (): Timestamp =>
 {
     const [value, setValue] = useState<number>(0);
 
@@ -8,7 +16,7 @@ const useTimestamp = () =>
     {
         if (targetTimestamp) 
         {
-            setValue(targetTimestamp * 1000)  
+            setValue(targetTimestamp)  
         }
     }, [])
     

@@ -1,4 +1,4 @@
-import { SeekLineFunctionType } from '../../../Utils/types';
+import { SeekFunctionType } from '../../../Utils/types';
 import { LyricsObject } from '../../../Utils/types/lyrics'
 import ScrollableLyricsView from './ScrollableLyricsView';
 import SyncedLyricsView from './SyncedLyricsView';
@@ -8,56 +8,53 @@ import { motion } from 'framer-motion';
 type Props = 
 {
     timestamp: number,
-
-    trackID: string,
-    lyricsObj: LyricsObject,
+    id: string,
+    lyrics: LyricsObject,
 
     seek: (timestamp: number) => void,
-    setSeekLine: (seekLineFunction: SeekLineFunctionType) => void
+    setSeekLine: (seekLineFunction: SeekFunctionType) => void
 }
 
 const LyricsView = (props: Props) => 
 {
-    const { timestamp, trackID,  lyricsObj, seek, setSeekLine } = props;
+    const { timestamp, id, lyrics, seek, setSeekLine } = props;
 
     return (
         <motion.div 
             layout
             className=
             {`
-                flex 
-                h-full 
-                w-[600px] px-4
-                justify-center 
-
-                items-center
+                flex justify-center items-center
+                h-full w-[600px] 
+                px-4
+                
                 bg-black/50 rounded-lg overflow-y-scroll
 
                 select-none
             `}
 
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "100%", opacity: [0,1] }}
+            animate={{ height: "100%", opacity: [0, 1] }}
 
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
         >
             {
-                lyricsObj.status === "synced"
+                lyrics.status === "synced"
             ?
                 <ScrollableLyricsView 
                     timestamp={timestamp} 
-                    trackID={trackID} 
-                    lyrics={lyricsObj.value} 
+                    trackID={id} 
+                    lyrics={lyrics.value} 
                     seek={seek}
                     setSeekLine={setSeekLine}
                 />
             :
-                lyricsObj.status === "unsynced"
+                lyrics.status === "unsynced"
             ?
-                <UnsyncedLyricsView lyrics={lyricsObj.value} />
+                <UnsyncedLyricsView lyrics={lyrics.value} />
             :
-                lyricsObj.status === "instrumental"
+                lyrics.status === "instrumental"
             &&
                 <pre className="w-fit font-bold text-white text-5xl h-fit text-center  drop-shadow-5xl">
                     ♪ Instrumental Track ♪

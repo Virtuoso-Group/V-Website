@@ -13,6 +13,7 @@ module.exports = {
 
       // HD
       'HD': '720px',
+      'XGA': '1024px',
       'FHD': '1080px',
       '2K': '2560px',
 

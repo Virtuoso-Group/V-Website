@@ -91,7 +91,6 @@ const SeekBar = (props: SeekBarProps) =>
             animate={{ width: currentPercentage? `${currentPercentage}%`: "0%"}}
             transition={{  duration: 0.25, type: "spring", bounce: 0.25 }}
         />
-
        
         <Ball 
             isDragging={isDragging}

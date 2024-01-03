@@ -10,9 +10,6 @@ type Environment = 'local' |'dev';
 
 const env: Environment = (process.env.REACT_APP_ENV as Environment)
 
-console.log("env: ", env);
-
-
 export const AWS_URL =
 {
     release:

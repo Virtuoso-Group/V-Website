@@ -1,7 +1,7 @@
 import { Outlet, useNavigate, useOutletContext } from "react-router-dom";
 import WebsiteHeader from "./WebsiteHeader";
 import { useEffect, useState } from "react";
-import TrackControls from "../Pages/MusicPlayer/Components/TrackControls";
+import TrackControls from "../Pages/MusicPlayer/Components/TrackOverlay";
 import useTrack from "../../Utils/hooks/useTrack";
 import { Track } from "../../Utils/types/track";
 

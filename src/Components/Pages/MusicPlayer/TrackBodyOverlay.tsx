@@ -1,37 +1,21 @@
 import CoverArt from '../../Atoms/CoverArt'
-import { SeekLineFunctionType } from '../../../Utils/types'
+import { SeekFunctionType } from '../../../Utils/types'
 
 import { MdLyrics } from 'react-icons/md'
 
 import { AnimatePresence, motion } from 'framer-motion'
 
-import { memo, useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef } from 'react'
 import { Track } from '../../../Utils/types/track'
 import LyricsView from '../../Organisms/Lyrics/LyricsView'
 import ButtonIcon from '../../Atoms/ButtonIcon'
-import { PlayerState } from '../../../Utils/hooks/usePlayerControls'
+import { PlayerState } from '../../../Utils/hooks/useMusicPlayer'
 import { releaseURL } from '../../../config/config'
+import { LyricsObject } from '../../../Utils/types/lyrics'
 
 
-const Background = memo((props: {  playerState: PlayerState, timestamp: number, coverArt: string, video?: string }) =>
+const Background = memo((props: { coverArt: string, video?: string }) =>
 {
-    const { playerState } = props;
-    
-    const videoRef = useRef<HTMLVideoElement | null>(null);
-
-    useEffect(() => 
-    {        
-        if (playerState === PlayerState.PLAYING) 
-        {            
-            videoRef.current?.play();
-        }
-        else if ([PlayerState.PAUSED, PlayerState.STOPPED].includes(playerState))
-        {
-            videoRef.current?.pause();
-        }
-    }, [playerState, videoRef.current?.duration])
-    
-
     return (
         <div className='z-[30] absolute h-full w-full'>
             <img 
@@ -77,23 +61,34 @@ const CoverArtContainer = memo((props:
 })
 
 interface Props
-{   
-    playerState: PlayerState,
-    track: Track, 
+{       
     timestamp: number, 
     seek: (timestamp: number) => void,
 
-    setSeekLine: (seekLineFunction: SeekLineFunctionType) => void,
+    setSeekLine: (seekLineFunction: SeekFunctionType) => void,
     
-    areLyricsVisible: boolean,
-    toggleLyrics: () => void
+    release:{ _id: string, title: string }
+
+    lyrics:
+    {
+        _id: string,
+        value: LyricsObject,
+        areVisible: boolean,
+        
+        toggle: () => void
+    }
 }
 
-const TrackOverlay = memo((props: Props) => 
+const TrackBodyOverlay = memo((props: Props) => 
 {
-    const { playerState, track, timestamp, seek, setSeekLine } = props;
+    const 
+    { 
+        timestamp, release, lyrics,  
+
+        seek, setSeekLine 
+    } = props;
     
-    const coverArt = `${releaseURL}/${track.release._id}/cover_art.jpeg`;
+    const coverArt = `${releaseURL}/${release._id}/cover_art.jpeg`;
 
     return (
         <motion.div 
@@ -103,59 +98,55 @@ const TrackOverlay = memo((props: Props) =>
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
         >
-            <Background 
-                playerState={playerState}
-                timestamp={timestamp}
-                coverArt={coverArt} 
-            />
+            <Background coverArt={coverArt} />
 
-            <section className={`z-[99] h-[550px] flex w-full justify-center items-center gap-10`}>
+            <section className={`mt-[64px] z-[99] h-[300px] HD:h-[400px] XGA:h-[500px] flex w-full justify-center items-center gap-10`}>
                 <CoverArtContainer 
-                    release={track.release} 
+                    release={release} 
                     areLyricsUnavailable={true}
-                    toggleLyrics={props.toggleLyrics} 
+                    toggleLyrics={lyrics.toggle} 
                 />
 
-                {/* <AnimatePresence>
+                <AnimatePresence>
                     {
-                        track.lyrics.status !== "unavailable" && props.areLyricsVisible
+                        lyrics.value.status !== "unavailable" && lyrics.areVisible
                     && 
                         <LyricsView 
                             timestamp={timestamp}
-                            trackID={track._id}
-                            lyricsObj={track.lyrics}
+                            
+                            id={lyrics._id}
+                            lyrics={lyrics.value}
 
                             seek={seek}
                             setSeekLine={setSeekLine}
                         />
                     }
-                </AnimatePresence> */}
+                </AnimatePresence>
 
-                {/* <div className='z-[50] flex absolute top-[calc(64px+50px)] right-0 mx-20'>
+                <div className='z-[50] flex absolute top-[calc(64px+50px)] right-0 mx-20'>
                     {
-                        track.lyrics.status !== "unavailable"
+                        lyrics.value.status !== "unavailable"
                     &&
                         <ButtonIcon 
                             className=
                             {`  
                                 z-[1]
-                                h-[35px] 
-                                m-4
-                                aspect-square 
-                                rounded-full bg-slate-300
-
                                 flex items-center justify-center
+                                h-[35px] aspect-square
+                                m-4
+                                 
+                                rounded-full bg-slate-300
                             `}
                             name='showLyrics'
                             icon={<MdLyrics />}
 
-                            onClick={props.toggleLyrics}
+                            onClick={lyrics.toggle}
                         />
                     }
-                </div> */}
+                </div>
             </section>
         </motion.div>       
     )
 })
 
-export default TrackOverlay
+export default TrackBodyOverlay
