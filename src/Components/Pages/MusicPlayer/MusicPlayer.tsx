@@ -1,7 +1,7 @@
 import { IoIosClose } from "react-icons/io";
 import useMusicPlayer, { PlayerState } from "../../../Utils/hooks/useMusicPlayer";
 import { Track } from "../../../Utils/types/track";
-import { baseURL } from "../../../config/config";
+import { baseURL, releaseURL } from "../../../config/config";
 import SeekBar from "../../Molecules/SeekBar";
 import { useCallback, useEffect } from "react";
 import TimeInformation from "./Components/TimeInformation";
@@ -10,6 +10,7 @@ import PlayerControls from "./Components/PlayerControls";
 import ToggleTriangle from "../../Atoms/ToggleTriangle";
 import { SeekFunctionType } from "../../../Utils/types";
 import { Timestamp } from "../../../Utils/hooks/useTimestamp";
+import { Overlay } from "../../../Utils/hooks/useOverlay";
 
 const CloseSection = (props: { onClick: () => void}) =>
 {
@@ -27,11 +28,7 @@ interface Props
 {
     timestamp: Timestamp,
     track: Track,
-    overlay:
-    {
-        isOn: boolean,
-        toggle: () => void
-    }
+    overlay: Overlay,
 
     seekLyric?: SeekFunctionType,
     retrieveSeekFunction: (seekFunction: SeekFunctionType) => void,
@@ -53,7 +50,7 @@ export const MusicPlayer = (props: Props) =>
 
     const stepForwards = useCallback(() => { console.log("Forwards!")  }, [])
 
-    useEffect(() => { reset()}, [track._id])
+    useEffect(() => { reset() }, [track._id])
 
     useEffect(() => {
       
@@ -72,17 +69,32 @@ export const MusicPlayer = (props: Props) =>
         }
     }, [seek, duration.value])
     
-
     const timeInfo = { duration: duration.value, timestamp: timestamp.value }
     
     return (
         <>
             <audio 
                 key={track._id}
+                title={track.title}
                 ref={audioControls.ref}
                 controlsList="nodownload noplaybackrate"
                 src={`${baseURL}/music/track/play/${track.release._id}/${track._id}`}
-                onLoadedMetadata={e => initialize(overlay.toggle)}
+                onLoadedMetadata={e => 
+                {
+                    const callback = () =>
+                    {
+                        overlay.show();
+
+                        navigator.mediaSession.metadata = new MediaMetadata({
+                            title: track.title,
+                            artist: track.artist.name,
+                            album: track.release.title,
+                            artwork: [{ src: `${releaseURL}/${track.release._id}/cover_art.jpeg` }],
+                          });
+                    }
+
+                    initialize(callback) 
+                }}
                 onTimeUpdate={e => timestamp.update(e.currentTarget.currentTime * 1000)}
                 onPlay={playerState.setToPlay}
                 onPause={playerState.setToPause}
@@ -106,7 +118,9 @@ export const MusicPlayer = (props: Props) =>
                                 className="invisible HD:visible justify-self-start flex gap-5"
                                 release={track.release}
                                 trackName={track.title} 
-                                artistName={track.artist.name} 
+                                artist={track.artist}
+
+                                onClick={overlay.hide}
                             />
 
                             <PlayerControls 

@@ -1,6 +1,15 @@
 import { useCallback, useState } from "react";
 
-const useOverlay = () =>
+export type Overlay =
+{
+    isOn: boolean, 
+    show: () => void,
+    hide: () => void,
+
+    toggle: () => void
+}
+
+const useOverlay = (): Overlay =>
 {
     const [isOn, setState] = useState<boolean>(false)
     
@@ -13,8 +22,7 @@ const useOverlay = () =>
         {
             isOn,
 
-            toggle,
-            show, hide
+            toggle, show, hide
         }
     )
 }

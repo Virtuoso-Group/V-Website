@@ -5,10 +5,12 @@ export const isWithinRange = (line: Line, timestamp: number) =>
 {
     if (line) 
     {
-        const { start, end } = line.range;
+        const { start, end } = line.interval;
 
         return start <= timestamp && timestamp <= end
     }
+
+    return false
 }
 
 // This should return the index of the closest line to the selected timestamp
@@ -34,7 +36,7 @@ const seekLineIndex = (lyrics: Lyrics, selectedTimestamp: number, lowIndex: numb
     {
         return midIndex
     }
-    else if (line.range.end < selectedTimestamp) 
+    else if (line.interval.end < selectedTimestamp) 
     {        
         return seekLineIndex(lyrics, selectedTimestamp, midIndex + 1, highIndex)
     }
@@ -79,6 +81,8 @@ const useLineIndex = (lyrics: Lyrics) =>
 
     const seek = (timestamp: number) => 
     {
+        console.log("timestamptimestamp: ", timestamp);
+        
        const newIndex = seekLineIndex(lyrics, timestamp, 0, lyrics.length);
               
        setValue(newIndex)
@@ -108,9 +112,12 @@ export const useLyricsReader = (trackID: string, timestamp: number, lyrics: Lyri
     : 
         {
             value: "",
-            range: { start: 0, end: 0 }
+            interval: { start: 0, end: 0 }
         }
     ;
+
+    console.log("lol: ", {trackID, index: index.value, timestamp, visibleLine});
+    
 
     useEffect(() => { index.seek(timestamp) }, [trackID])
 
@@ -120,14 +127,24 @@ export const useLyricsReader = (trackID: string, timestamp: number, lyrics: Lyri
 
         const chosenLine = lyrics[index.value];
 
-        if (chosenLine && timestamp > chosenLine.range.end) 
+        if (chosenLine && timestamp > chosenLine.interval.end) 
         {
             index.goForward();
         }
     }, [timestamp, lyrics])
+
+
+    
       
     return {  
         line: visibleLine,
+        index,
+
+        // value:
+        // {
+        //     index: index.value,
+        //     isVisible: isWithinRange(lyrics[index.value], timestamp)
+        // },
         seekLine: index.seek
     }
 }

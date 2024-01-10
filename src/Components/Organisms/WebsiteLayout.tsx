@@ -37,7 +37,7 @@ const WebsiteLogo = () =>
         </p>
     )
 }
-type WebsiteContext = { selectTrack: (track: Track) => void }
+type WebsiteContext = { selectTrack: (trackID: string) => void }
 
 // TODO: what should the semantic html tag be for this component?
 const WebsiteLayout = () =>
@@ -50,7 +50,6 @@ const WebsiteLayout = () =>
     
     useEffect(() => 
     { 
-        // fetchSong()
         return () => { track.reset() }
     }, []);
 

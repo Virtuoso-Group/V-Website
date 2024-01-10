@@ -7,7 +7,7 @@ import { AWS_URL } from '../../config/config';
 type Props = 
 { 
     track: Track, 
-    select: (song: Track) => void 
+    select: (trackID: string) => void 
 }
 
 const TrackCard = forwardRef<HTMLElement, Props>((props, ref) => 
@@ -22,7 +22,7 @@ const TrackCard = forwardRef<HTMLElement, Props>((props, ref) =>
         <article 
             ref={ref}
             className='flex cursor-pointer flex-col w-[150px] gap-2'
-            onClick={() => select(track)}
+            onClick={() => select(track._id)}
 
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}

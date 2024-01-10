@@ -35,5 +35,5 @@ export type Track =
        title: string,
     },
 
-    // lyrics: LyricsObject,
+    lyrics: LyricsObject,
 }

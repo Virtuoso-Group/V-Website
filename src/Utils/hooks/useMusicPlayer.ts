@@ -105,6 +105,8 @@ const useMusicPlayer = (timestamp: Timestamp, seekLyric?: SeekFunctionType) =>
 
     const seek = useCallback((percentage: number) =>
     { 
+        console.log("LOLOL");
+        
         const clipPercentage = (percentage: number): number =>
         {
             if (percentage < 0) 
@@ -138,7 +140,7 @@ const useMusicPlayer = (timestamp: Timestamp, seekLyric?: SeekFunctionType) =>
 
             audioControls.play()
         }
-    }, [duration.value])
+    }, [duration.value, seekLyric])
 
     const reset = () => 
     {        

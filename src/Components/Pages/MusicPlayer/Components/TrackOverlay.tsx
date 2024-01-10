@@ -42,6 +42,7 @@ const TrackControls = (props: Props) =>
     const [seekLyric, setSeekLyric] = useState<SeekFunctionType>()
     
     const overlay = useOverlay();
+    
 
     return (
         <>
@@ -59,8 +60,9 @@ const TrackControls = (props: Props) =>
                         {
                             {
                                 _id: track._id,
-                                value: { status: "unavailable"},
+                                value: track.lyrics,
                                 areVisible: areLyricsVisible,
+                                
                                 toggle: toggleLyrics
                             }
                         }

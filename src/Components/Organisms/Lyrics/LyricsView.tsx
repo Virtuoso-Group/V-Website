@@ -25,7 +25,7 @@ const LyricsView = (props: Props) =>
             className=
             {`
                 flex justify-center items-center
-                h-full w-[600px] 
+                h-full aspect-square
                 px-4
                 
                 bg-black/50 rounded-lg overflow-y-scroll
@@ -40,7 +40,7 @@ const LyricsView = (props: Props) =>
             transition={{ duration: 0.2 }}
         >
             {
-                lyrics.status === "synced"
+                lyrics.status === "Synced"
             ?
                 <ScrollableLyricsView 
                     timestamp={timestamp} 
@@ -50,11 +50,11 @@ const LyricsView = (props: Props) =>
                     setSeekLine={setSeekLine}
                 />
             :
-                lyrics.status === "unsynced"
+                lyrics.status === "Unsynced"
             ?
                 <UnsyncedLyricsView lyrics={lyrics.value} />
             :
-                lyrics.status === "instrumental"
+                lyrics.status === "Instrumental"
             &&
                 <pre className="w-fit font-bold text-white text-5xl h-fit text-center  drop-shadow-5xl">
                     ♪ Instrumental Track ♪

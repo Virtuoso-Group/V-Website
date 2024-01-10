@@ -18,7 +18,7 @@ const useAPI = <Result>(url: string, method: 'get' | 'post', defaultValue: Resul
     const [isLoading, setLoading] = useState<boolean>(false);
     const [data, setData] = useState<Result>(defaultValue);
 
-    const execute = async () =>
+    const execute = async (id = "") =>
     {        
         if (isLoading) 
         {
@@ -29,7 +29,7 @@ const useAPI = <Result>(url: string, method: 'get' | 'post', defaultValue: Resul
         
         try 
         {
-            const response = await VirtuosoClient[method]<Result>(url,
+            const response = await VirtuosoClient[method]<Result>(url + (id),
             {
                 signal: controller.signal
             })
@@ -43,6 +43,7 @@ const useAPI = <Result>(url: string, method: 'get' | 'post', defaultValue: Resul
         } 
         catch (e) 
         {
+            setLoading(false);
             const error = e as AxiosError;
 
             // console.log("error: ", error);
@@ -52,6 +53,12 @@ const useAPI = <Result>(url: string, method: 'get' | 'post', defaultValue: Resul
                 // console.log("Bad request!");
             }
         }
+    }
+
+    const reset = () =>
+    {
+        setLoading(false);
+        setData(defaultValue)
     }
 
     useEffect(() => 
@@ -65,7 +72,8 @@ const useAPI = <Result>(url: string, method: 'get' | 'post', defaultValue: Resul
 
         isLoading,
 
-        execute
+        execute,
+        reset
     }
 }
 

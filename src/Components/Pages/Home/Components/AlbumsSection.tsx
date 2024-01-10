@@ -20,7 +20,7 @@ const AlbumsSection = () =>
 {
     const navigate = useNavigate();
 
-    const albums = useAPI<Release[]>("music/album/getAll", 'get', [])
+    const albums = useAPI<Release[]>("music/release/getAll", 'get', [])
 
     useEffect(() => { albums.execute() }, []);
 

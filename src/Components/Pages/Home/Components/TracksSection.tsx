@@ -1,29 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import TrackCard from '../../../Molecules/TrackCard';
 import { useWebsiteContext } from '../../../Organisms/WebsiteLayout';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Track } from '../../../../Utils/types/track';
-import axios from 'axios';
-import { baseURL } from '../../../../config/config';
 import useAPI from '../../../../Utils/hooks/useAPI';
 
 const MotionTrackCard = motion(TrackCard);
 
-
-// const sortedTracks = res.data.tracks.sort((trackA: Track, trackB: Track) => 
-// {
-//     if (trackA.artist._id === trackB.artist._id) 
-//     {
-//         if (trackA.release._id === trackB.release._id) 
-//         {
-//             return trackA.title.localeCompare(trackB.title) 
-//         } 
-
-//         return trackA.release._id.localeCompare(trackB.release._id)
-//     }
-
-//     return trackA.artist._id.localeCompare(trackB.artist._id)
-// })
 const TracksSection = () => 
 {
     const { selectTrack } = useWebsiteContext();

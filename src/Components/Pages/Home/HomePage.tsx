@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Category } from '../../../Utils/types';
 import Chip from '../../Atoms/Chip';
 import TracksSection from './Components/TracksSection';
-import AlbumsSection from './Components/AlbumsSection';
+import ReleasesSection from './Components/AlbumsSection';
 import ArtistsSection from './Components/ArtistsSection';
 
 const Categories: Category[] = 
@@ -25,7 +25,7 @@ const HomePage = () =>
     const HomeSections: { [index: string]: () => JSX.Element } = 
     {
         'tracks': TracksSection,
-        'albums': AlbumsSection,
+        'albums': ReleasesSection,
         'artists': ArtistsSection
     }
 

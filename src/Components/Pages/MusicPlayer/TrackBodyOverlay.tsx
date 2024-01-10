@@ -109,7 +109,7 @@ const TrackBodyOverlay = memo((props: Props) =>
 
                 <AnimatePresence>
                     {
-                        lyrics.value.status !== "unavailable" && lyrics.areVisible
+                        lyrics.value.status !== "Unavailable" && lyrics.areVisible
                     && 
                         <LyricsView 
                             timestamp={timestamp}
@@ -125,7 +125,7 @@ const TrackBodyOverlay = memo((props: Props) =>
 
                 <div className='z-[50] flex absolute top-[calc(64px+50px)] right-0 mx-20'>
                     {
-                        lyrics.value.status !== "unavailable"
+                        lyrics.value.status !== "Unavailable"
                     &&
                         <ButtonIcon 
                             className=
