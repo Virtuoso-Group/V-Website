@@ -3,7 +3,7 @@ import WebsiteHeader from "./WebsiteHeader";
 import { useEffect, useState } from "react";
 import TrackControls from "../Pages/MusicPlayer/Components/TrackOverlay";
 import useTrack from "../../Utils/hooks/useTrack";
-import { Track } from "../../Utils/types/track";
+
 
 const WebsiteLogo = () =>
 {
@@ -50,18 +50,24 @@ const WebsiteLayout = () =>
     
     useEffect(() => 
     { 
+       const root =  document.documentElement;
+
+       root.style.setProperty(
+        "--base-font-size",
+        "16px",
+    )
+       
         return () => { track.reset() }
     }, []);
 
     
     return (
-        <main className="relative min-h-screen w-screen bg-primary pb-[128px]">
-            <WebsiteHeader 
-                className="z-[50] self-start fixed"
-                start={<WebsiteLogo />}
-            />
+        <main 
+            className="relative min-h-screen w-screen bg-primary pb-[8rem]"
+        >
+            <WebsiteHeader className="z-[50] self-start fixed" start={<WebsiteLogo />} />
 
-            <div className="z-[10] min-h-screen min-w-screen">
+            <div className="z-[10] min-h-screen min-w-screen ">
                 <Outlet context={{ selectTrack: track.selectTrack } satisfies WebsiteContext} />
             </div>
 

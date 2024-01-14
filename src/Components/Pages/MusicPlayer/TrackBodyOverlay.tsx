@@ -45,18 +45,23 @@ const CoverArtContainer = memo((props:
     const coverArt = `${releaseURL}/${release._id}/cover_art.jpeg`;
 
     return ( 
-        <motion.div 
-            layout
-            className='relative h-full flex justify-end aspect-square object-fit drop-shadow-2xl'
-            transition={{ duration: 0.25 }}
-        >
-            <CoverArt 
-                className={`z-[50] absolute h-full w-full rounded-lg `}
-                name={release.title}
-                coverArt={coverArt?? ""} 
-                loading={"eager"}
-            />
-        </motion.div>
+    <motion.div 
+        layout
+        className=
+        {`
+            absolute SD:relative 
+            w-screen SD:w-fit 
+            SD:h-full 
+            SD:flex justify-center aspect-square object-fit drop-shadow-2xl
+        `}
+    >
+        <CoverArt 
+            className={`z-[40] absolute h-full SD:rounded-lg `}
+            name={release.title}
+            coverArt={coverArt?? ""} 
+            loading={"eager"}
+        />
+    </motion.div>
     )
 })
 
@@ -92,7 +97,7 @@ const TrackBodyOverlay = memo((props: Props) =>
 
     return (
         <motion.div 
-            className={`bg-blue-600  z-[49] fixed grid w-screen bottom-10 min-h-screen jutsfiy-center items-center`}
+            className={`bg-blue-600  z-[49] fixed grid w-screen bottom-10 min-h-screen SD:jutsfiy-center SD:items-center`}
             initial={{  opacity: 0 }}
             animate={{  opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -100,7 +105,18 @@ const TrackBodyOverlay = memo((props: Props) =>
         >
             <Background coverArt={coverArt} />
 
-            <section className={`mt-[64px] z-[99] h-[300px] HD:h-[400px] XGA:h-[500px] flex w-full justify-center items-center gap-10`}>
+            <section 
+                className=
+                {`
+                    z-[99]
+                    mt-[6.5rem] SD:mt-[4rem]  
+                    h-full SD:h-[23rem] XGA:h-[30rem]  
+                    
+                    SD:flex SD:justify-center SD:items-center 
+
+                    gap-10
+                `}
+            >
                 <CoverArtContainer 
                     release={release} 
                     areLyricsUnavailable={true}
@@ -108,7 +124,7 @@ const TrackBodyOverlay = memo((props: Props) =>
                 />
 
                 <AnimatePresence>
-                    {
+                    { 
                         lyrics.value.status !== "Unavailable" && lyrics.areVisible
                     && 
                         <LyricsView 
@@ -123,22 +139,23 @@ const TrackBodyOverlay = memo((props: Props) =>
                     }
                 </AnimatePresence>
 
-                <div className='z-[50] flex absolute top-[calc(64px+50px)] right-0 mx-20'>
+                <div className='z-[99] flex absolute top-[6rem] SD:top-[7.125rem] right-0'>
                     {
                         lyrics.value.status !== "Unavailable"
                     &&
                         <ButtonIcon 
                             className=
                             {`  
-                                z-[1]
+                                z-[99]
                                 flex items-center justify-center
-                                h-[35px] aspect-square
+
+                                h-[2.1875rem] aspect-square
                                 m-4
                                  
                                 rounded-full bg-slate-300
                             `}
                             name='showLyrics'
-                            icon={<MdLyrics />}
+                            icon={<MdLyrics size={"1rem"}/>}
 
                             onClick={lyrics.toggle}
                         />

@@ -21,7 +21,7 @@ const TrackCard = forwardRef<HTMLElement, Props>((props, ref) =>
     return (
         <article 
             ref={ref}
-            className='flex cursor-pointer flex-col w-[150px] gap-2'
+            className='flex cursor-pointer flex-col w-[9.375rem] gap-2'
             onClick={() => select(track._id)}
 
             onMouseEnter={() => setIsHover(true)}

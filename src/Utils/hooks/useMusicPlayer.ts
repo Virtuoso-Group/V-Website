@@ -3,7 +3,8 @@ import { SeekFunctionType } from "../types";
 
 export enum PlayerState 
 {
-    PLAYING = "Playing",
+    LOADING = "LOADING",
+    PLAYING = "PLAYING",
     PAUSED = "PAUSED",
     STOPPED = "STOPPED"
 }
@@ -15,13 +16,16 @@ const usePlayerState = () =>
 
     const setToPlay = useCallback(() => setValue(PlayerState.PLAYING), []);
 
+    const setToLoading = useCallback(() => setValue(PlayerState.LOADING), []);
+
     const setToPause = useCallback(() => setValue(PlayerState.PAUSED), [])
 
     const reset = useCallback(() =>  setValue(PlayerState.STOPPED), []);
 
-
     return {
         value,
+
+        setToLoading,
 
         setToPlay,
 
@@ -104,9 +108,7 @@ const useMusicPlayer = (timestamp: Timestamp, seekLyric?: SeekFunctionType) =>
     }
 
     const seek = useCallback((percentage: number) =>
-    { 
-        console.log("LOLOL");
-        
+    {         
         const clipPercentage = (percentage: number): number =>
         {
             if (percentage < 0) 
@@ -148,9 +150,6 @@ const useMusicPlayer = (timestamp: Timestamp, seekLyric?: SeekFunctionType) =>
 
         timestamp.reset();
     }
-
-
-      
 
     return {
         playerState,

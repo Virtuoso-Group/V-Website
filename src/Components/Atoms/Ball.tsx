@@ -27,7 +27,9 @@ const Ball = (props: BallProps) =>
                 z-[2] 
                 relative 
 
-                aspect-square h-[15px] 
+                aspect-square 
+                
+                h-[0.9375rem]
 
                 rounded-full 
                 bg-white 

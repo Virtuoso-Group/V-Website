@@ -11,10 +11,10 @@ module.exports = {
       //  Standard
       'SD': '640px',
 
-      // HD
-      'HD': '720px',
+      
       'XGA': '1024px',
-      'FHD': '1080px',
+      'HD': '1280px',
+      'FHD': '1920px',
       '2K': '2560px',
 
       // Ultra HD
@@ -27,7 +27,8 @@ module.exports = {
 
       colors:
       {
-        "primary": "#11B4D4"
+        "primary": "#11B4D4",
+        "secondary": "#dc143c"
       },
       
       fontFamily:
@@ -46,6 +47,8 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    // require('@tailwindcss/aspect-ratio'),
+  ],
 }
 

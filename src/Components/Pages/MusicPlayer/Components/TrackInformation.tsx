@@ -21,7 +21,7 @@ const TrackInformation = memo((props: SongInfoProps) =>
     return (
         <div className={`flex items-center whitespace-nowrap ${className}`}>
             <CoverArt
-                className={`h-[50px] bg-blue-800 rounded-sm`}
+                className={`h-[3.125rem] bg-blue-800 rounded-sm`}
                 name={release.title}
                 coverArt={getCoverArt(release._id)??""} 
             />

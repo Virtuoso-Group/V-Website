@@ -1,37 +1,57 @@
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import { IconType } from "react-icons";
 import ButtonIcon from "../../../Atoms/ButtonIcon";
 import { FaPause, FaPlay, FaStepBackward, FaStepForward } from "react-icons/fa";
+import { PlayerState } from "../../../../Utils/hooks/useMusicPlayer";
+
+import PuffLoader from 'react-spinners/PuffLoader'
+import { JsxElement } from "typescript";
 
 interface PlayerControlsProps 
 {
     className?: string,
-    isPlaying: boolean,
+    playerState: PlayerState,
 
     stepBackwards: () => void,
     togglePlay: () => void,
     stepForwards: () => void,
 }
 
+const MiddleButton = (props: { playerState: PlayerState }) =>
+{
+    const { playerState } = props;
+
+    const MiddleIcon: { [index in PlayerState]: JSX.Element } = 
+    {
+        [PlayerState.PLAYING]: <FaPause size={"1.5625rem"} />,
+
+        [PlayerState.PAUSED]: <FaPlay size={"1.5625rem"} />,
+
+        [PlayerState.STOPPED]: <FaPlay size={"1.5625rem"} />,
+
+        [PlayerState.LOADING]: <PuffLoader color="#dc143c" loading={true} size={"1.5625rem"} />
+    }
+
+   return MiddleIcon[playerState]
+}
+
 const PlayerControls = memo((props: PlayerControlsProps) =>
 {
-    const { className, isPlaying, stepBackwards, togglePlay, stepForwards } = props;
-
-    const PlayPauseIcon: IconType = isPlaying? FaPause: FaPlay;
-        
+    const { className, playerState, stepBackwards, togglePlay, stepForwards } = props;
+    
     return (
         <div className={`${className}`}>
             <ButtonIcon 
                 className=
                 {`
-                    h-[35px] 
+                    h-[2.1875rem]
                     aspect-square 
                     rounded-full bg-slate-300
 
                     flex items-center justify-center
                 `}
                 name="Step Forward"
-                icon={<FaStepBackward size={15}/>}
+                icon={<FaStepBackward size={"1rem"}/>}
 
                 onClick={stepBackwards}
             />
@@ -39,14 +59,14 @@ const PlayerControls = memo((props: PlayerControlsProps) =>
             <ButtonIcon 
                 className=
                 {`
-                    h-[50px] 
+                    h-[3.125rem]
                     aspect-square 
                     rounded-full bg-slate-300
 
                     flex items-center justify-center
                 `}
                 name="Play"
-                icon={<PlayPauseIcon size={25}/>}
+                icon={<MiddleButton playerState={playerState} />}
 
                 onClick={togglePlay}
             />
@@ -54,14 +74,14 @@ const PlayerControls = memo((props: PlayerControlsProps) =>
             <ButtonIcon 
                 className=
                 {`
-                    h-[35px]  
+                    h-[2.1875rem]
                     aspect-square 
                     rounded-full bg-slate-300
 
                     flex items-center justify-center
                 `}
                 name="Step Forward"
-                icon={<FaStepForward size={15}/>}
+                icon={<FaStepForward size={"1rem"}/>}
 
                 onClick={stepForwards}
             />

@@ -8,7 +8,6 @@ type Props =
     toggle: () => void
 }
 
-
 const ToggleTriangle = memo((props: Props) => 
 {
     const { isOn, toggle } = props;
@@ -23,7 +22,7 @@ const ToggleTriangle = memo((props: Props) =>
             >
                 <GoTriangleDown 
                     className={`fill-white`}
-                    size={35}
+                    size={"2.25rem"}
                 />
             </motion.div>
         </div>

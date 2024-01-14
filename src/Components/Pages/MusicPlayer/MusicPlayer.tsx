@@ -16,10 +16,9 @@ const CloseSection = (props: { onClick: () => void}) =>
 {
     return (
         <div
-            className='me-5 w-fit h-fit flex items-center justify-center'
-            onClick={props.onClick}
+            className='w-fit h-fit flex items-center justify-center cursor-pointer'
         >
-            <IoIosClose  className={`fill-white`} size={35} />
+            <IoIosClose  className={`fill-white me-5 `} size={"2.25rem"} onClick={props.onClick}/>
         </div>
     )
 }
@@ -95,9 +94,12 @@ export const MusicPlayer = (props: Props) =>
 
                     initialize(callback) 
                 }}
+                
                 onTimeUpdate={e => timestamp.update(e.currentTarget.currentTime * 1000)}
                 onPlay={playerState.setToPlay}
                 onPause={playerState.setToPause}
+                onLoadStart={playerState.setToLoading}
+                
                 onEnded={reset}
                 onCanPlay={() => console.log("I can play!")}
             />
@@ -110,12 +112,12 @@ export const MusicPlayer = (props: Props) =>
                         controls={{ pause: audioControls.pause, seek }}
                     />
 
-                    <div className="w-full flex items-center justify-between h-[75px]  py-[25px]">
+                    <div className="w-full flex items-center justify-between h-[4.6875rem] py-[1.5625rem]">
                         <ToggleTriangle {...overlay} />
 
                         <div className="grid grid-cols-3 content-center w-full h-full  px-20">
                             <TrackInformation 
-                                className="invisible HD:visible justify-self-start flex gap-5"
+                                className="invisible SD:visible justify-self-start flex gap-5"
                                 release={track.release}
                                 trackName={track.title} 
                                 artist={track.artist}
@@ -125,7 +127,7 @@ export const MusicPlayer = (props: Props) =>
 
                             <PlayerControls 
                                 className="flex items-center gap-10  justify-self-center h-full"
-                                isPlaying={playerState.value === PlayerState.PLAYING} 
+                                playerState={playerState.value}
 
                                 stepBackwards={stepBackwards}
                                 togglePlay={audioControls.togglePlay}
@@ -135,7 +137,7 @@ export const MusicPlayer = (props: Props) =>
                             <TimeInformation 
                                 className=
                                 {`
-                                    flex items-center justify-center
+                                    hidden SD:flex items-center justify-center
                                     justify-self-end
                                     font-light text-gray-300
                                     text-xs
@@ -144,7 +146,7 @@ export const MusicPlayer = (props: Props) =>
                             />
                         </div>
 
-                        <div className="right-0 absolute flex items-center cursor-pointer">
+                        <div className="right-0 absolute flex items-center">
                             <CloseSection onClick={close}/>
                         </div>
                     </div>

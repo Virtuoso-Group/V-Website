@@ -42,12 +42,12 @@ export const ArtistPage = () =>
             min-h-screen w-screen 
             flex flex-col 
             gap-20
-            pt-[calc(64px+25px)]
+            pt-[5.5625rem]
             px-20 
         `}
     >
       {/* Basic artist info */}
-      <div className="border h-[250px] flex gap-10">
+      <div className="border h-[15.625rem] flex gap-10">
         <Avatar
           className="h-full" 
           src={artist?.image?? ""} 
@@ -60,7 +60,7 @@ export const ArtistPage = () =>
       </div>
 
       {/* Their content */}
-      <div className="h-[200px] border">
+      <div className="h-[12.5rem] border">
         <h1 className="text-2xl text-white font-bold">{"Albums"}</h1>
       </div>
     </div>

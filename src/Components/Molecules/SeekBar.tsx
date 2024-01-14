@@ -83,7 +83,7 @@ const SeekBar = (props: SeekBarProps) =>
     return (
     <div 
         ref={barContainerRef}
-        className='relative w-full h-[3.5px] bg-slate-400 cursor-pointer flex items-center'
+        className='relative w-full h-[0.21875rem] bg-slate-400 cursor-pointer flex items-center'
         onClick={e => seekWrapper(e.clientX)}
     >
         <motion.div 

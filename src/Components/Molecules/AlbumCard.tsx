@@ -23,7 +23,7 @@ const ReleaseCard = (props: Props) =>
 
     return (
         <article
-            className='flex cursor-pointer flex-col w-[150px] gap-2'
+            className='flex cursor-pointer flex-col w-[9.375rem] gap-2'
             onClick={onClick}
 
             onMouseEnter={() => setIsHover(true)}
@@ -31,13 +31,13 @@ const ReleaseCard = (props: Props) =>
         >  
             <div className='relative'>
                 <CoverArt 
-                    className={`absolute right-5 z-[0] rounded-lg scale-[0.9] bg-blend-darken`}
+                    className={`w-full absolute right-5 z-[0] rounded-lg scale-[0.9] bg-blend-darken`}
                     name={release.title}
                     coverArt={coverArtURL} 
                 />
 
                 <CoverArt 
-                    className={`relative z-[5] rounded-lg drop-shadow-2xl `}
+                    className={`w-full relative z-[5] rounded-lg drop-shadow-2xl `}
                     name={release.title}
                     coverArt={coverArtURL} 
                 />

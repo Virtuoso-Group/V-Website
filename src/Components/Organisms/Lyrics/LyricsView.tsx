@@ -24,19 +24,22 @@ const LyricsView = (props: Props) =>
             layout
             className=
             {`
-                flex justify-center items-center
-                h-full aspect-square
+                absolute SD:relative
+                w-full SD:w-fit
+                
+                SD:flex SD:justify-center SD:items-center
+                h-full SD:aspect-square
                 px-4
                 
-                bg-black/50 rounded-lg overflow-y-scroll
-
+                bg-black/50 SD:rounded-lg overflow-y-scroll
+                
                 select-none
             `}
 
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "100%", opacity: [0, 1] }}
+            initial={{  opacity: 0 }}
+            animate={{  opacity: [0, 1] }}
 
-            exit={{ height: 0, opacity: 0 }}
+            exit={{  opacity: 0 }}
             transition={{ duration: 0.2 }}
         >
             {
@@ -56,9 +59,17 @@ const LyricsView = (props: Props) =>
             :
                 lyrics.status === "Instrumental"
             &&
-                <pre className="w-fit font-bold text-white text-5xl h-fit text-center  drop-shadow-5xl">
-                    ♪ Instrumental Track ♪
-                </pre>
+                <div className='mt-[25%] h-1/2 w-full flex justify-center items-center'>
+                    <pre 
+                        className=
+                        {`
+                            w-fit h-fit font-bold 
+                            text-white text-xl XGA:text-3xl text-center  drop-shadow-5xl
+                        `}
+                    >
+                        ♪ Instrumental Track ♪
+                    </pre>
+                </div>
             }
         </motion.div>
     )

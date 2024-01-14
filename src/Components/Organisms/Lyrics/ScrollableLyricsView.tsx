@@ -38,7 +38,7 @@ const Line = (props: {  value: string, isSelected: boolean,  onClick: () => void
                 ${
                     props.isSelected
                 ? 
-                    "font-bold drop-shadow-5xl py-[18px] text-white text-2xl XGA:text-5xl"
+                    "font-bold drop-shadow-5xl py-[1.125rem] text-white text-2xl XGA:text-5xl"
                 : 
                     "text-xl XGA:text-3xl text-white/60"
                 }
@@ -72,7 +72,18 @@ const ScrollableLyricsView = (props: Props) =>
     }, [])
     
     return (
-        <div className="z-[50] h-full w-full overflow-scroll flex flex-col items-center gap-10 py-10">
+        <div 
+            className=
+            {`
+                z-[50] 
+                SD:h-full w-full overflow-scroll 
+                flex flex-col items-center 
+                gap-10 
+                pt-[5rem] SD:pt-0 
+                pb-[calc(6.5rem+5rem)] SD:pb-0
+                SD:py-10
+            `}
+        >
             {
                 lyrics.map((line, index) =>
                 {

@@ -15,7 +15,9 @@ const WebsiteHeader = (props: Props) =>
         <header 
             className=
             {`
-                h-[64px] w-full 
+                h-[4rem]
+
+                w-full 
                 flex items-center
                 px-10 HD:px-20
                 bg-black

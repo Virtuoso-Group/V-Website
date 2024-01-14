@@ -1,27 +1,28 @@
-import { AnimatePresence } from 'framer-motion'
-import { useEffect } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import ArtistCard from '../../../Molecules/ArtistCard';
 import { Artist } from '../../../../Utils/types/track';
 import { useNavigate } from 'react-router';
-import useAPI from '../../../../Utils/hooks/useAPI';
 
-// const sortedArtists = res.data.artists.sort((artistA: Artist, artistB: Artist) => artistA.name.localeCompare(artistB.name));
+const MotionArtistCard = motion(ArtistCard);
 
-const ArtistsSection = () => 
+const ArtistsSection = (props: { data: Artist[] }) => 
 {
     const navigate = useNavigate();
 
-    const artists = useAPI<Artist[]>("music/artist/getAll", 'get', [])
-
-    useEffect(() => { artists.execute() }, []);
-
     return (
         <AnimatePresence>
-            {artists.data.map(artist => 
+            {props.data.map((artist, index) => 
                 {
                     return (
-                        <ArtistCard 
+                        <MotionArtistCard 
                             key={artist._id}
+
+                            initial={{ opacity: 0}}
+
+                            animate={{ opacity: 1 }}
+
+                            transition={{ duration: 0.05 * (index + 1)}}
+
                             artist={artist}
                             onClick={() => { navigate(`/artist/${artist._id}`) }}
                         />
