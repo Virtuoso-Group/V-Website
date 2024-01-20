@@ -49,7 +49,7 @@ const HomePage = () =>
 
     return (
         <div className={`flex flex-col gap-10 pt-[4rem]`}>
-            <div className='pt-[4.0625rem] px-10 HD:px-20 z-[49] top-[1.5625rem] fixed w-full flex gap-5 bg-primary'>
+            <div className='pt-[4.0625rem] z-[49] top-[1.5625rem] fixed w-full flex gap-5 bg-primary'>
                 {
                     Categories.map((category, index) =>  
                     {
@@ -67,7 +67,7 @@ const HomePage = () =>
                 }
             </div>
             
-            <div className='px-10 HD:px-20 mt-20 flex flex-wrap w-full gap-8 h-full'>
+            <div className='mt-20 flex flex-wrap w-full gap-8 h-full'>
                 {ChosenSection}
             </div>
         </div>

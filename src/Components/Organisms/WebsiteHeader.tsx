@@ -19,7 +19,7 @@ const WebsiteHeader = (props: Props) =>
 
                 w-full 
                 flex items-center
-                px-10 HD:px-20
+                
                 bg-black
                 ${className}
             `}

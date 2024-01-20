@@ -53,26 +53,28 @@ export const useCurrentTimestamp = (trackID: string, audioElement: RefObject<HTM
 
     useEffect(() => 
     {
-        const printSomething = (e: Event) => 
+        const update = (e: Event) => 
         {
             if (audioElement.current?.currentTime) 
-            {
-                console.log("audioElement.current?.currentTime * 1000: ", audioElement.current?.currentTime * 1000);
-                
+            {                                
                 setCurrentTimestamp(audioElement.current?.currentTime * 1000)
             }
         }
 
+        const reset = () => setCurrentTimestamp(0)
+
         if (audioElement.current) 
         {
-            audioElement.current.addEventListener("timeupdate", printSomething)
+            audioElement.current.addEventListener("timeupdate", update)
+            audioElement.current.addEventListener("ended", reset)
         }
     
         return () => 
         {            
             if (audioElement.current) 
             {
-                audioElement.current.removeEventListener("timeupdate", printSomething)
+                audioElement.current.removeEventListener("timeupdate", update)
+                audioElement.current.removeEventListener("ended", reset)
             }  
         }
     }, [trackID])    
@@ -102,8 +104,6 @@ const useAudioControls = (playerState: PlayerState) =>
     }, [])
 
     
-    
-
     return {
         ref,
 
@@ -179,7 +179,7 @@ const useMusicPlayer = (seekLyric?: SeekFunctionType) =>
     {        
         playerState.reset();
 
-        // audioControls.seek(0)
+        audioControls.seek(0)
     }
 
     return {

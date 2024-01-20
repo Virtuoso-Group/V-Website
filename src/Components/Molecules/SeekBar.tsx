@@ -72,9 +72,7 @@ const SeekBar = memo((props: SeekBarProps) =>
     }, [props.controls])
 
     const release = useCallback((xPoint: number) =>
-    {
-        console.log("xPoint: ", xPoint);
-        
+    {        
         setIsDragging(false)
         seekWrapper(xPoint)
     }, [seekWrapper])

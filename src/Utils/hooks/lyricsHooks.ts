@@ -58,10 +58,10 @@ const useLineIndex = (lyrics: LyricsObject) =>
         {
             setValue(0)
         }
-    }, []);
+    }, [lyrics]);
 
 
-    const goForward = useCallback(() => 
+    const goForward = () => 
     {
         if (lyrics.status !== "Synced") return
 
@@ -71,9 +71,9 @@ const useLineIndex = (lyrics: LyricsObject) =>
         }
 
         setValue(value => value + 1)
-    }, [])
+    }
 
-    const goBack = useCallback(() => 
+    const goBack = () => 
     {
         if (lyrics.status !== "Synced") return
 
@@ -83,23 +83,23 @@ const useLineIndex = (lyrics: LyricsObject) =>
         }
 
         setValue(value => value - 1)
-    }, [])
+    }
 
-    const seek = useCallback((timestamp: number) => 
+    const seek = (timestamp: number) => 
     {        
         if (lyrics.status !== "Synced") return
 
         const newIndex = seekLineIndex(lyrics.value, timestamp, 0, lyrics.value.length);
               
         setValue(newIndex)
-    }, [])
+    }
 
-    const reset = useCallback(() => 
+    const reset = () => 
     {
         if (lyrics.status !== "Synced") return
 
         setValue(lyrics.value.length > 0? 0 : -1)
-    }, [])
+    }
 
 
     return {
@@ -131,14 +131,12 @@ export const useLyrics = (trackID: string, lyrics: LyricsObject) =>
     }, [trackID])
 
     
-    const update = useCallback((timestamp: number) =>
+    const update = (timestamp: number) =>
     {
         if (lyrics.status !== "Synced")  return;
 
-        if (timestamp === 0) index.reset()
-
         const chosenLine = lyrics.value[index.value];
-
+        
         if (chosenLine) 
         {
             if (timestamp > chosenLine.interval.end) 
@@ -175,7 +173,7 @@ export const useLyrics = (trackID: string, lyrics: LyricsObject) =>
                 })
             }
         }
-    }, [index.value, lyrics])
+    }
 
     return {  
         selectedLine,        

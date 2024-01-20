@@ -68,9 +68,9 @@ const WebsiteLayout = () =>
         <main 
             className="relative min-h-screen w-screen bg-primary pb-[8rem]"
         >
-            <WebsiteHeader className="z-[50] self-start fixed" start={<WebsiteLogo />} />
+            <WebsiteHeader className="z-[50] self-start fixed px-5 SD:px-10 HD:px-20" start={<WebsiteLogo />} />
 
-            <div className="z-[10] min-h-screen min-w-screen ">
+            <div className="z-[10] min-h-screen min-w-screen px-5 SD:px-10 HD:px-20">
                 <Outlet context={{ selectTrack: track.selectTrack } satisfies WebsiteContext} />
             </div>
 

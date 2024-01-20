@@ -98,7 +98,7 @@ export const MusicPlayer = (props: Props) =>
                 
                 onTimeUpdate=
                 {e => 
-                {
+                {                    
                     lyrics.update(e.currentTarget.currentTime * 1000);
                 }}
                 onPlay={playerState.setToPlay}
@@ -110,7 +110,6 @@ export const MusicPlayer = (props: Props) =>
                 onPlaying={playerState.setToPlay}
                 
                 onEnded={reset}
-                onCanPlay={() => console.log("I can play!")}
             />
 
             <AnimatePresence>
