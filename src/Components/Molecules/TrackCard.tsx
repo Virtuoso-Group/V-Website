@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react'
+import { forwardRef, memo, useState } from 'react'
 import CoverArt from '../Atoms/CoverArt';
 import Marquee from 'react-fast-marquee';
 import { Track } from '../../Utils/types/track';
@@ -19,7 +19,7 @@ type Props =
     }
 }
 
-const TrackCard = forwardRef<HTMLElement, Props>((props, ref) => 
+const TrackCard = memo(forwardRef<HTMLElement, Props>((props, ref) => 
 {
     const { hover, track } = props;
 
@@ -53,6 +53,6 @@ const TrackCard = forwardRef<HTMLElement, Props>((props, ref) =>
             </div>
         </article>
     )
-})
+}))
 
 export default TrackCard

@@ -3,6 +3,7 @@ import { useCurrentTimestamp } from "../../../../Utils/hooks/useMusicPlayer";
 
 interface Props
 {
+    trackID: string,
     audioRef: RefObject<HTMLAudioElement>,
     className?: string,
     duration: number, 
@@ -12,7 +13,7 @@ const TimeInformation = memo((props: Props) =>
 {
     const { className } = props;
 
-    const timestamp = useCurrentTimestamp(props.audioRef);
+    const timestamp = useCurrentTimestamp(props.trackID, props.audioRef);
 
     const convertMilliToTimeStamp = (milliseconds: number): string =>
     {

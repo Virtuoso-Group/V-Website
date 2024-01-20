@@ -24,7 +24,7 @@ const SeekBar = memo((props: SeekBarProps) =>
     const barContainerRef = useRef<HTMLDivElement>(null);
     const { duration, } = props;
 
-    const current = useCurrentTimestamp(props.audioRef);
+    const current = useCurrentTimestamp(props.trackID, props.audioRef);
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const [ballPosition, setBallPosition] = useState<number>(0);
     const [currentPercentage, setCurrentPercentage] = useState<number>(0)

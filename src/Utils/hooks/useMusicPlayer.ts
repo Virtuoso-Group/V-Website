@@ -47,7 +47,7 @@ const useDuration = () =>
     return { value, initialize }
 }
 
-export const useCurrentTimestamp = (audioElement: RefObject<HTMLAudioElement>) =>
+export const useCurrentTimestamp = (trackID: string, audioElement: RefObject<HTMLAudioElement>) =>
 {
     const [currentTimestamp, setCurrentTimestamp] = useState<number>(0);
 
@@ -57,6 +57,8 @@ export const useCurrentTimestamp = (audioElement: RefObject<HTMLAudioElement>) =
         {
             if (audioElement.current?.currentTime) 
             {
+                console.log("audioElement.current?.currentTime * 1000: ", audioElement.current?.currentTime * 1000);
+                
                 setCurrentTimestamp(audioElement.current?.currentTime * 1000)
             }
         }
@@ -73,7 +75,7 @@ export const useCurrentTimestamp = (audioElement: RefObject<HTMLAudioElement>) =
                 audioElement.current.removeEventListener("timeupdate", printSomething)
             }  
         }
-    }, [])    
+    }, [trackID])    
 
     return currentTimestamp
 }
@@ -177,8 +179,7 @@ const useMusicPlayer = (seekLyric?: SeekFunctionType) =>
     {        
         playerState.reset();
 
-        audioControls.seek(0)
-        // timestamp.reset();
+        // audioControls.seek(0)
     }
 
     return {

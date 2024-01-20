@@ -104,6 +104,10 @@ export const MusicPlayer = (props: Props) =>
                 onPlay={playerState.setToPlay}
                 onPause={playerState.setToPause}
                 onLoadStart={playerState.setToLoading}
+
+                onWaiting={playerState.setToLoading}
+                // onProgress={playerState.setToPlay}
+                onPlaying={playerState.setToPlay}
                 
                 onEnded={reset}
                 onCanPlay={() => console.log("I can play!")}
@@ -162,6 +166,7 @@ export const MusicPlayer = (props: Props) =>
                             />
                         
                             <TimeInformation 
+                                trackID={track._id}
                                 audioRef={audioControls.ref}
                                 className=
                                 {`
