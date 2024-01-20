@@ -172,14 +172,7 @@ const useMusicPlayer = (seekLyric?: SeekFunctionType) =>
     }, [duration.value])
 
     const seekTimestamp = useCallback((timestamp: number) => seekPercentage((timestamp/duration.value)), [seekPercentage])
-
-
-    useEffect(() => 
-    {
-      console.log("seek: ", seekPercentage);
-    }, [seekPercentage])
     
-
     const reset = () => 
     {        
         playerState.reset();
