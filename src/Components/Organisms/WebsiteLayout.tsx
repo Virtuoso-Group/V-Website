@@ -1,7 +1,11 @@
 import { Outlet, useNavigate, useOutletContext } from "react-router-dom";
 import WebsiteHeader from "./WebsiteHeader";
-import { useEffect, useState } from "react";
-import TrackControls from "../Pages/MusicPlayer/Components/TrackOverlay";
+import { useCallback, useEffect, useState } from "react";
+// import TrackControls from "../Pages/MusicPlayer/MusicPlayer";
+
+// import { MusicPlayer } from "../Pages/MusicPlayer/MusicPlayer";
+import { MusicPlayer } from "../Pages/MusicPlayer/MusicPlayer";
+
 import useTrack from "../../Utils/hooks/useTrack";
 
 
@@ -46,7 +50,7 @@ const WebsiteLayout = () =>
 
     const [areLyricsVisible, setLyricsVisibility] = useState(false);
 
-    const toggleLyrics = () => setLyricsVisibility(value => !value);
+    const toggleLyrics = useCallback(() => setLyricsVisibility(value => !value), []);
     
     useEffect(() => 
     { 
@@ -60,7 +64,6 @@ const WebsiteLayout = () =>
         return () => { track.reset() }
     }, []);
 
-    
     return (
         <main 
             className="relative min-h-screen w-screen bg-primary pb-[8rem]"
@@ -74,7 +77,7 @@ const WebsiteLayout = () =>
             {
                 track.value 
             && 
-                <TrackControls 
+                <MusicPlayer 
                     track={track.value} 
                     close={track.reset} 
 

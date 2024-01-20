@@ -1,16 +1,18 @@
+import { RefObject, memo } from "react";
+import { useCurrentTimestamp } from "../../../../Utils/hooks/useMusicPlayer";
+
 interface Props
 {
+    audioRef: RefObject<HTMLAudioElement>,
     className?: string,
-    timeInfo: 
-    {
-        duration: number, 
-        timestamp: number 
-    }
+    duration: number, 
 }
 
-const TimeInformation = (props: Props) =>
+const TimeInformation = memo((props: Props) =>
 {
-    const { className, timeInfo} = props;
+    const { className } = props;
+
+    const timestamp = useCurrentTimestamp(props.audioRef);
 
     const convertMilliToTimeStamp = (milliseconds: number): string =>
     {
@@ -20,15 +22,15 @@ const TimeInformation = (props: Props) =>
         return `${minutes}:${seconds.padStart(2, "0")}`
     }
     
-    const currentTime = convertMilliToTimeStamp(timeInfo.timestamp);
+    const currentTime = convertMilliToTimeStamp(timestamp);
     
-    const duration = convertMilliToTimeStamp(timeInfo.duration);
+    const duration = convertMilliToTimeStamp(props.duration);
 
     return (
         <div className={`${className}`}>
             <p >{currentTime}/{duration}</p>
         </div>
     )
-}
+})
 
 export default TimeInformation

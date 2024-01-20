@@ -1,20 +1,8 @@
-import { useEffect, useRef } from "react";
-import { useLyricsReader } from "../../../Utils/hooks/lyricsHooks";
-import { SeekFunctionType } from "../../../Utils/types";
+import { memo, useCallback, useEffect, useRef } from "react";
 import { Lyrics } from "../../../Utils/types/lyrics";
+import { SelectedLine } from "../../../Utils/hooks/lyricsHooks";
 
-interface Props 
-{ 
-    trackID: string,
-    lyrics: Lyrics,
-    timestamp: number,
-
-    seek: (timestamp: number) => void,
-    setSeekLine: (seekLineFunction: SeekFunctionType) => void
-}
-
-
-const Line = (props: {  value: string, isSelected: boolean,  onClick: () => void }) =>
+const Line = memo((props: {  value: string, isSelected: boolean,  onClick: () => void }) =>
 {
     const ref = useRef<HTMLParagraphElement>(null);
 
@@ -54,23 +42,26 @@ const Line = (props: {  value: string, isSelected: boolean,  onClick: () => void
             {value}
         </p>
     )
+})
+
+interface Props 
+{ 
+    trackID: string,
+    lyrics: Lyrics,
+    selectedLine: SelectedLine,
+
+    seek: (timestamp: number) => void,
 }
 
 const ScrollableLyricsView = (props: Props) =>
 {
-    const { trackID, timestamp, lyrics, seek, setSeekLine } = props
-
-    const { line: highlightedLine, seekLine } = useLyricsReader(trackID, timestamp, lyrics);
-
-    useEffect(() => 
-    {               
-        console.log("lyrics: ", lyrics);
-                         
-        setSeekLine(() => seekLine);
-        
-        return () => { }
+    const { selectedLine, lyrics, seek } = props;
+      
+    const seekLine = useCallback((timestamp: number) =>
+    {
+        seek(timestamp)
     }, [])
-    
+
     return (
         <div 
             className=
@@ -87,25 +78,23 @@ const ScrollableLyricsView = (props: Props) =>
             {
                 lyrics.map((line, index) =>
                 {
-                    const isSelected = JSON.stringify(highlightedLine) === JSON.stringify(line);
+                    let isSelected = false;
 
-                    console.log("isSelected: ", index, isSelected);
-                    
-                    // console.log("value.index : ", value.index );
-                    
-                    // const isSelected = value.index === index && value.isVisible;
+                    if (selectedLine) 
+                    {
+                        isSelected = index === selectedLine.index
+                    }
 
                     return (
                         <Line 
                             key={index}
                             isSelected={isSelected}
                             value={line.value} 
-                            onClick={() => seek(line.interval.start)}
+                            onClick={() => seekLine(line.interval.start)}
                         />
                     )
                 })
             }
-            
         </div> 
     )
 }

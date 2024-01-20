@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { useLyricsReader } from "../../../Utils/hooks/lyricsHooks";
 import { SeekFunctionType } from "../../../Utils/types";
 import { Lyrics } from "../../../Utils/types/lyrics";
 
@@ -14,20 +12,20 @@ interface Props
 
 const SyncedLyricsView = (props: Props) =>
 {
-    const { trackID, timestamp, lyrics, setSeekLine } = props
+    // const { trackID, timestamp, lyrics, setSeekLine } = props
 
-    const { line, seekLine } = useLyricsReader(trackID, timestamp, lyrics);
+    // const { line, seekLine } = useLyricsReader(trackID, timestamp, lyrics);
 
-    useEffect(() => 
-    {                                
-        setSeekLine(() => seekLine);
+    // useEffect(() => 
+    // {                                
+    //     setSeekLine(() => seekLine);
         
-        return () => { }
-    }, [])
+    //     return () => { }
+    // }, [])
     
     return (
         <p className="z-[50] font-bold text-white text-5xl h-fit text-center drop-shadow-5xl">
-            {line.value}
+            {/* {line.value} */}
         </p>
     )
 }

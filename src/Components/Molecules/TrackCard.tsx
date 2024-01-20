@@ -6,45 +6,50 @@ import { AWS_URL } from '../../config/config';
 
 type Props = 
 { 
-    track: Track, 
-    select: (trackID: string) => void 
+    hover: 
+    {
+        isHover: boolean;
+        onStart: () => void;
+        onEnd: () => void;
+    }
+    track: 
+    {
+        value: Track;
+        select: () => void;
+    }
 }
 
 const TrackCard = forwardRef<HTMLElement, Props>((props, ref) => 
 {
-    const { track, select } = props;
+    const { hover, track } = props;
 
-    const [isHover, setIsHover] = useState<boolean>(false)
-
-    const coverArt = `${AWS_URL.release.dev}/${track.release._id}/cover_art.jpeg`;
+    const coverArt = `${AWS_URL.release.dev}/${track.value.release._id}/cover_art.jpeg`;
 
     return (
         <article 
             ref={ref}
             className='flex cursor-pointer flex-col w-[9.375rem] gap-2'
-            onClick={() => select(track._id)}
+            onClick={track.select}
 
-            onMouseEnter={() => setIsHover(true)}
-            onMouseLeave={() => setIsHover(false)}
+            onMouseEnter={hover.onStart}
+            onMouseLeave={hover.onEnd}
         >
             <CoverArt 
                 className={`rounded-lg`}
-                name={track.title + " by "+track.artist.name}
+                name={track.value.title + " by "+track.value.artist.name}
                 coverArt={coverArt?? ""} 
-                // name={song.name + " by "+ArtistsObject[song.artistID].name}
-                // coverArt={AlbumsObj[song.albumID].coverArt} 
             />
 
             <div className='text-white flex flex-col overflow-hidden whitespace-nowrap'>
                 <Marquee 
-                    key={""+isHover}
-                    play={isHover}
+                    key={""+hover.isHover}
+                    play={hover.isHover}
                     autoFill={false}
                 >
-                    <span className='text-lgn font-extrabold pe-10'>{track.title}</span>
+                    <span className='text-lgn font-extrabold pe-10'>{track.value.title}</span>
                 </Marquee>
 
-                {/* <span className='text-md'>{ArtistsObject[song.artistID].name}</span> */}
+                <span className='text-md'>{track.value.artist.name}</span>
             </div>
         </article>
     )

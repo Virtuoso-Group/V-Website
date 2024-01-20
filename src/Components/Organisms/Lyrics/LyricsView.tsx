@@ -1,23 +1,21 @@
-import { SeekFunctionType } from '../../../Utils/types';
+import { SelectedLine } from '../../../Utils/hooks/lyricsHooks';
 import { LyricsObject } from '../../../Utils/types/lyrics'
 import ScrollableLyricsView from './ScrollableLyricsView';
-import SyncedLyricsView from './SyncedLyricsView';
 import UnsyncedLyricsView from './UnsyncedLyricsView';
 import { motion } from 'framer-motion';
 
 type Props = 
 {
-    timestamp: number,
     id: string,
     lyrics: LyricsObject,
+    selectedLine: SelectedLine,
 
     seek: (timestamp: number) => void,
-    setSeekLine: (seekLineFunction: SeekFunctionType) => void
 }
 
 const LyricsView = (props: Props) => 
 {
-    const { timestamp, id, lyrics, seek, setSeekLine } = props;
+    const { id, lyrics, seek } = props;
 
     return (
         <motion.div 
@@ -46,11 +44,10 @@ const LyricsView = (props: Props) =>
                 lyrics.status === "Synced"
             ?
                 <ScrollableLyricsView 
-                    timestamp={timestamp} 
                     trackID={id} 
                     lyrics={lyrics.value} 
+                    selectedLine={props.selectedLine}
                     seek={seek}
-                    setSeekLine={setSeekLine}
                 />
             :
                 lyrics.status === "Unsynced"

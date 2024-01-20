@@ -1,20 +1,18 @@
 import CoverArt from '../../Atoms/CoverArt'
-import { SeekFunctionType } from '../../../Utils/types'
 
 import { MdLyrics } from 'react-icons/md'
 
 import { AnimatePresence, motion } from 'framer-motion'
 
-import { memo, useEffect, useRef } from 'react'
-import { Track } from '../../../Utils/types/track'
+import { memo } from 'react'
 import LyricsView from '../../Organisms/Lyrics/LyricsView'
 import ButtonIcon from '../../Atoms/ButtonIcon'
-import { PlayerState } from '../../../Utils/hooks/useMusicPlayer'
 import { releaseURL } from '../../../config/config'
 import { LyricsObject } from '../../../Utils/types/lyrics'
+import { SelectedLine } from '../../../Utils/hooks/lyricsHooks'
 
 
-const Background = memo((props: { coverArt: string, video?: string }) =>
+const Background = memo((props: { coverArt: string }) =>
 {
     return (
         <div className='z-[30] absolute h-full w-full'>
@@ -31,70 +29,52 @@ const Background = memo((props: { coverArt: string, video?: string }) =>
     )
 })
 
-const CoverArtContainer = memo((props: 
-    { 
-        release: 
-        {
-            _id: string
-            title: string,
-        }, 
-    areLyricsUnavailable: boolean , toggleLyrics: () => void }) =>
+const CoverArtContainer = memo((props: { _id: string, title: string }) =>
 {
-    const { release } = props;
+    const { _id } = props;
     
-    const coverArt = `${releaseURL}/${release._id}/cover_art.jpeg`;
-
     return ( 
-    <motion.div 
-        layout
-        className=
-        {`
-            absolute SD:relative 
-            w-screen SD:w-fit 
-            SD:h-full 
-            SD:flex justify-center aspect-square object-fit drop-shadow-2xl
-        `}
-    >
-        <CoverArt 
-            className={`z-[40] absolute h-full SD:rounded-lg `}
-            name={release.title}
-            coverArt={coverArt?? ""} 
-            loading={"eager"}
-        />
-    </motion.div>
+        <motion.div 
+            layout
+            className=
+            {`
+                absolute SD:relative 
+                w-screen SD:w-fit 
+                SD:h-full 
+                SD:flex justify-center aspect-square object-fit drop-shadow-2xl
+            `}
+        >
+            <CoverArt 
+                className={`z-[40] absolute h-full SD:rounded-lg `}
+                name={props.title}
+                coverArt={`${releaseURL}/${_id}/cover_art.jpeg`?? ""} 
+                loading={"eager"}
+            />
+        </motion.div>
     )
 })
 
 interface Props
 {       
-    timestamp: number, 
-    seek: (timestamp: number) => void,
+    release: { _id: string, title: string }
 
-    setSeekLine: (seekLineFunction: SeekFunctionType) => void,
-    
-    release:{ _id: string, title: string }
-
-    lyrics:
-    {
-        _id: string,
-        value: LyricsObject,
+    selectedLine: SelectedLine,
+    value: LyricsObject,
+    _id: string,
+        
         areVisible: boolean,
         
-        toggle: () => void
-    }
+        
+    toggle: () => void
+    
+
+    seek: (timestamp: number) => void,
 }
 
-const TrackBodyOverlay = memo((props: Props) => 
+const PlayerOverlay = memo((props: Props) => 
 {
-    const 
-    { 
-        timestamp, release, lyrics,  
-
-        seek, setSeekLine 
-    } = props;
-    
-    const coverArt = `${releaseURL}/${release._id}/cover_art.jpeg`;
-
+    const { release, seek } = props;
+            
     return (
         <motion.div 
             className={`bg-blue-600  z-[49] fixed grid w-screen bottom-10 min-h-screen SD:jutsfiy-center SD:items-center`}
@@ -103,7 +83,7 @@ const TrackBodyOverlay = memo((props: Props) =>
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
         >
-            <Background coverArt={coverArt} />
+            <Background coverArt={`${releaseURL}/${release._id}/cover_art.jpeg`} />
 
             <section 
                 className=
@@ -117,31 +97,24 @@ const TrackBodyOverlay = memo((props: Props) =>
                     gap-10
                 `}
             >
-                <CoverArtContainer 
-                    release={release} 
-                    areLyricsUnavailable={true}
-                    toggleLyrics={lyrics.toggle} 
-                />
+                <CoverArtContainer {...release} />
 
                 <AnimatePresence>
                     { 
-                        lyrics.value.status !== "Unavailable" && lyrics.areVisible
+                        props.value.status !== "Unavailable" && props.areVisible
                     && 
                         <LyricsView 
-                            timestamp={timestamp}
-                            
-                            id={lyrics._id}
-                            lyrics={lyrics.value}
-
-                            seek={seek}
-                            setSeekLine={setSeekLine}
+                            id={props._id} 
+                            lyrics={props.value} 
+                            selectedLine={props.selectedLine}
+                            seek={seek} 
                         />
                     }
                 </AnimatePresence>
 
                 <div className='z-[99] flex absolute top-[6rem] SD:top-[7.125rem] right-0'>
                     {
-                        lyrics.value.status !== "Unavailable"
+                        props.value.status !== "Unavailable"
                     &&
                         <ButtonIcon 
                             className=
@@ -157,7 +130,7 @@ const TrackBodyOverlay = memo((props: Props) =>
                             name='showLyrics'
                             icon={<MdLyrics size={"1rem"}/>}
 
-                            onClick={lyrics.toggle}
+                            onClick={props.toggle}
                         />
                     }
                 </div>
@@ -166,4 +139,4 @@ const TrackBodyOverlay = memo((props: Props) =>
     )
 })
 
-export default TrackBodyOverlay
+export default PlayerOverlay

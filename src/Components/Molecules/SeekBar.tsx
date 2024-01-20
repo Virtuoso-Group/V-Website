@@ -1,13 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { RefObject, memo, useCallback, useEffect, useRef, useState } from "react";
 import Ball from "../Atoms/Ball";
 
 import { motion } from "framer-motion";
+import { useCurrentTimestamp } from "../../Utils/hooks/useMusicPlayer";
 
-type TimeInfo =
-{
-    duration: number, 
-    timestamp: number 
-}
 
 type Controls = 
 {
@@ -17,15 +13,18 @@ type Controls =
 
 interface SeekBarProps
 {
+    audioRef: RefObject<HTMLAudioElement>
     trackID: string,
-    timeInfo: TimeInfo,
+    duration: number, 
     controls: Controls,
 }
 
-const SeekBar = (props: SeekBarProps) =>
+const SeekBar = memo((props: SeekBarProps) =>
 {
     const barContainerRef = useRef<HTMLDivElement>(null);
-    const { duration, timestamp: current } = props.timeInfo;
+    const { duration, } = props;
+
+    const current = useCurrentTimestamp(props.audioRef);
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const [ballPosition, setBallPosition] = useState<number>(0);
     const [currentPercentage, setCurrentPercentage] = useState<number>(0)
@@ -100,6 +99,6 @@ const SeekBar = (props: SeekBarProps) =>
         />
     </div>
     )
-}
+})
 
 export default SeekBar;

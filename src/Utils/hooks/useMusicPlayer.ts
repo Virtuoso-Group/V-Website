@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react"
+import { RefObject, useCallback, useEffect, useRef, useState } from "react"
 import { SeekFunctionType } from "../types";
 
 export enum PlayerState 
@@ -39,12 +39,43 @@ const useDuration = () =>
 {
     const [value, setValue] = useState<number>(0);
 
-    const initialize = (trackDuration = 0) =>
+    const initialize = useCallback((trackDuration = 0) =>
     {   
         setValue(trackDuration * 1000);
-    }
+    }, [])
 
     return { value, initialize }
+}
+
+export const useCurrentTimestamp = (audioElement: RefObject<HTMLAudioElement>) =>
+{
+    const [currentTimestamp, setCurrentTimestamp] = useState<number>(0);
+
+    useEffect(() => 
+    {
+        const printSomething = (e: Event) => 
+        {
+            if (audioElement.current?.currentTime) 
+            {
+                setCurrentTimestamp(audioElement.current?.currentTime * 1000)
+            }
+        }
+
+        if (audioElement.current) 
+        {
+            audioElement.current.addEventListener("timeupdate", printSomething)
+        }
+    
+        return () => 
+        {            
+            if (audioElement.current) 
+            {
+                audioElement.current.removeEventListener("timeupdate", printSomething)
+            }  
+        }
+    }, [])    
+
+    return currentTimestamp
 }
 
 const useAudioControls = (playerState: PlayerState) =>
@@ -68,6 +99,9 @@ const useAudioControls = (playerState: PlayerState) =>
         }
     }, [])
 
+    
+    
+
     return {
         ref,
 
@@ -75,13 +109,8 @@ const useAudioControls = (playerState: PlayerState) =>
     }
 }
 
-type Timestamp =
-{
-    update: (targetTimestamp: number) => void,
-    reset: () => void;
-}
 
-const useMusicPlayer = (timestamp: Timestamp, seekLyric?: SeekFunctionType) =>
+const useMusicPlayer = (seekLyric?: SeekFunctionType) =>
 {
     const metaDataLoaded = useRef<boolean>(false);
 
@@ -107,7 +136,7 @@ const useMusicPlayer = (timestamp: Timestamp, seekLyric?: SeekFunctionType) =>
         }
     }
 
-    const seek = useCallback((percentage: number) =>
+    const seekPercentage = useCallback((percentage: number) =>
     {         
         const clipPercentage = (percentage: number): number =>
         {
@@ -130,10 +159,8 @@ const useMusicPlayer = (timestamp: Timestamp, seekLyric?: SeekFunctionType) =>
         if (audioControls.ref.current && metaDataLoaded.current) 
         {
             const newTimeStamp = (duration.value * clippedPercentage);
-            
+                        
             audioControls.seek(newTimeStamp)
-
-            timestamp.update(newTimeStamp)
 
             if (seekLyric)
             {
@@ -142,22 +169,34 @@ const useMusicPlayer = (timestamp: Timestamp, seekLyric?: SeekFunctionType) =>
 
             audioControls.play()
         }
-    }, [duration.value, seekLyric])
+    }, [duration.value])
+
+    const seekTimestamp = useCallback((timestamp: number) => seekPercentage((timestamp/duration.value)), [seekPercentage])
+
+
+    useEffect(() => 
+    {
+      console.log("seek: ", seekPercentage);
+    }, [seekPercentage])
+    
 
     const reset = () => 
     {        
         playerState.reset();
 
-        timestamp.reset();
+        audioControls.seek(0)
+        // timestamp.reset();
     }
 
     return {
         playerState,
         audioControls,
-        timestamp,
         duration,
 
-        initialize, seek, reset
+        initialize, 
+        seekPercentage, 
+        seekTimestamp,
+        reset
     }
 }
 

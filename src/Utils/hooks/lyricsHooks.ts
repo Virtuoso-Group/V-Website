@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Line, Lyrics } from "../types/lyrics";
+import { useCallback, useEffect, useState } from "react";
+import { Line, Lyrics, LyricsObject } from "../types/lyrics";
 
 export const isWithinRange = (line: Line, timestamp: number) =>
 {
@@ -46,49 +46,61 @@ const seekLineIndex = (lyrics: Lyrics, selectedTimestamp: number, lowIndex: numb
     } 
 }
 
-const useLineIndex = (lyrics: Lyrics) =>
+const useLineIndex = (lyrics: LyricsObject) =>
 {
     const [value, setValue] = useState<number>(-1);
 
-    useEffect( () =>
+    useEffect(() =>
     {
-        if (lyrics.length > 0) 
+        if (lyrics.status !== "Synced") return
+
+        if (lyrics.value.length > 0) 
         {
             setValue(0)
         }
     }, []);
 
 
-    const goForward = () => 
+    const goForward = useCallback(() => 
     {
-        if (value === lyrics.length -1) 
+        if (lyrics.status !== "Synced") return
+
+        if (value === lyrics.value.length -1) 
         {
             return
         }
 
         setValue(value => value + 1)
-    }
+    }, [])
 
-    const goBack = () => 
+    const goBack = useCallback(() => 
     {
+        if (lyrics.status !== "Synced") return
+
         if (value === 0) 
         {
             return
         }
 
         setValue(value => value - 1)
-    }
+    }, [])
 
-    const seek = (timestamp: number) => 
-    {
-        console.log("timestamptimestamp: ", timestamp);
-        
-       const newIndex = seekLineIndex(lyrics, timestamp, 0, lyrics.length);
+    const seek = useCallback((timestamp: number) => 
+    {        
+        if (lyrics.status !== "Synced") return
+
+        const newIndex = seekLineIndex(lyrics.value, timestamp, 0, lyrics.value.length);
               
-       setValue(newIndex)
-    }
+        setValue(newIndex)
+    }, [])
 
-    const reset = () => setValue(lyrics.length > 0? 0:-1)
+    const reset = useCallback(() => 
+    {
+        if (lyrics.status !== "Synced") return
+
+        setValue(lyrics.value.length > 0? 0 : -1)
+    }, [])
+
 
     return {
         value,
@@ -100,51 +112,76 @@ const useLineIndex = (lyrics: Lyrics) =>
     }
 }
 
-export const useLyricsReader = (trackID: string, timestamp: number, lyrics: Lyrics) =>
-{    
+export type SelectedLine = 
+{
+    index: number
+    line: Line, 
+} | null
+
+export const useLyrics = (trackID: string, lyrics: LyricsObject) =>
+{
     const index = useLineIndex(lyrics);
 
-    const visibleLine: Line 
-    = 
-        isWithinRange(lyrics[index.value], timestamp)
-    ? 
-        lyrics[index.value]
-    : 
-        {
-            value: "",
-            interval: { start: 0, end: 0 }
-        }
-    ;
+    const [selectedLine, setSelectedLine] = useState<SelectedLine>(null);
 
-    console.log("lol: ", {trackID, index: index.value, timestamp, visibleLine});
+    useEffect(() => 
+    { 
+        setSelectedLine(null)
+        index.reset() 
+    }, [trackID])
+
     
+    const update = useCallback((timestamp: number) =>
+    {
+        if (lyrics.status !== "Synced")  return;
 
-    useEffect(() => { index.seek(timestamp) }, [trackID])
-
-    useEffect(() =>
-    {   
         if (timestamp === 0) index.reset()
 
-        const chosenLine = lyrics[index.value];
+        const chosenLine = lyrics.value[index.value];
 
-        if (chosenLine && timestamp > chosenLine.interval.end) 
+        if (chosenLine) 
         {
-            index.goForward();
+            if (timestamp > chosenLine.interval.end) 
+            {
+                index.goForward();
+            }
+            else if (timestamp < chosenLine.interval.start)
+            {
+                // index.goBack();
+            }
+            else
+            {
+                const visibleLine: SelectedLine | null 
+                = 
+                    isWithinRange(chosenLine, timestamp)
+                ? 
+                    {
+                        index: index.value,
+                        line:  lyrics.value[index.value]
+                    }
+                : 
+                    null
+                ; 
+                
+
+                setSelectedLine(oldLine => 
+                {
+                   if (JSON.stringify(oldLine)  === JSON.stringify(visibleLine)) 
+                   {                    
+                        return oldLine
+                   }                   
+                    
+                    return visibleLine
+                })
+            }
         }
-    }, [timestamp, lyrics])
+    }, [index.value, lyrics])
 
-
-    
-      
     return {  
-        line: visibleLine,
-        index,
+        selectedLine,        
 
-        // value:
-        // {
-        //     index: index.value,
-        //     isVisible: isWithinRange(lyrics[index.value], timestamp)
-        // },
-        seekLine: index.seek
+        update,
+
+        seek: index.seek,
     }
 }
