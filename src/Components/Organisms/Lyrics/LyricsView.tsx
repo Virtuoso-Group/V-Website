@@ -1,21 +1,21 @@
-import { SelectedLine } from '../../../Utils/hooks/lyricsHooks';
+import { RefObject } from 'react';
 import { LyricsObject } from '../../../Utils/types/lyrics'
-import ScrollableLyricsView from './ScrollableLyricsView';
+import ScrollableLyrics from './ScrollableLyricsView';
 import UnsyncedLyricsView from './UnsyncedLyricsView';
 import { motion } from 'framer-motion';
 
 type Props = 
 {
+    audioRef: RefObject<HTMLAudioElement>,
     id: string,
     lyrics: LyricsObject,
-    selectedLine: SelectedLine,
 
     seek: (timestamp: number) => void,
 }
 
 const LyricsView = (props: Props) => 
 {
-    const { id, lyrics, seek } = props;
+    const { audioRef, id, lyrics, seek } = props;
 
     return (
         <motion.div 
@@ -32,6 +32,8 @@ const LyricsView = (props: Props) =>
                 bg-black/50 SD:rounded-lg overflow-y-scroll
                 
                 select-none
+
+                backdrop-blur-sm	
             `}
 
             initial={{  opacity: 0 }}
@@ -43,12 +45,7 @@ const LyricsView = (props: Props) =>
             {
                 lyrics.status === "Synced"
             ?
-                <ScrollableLyricsView 
-                    trackID={id} 
-                    lyrics={lyrics.value} 
-                    selectedLine={props.selectedLine}
-                    seek={seek}
-                />
+                <ScrollableLyrics audioRef={audioRef} trackID={id} lines={lyrics.value} seek={seek} />
             :
                 lyrics.status === "Unsynced"
             ?
@@ -56,11 +53,23 @@ const LyricsView = (props: Props) =>
             :
                 lyrics.status === "Instrumental"
             &&
-                <div className='mt-[25%] h-1/2 w-full flex justify-center items-center'>
+                <div className=
+                    {`
+                        z-[50]
+                        flex justify-center items-center
+
+                        gap-10 
+                        pt-[5rem] SD:pt-0 
+                        pb-[calc(6.5rem+5rem)] SD:pb-0
+                        SD:py-10
+                        h-full w-full  
+                    `}
+                >
                     <pre 
                         className=
                         {`
-                            w-fit h-fit font-bold 
+                            
+                             font-bold 
                             text-white text-xl XGA:text-3xl text-center  drop-shadow-5xl
                         `}
                     >

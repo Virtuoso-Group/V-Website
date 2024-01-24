@@ -41,49 +41,40 @@ const WebsiteLogo = () =>
         </p>
     )
 }
-type WebsiteContext = { selectTrack: (trackID: string) => void }
+type WebsiteContext = 
+{ 
+    websitePadding: string,
+    selectTrack: (trackID: string) => void 
+}
 
 // TODO: what should the semantic html tag be for this component?
 const WebsiteLayout = () =>
 {
     const track = useTrack();
-
-    const [areLyricsVisible, setLyricsVisibility] = useState(false);
-
-    const toggleLyrics = useCallback(() => setLyricsVisibility(value => !value), []);
     
     useEffect(() => 
     { 
        const root =  document.documentElement;
 
-       root.style.setProperty(
-        "--base-font-size",
-        "16px",
-    )
+       root.style.setProperty("--base-font-size","16px")
        
         return () => { track.reset() }
     }, []);
 
-    return (
-        <main 
-            className="relative min-h-screen w-screen bg-primary pb-[8rem]"
-        >
-            <WebsiteHeader className="z-[50] self-start fixed px-5 SD:px-10 HD:px-20" start={<WebsiteLogo />} />
+    const websitePadding = "px-5 SD:px-10 HD:px-20";
 
-            <div className="z-[10] min-h-screen min-w-screen px-5 SD:px-10 HD:px-20">
-                <Outlet context={{ selectTrack: track.selectTrack } satisfies WebsiteContext} />
+    return (
+        <main className="relative min-h-screen w-screen bg-primary pb-[8rem]">
+            <WebsiteHeader className={`z-[50] self-start fixed ${websitePadding}`} start={<WebsiteLogo />} />
+
+            <div className="z-[10] min-h-full min-w-full">
+                <Outlet context={{ websitePadding: websitePadding, selectTrack: track.selectTrack } satisfies WebsiteContext} />
             </div>
 
             {
                 track.value 
             && 
-                <MusicPlayer 
-                    track={track.value} 
-                    close={track.reset} 
-
-                    areLyricsVisible={areLyricsVisible}
-                    toggleLyrics={toggleLyrics}
-                />
+                <MusicPlayer track={track.value} close={track.reset} />
 
                 // <audio 
                 //     key={track.value._id}

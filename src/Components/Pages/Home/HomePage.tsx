@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { Category } from '../../../Utils/types';
 import Chip from '../../Atoms/Chip';
 import TracksSection from './Components/TracksSection';
@@ -7,6 +7,7 @@ import ReleasesSection from './Components/AlbumsSection';
 import ArtistsSection from './Components/ArtistsSection';
 import useAPI from '../../../Utils/hooks/useAPI';
 import { Artist, Release, Track } from '../../../Utils/types/track';
+import { useWebsiteContext } from '../../Organisms/WebsiteLayout';
 
 const Categories: Category[] = 
 [
@@ -18,8 +19,10 @@ const Categories: Category[] =
 ]
 
 
-const HomePage = () => 
+const HomePage = memo(() => 
 {   
+    const { websitePadding } = useWebsiteContext();
+
     const [selectedCategory, setSelectedCategory] = useState<Category>(Categories[0])
     
     const selectCategory = (index: number) => setSelectedCategory(Categories[index]);
@@ -48,8 +51,8 @@ const HomePage = () =>
     const ChosenSection = HomeSections[selectedCategory.id];
 
     return (
-        <div className={`flex flex-col gap-10 pt-[4rem]`}>
-            <div className='pt-[4.0625rem] z-[49] top-[1.5625rem] fixed w-full flex gap-5 bg-primary'>
+        <div className={`flex flex-col gap-10 pt-[4rem] `}>
+            <div className={`${websitePadding} pt-[4.0625rem] z-[49] top-[1.5625rem] fixed w-full flex gap-5 bg-primary`}>
                 {
                     Categories.map((category, index) =>  
                     {
@@ -67,11 +70,11 @@ const HomePage = () =>
                 }
             </div>
             
-            <div className='mt-20 flex flex-wrap w-full gap-8 h-full'>
+            <div className={`mt-20 flex flex-wrap w-full gap-8 h-full ${websitePadding}`}>
                 {ChosenSection}
             </div>
         </div>
     )
-}
+})
 
 export default HomePage

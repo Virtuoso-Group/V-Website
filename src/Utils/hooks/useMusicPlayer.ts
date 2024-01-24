@@ -39,33 +39,72 @@ const useDuration = () =>
 {
     const [value, setValue] = useState<number>(0);
 
-    const initialize = useCallback((trackDuration = 0) =>
+    const initialize = (trackDuration: number) =>
     {   
         setValue(trackDuration * 1000);
-    }, [])
+    }
 
     return { value, initialize }
 }
 
-export const useCurrentTimestamp = (trackID: string, audioElement: RefObject<HTMLAudioElement>) =>
+export const useTrackTimestamp = 
+(
+    trackID: string, 
+    audioElement: RefObject<HTMLAudioElement>, 
+    tick: number, 
+    update: (timestamp: number) => void,
+    seek?: (timestamp: number) => void,
+) =>
 {
-    const [currentTimestamp, setCurrentTimestamp] = useState<number>(0);
+    const prevTimestamp = useRef<number>(0);
+
+    const seekedWrapper = () =>
+    {   
+        if (audioElement.current && seek) 
+        {
+            const currentTimestamp = audioElement.current.currentTime * 1000;
+
+            prevTimestamp.current = -1;
+
+            seek(currentTimestamp)   
+        }
+    }
 
     useEffect(() => 
     {
-        const update = (e: Event) => 
+        seekedWrapper()
+    }, [])
+    
+    useEffect(() => 
+    {
+        const updateWrapper = (e: Event) => 
         {
-            if (audioElement.current?.currentTime) 
-            {                                
-                setCurrentTimestamp(audioElement.current?.currentTime * 1000)
+            if (audioElement.current) 
+            {         
+                const currentTimestamp = audioElement.current.currentTime * 1000;
+
+                const diff = prevTimestamp.current  - currentTimestamp;
+
+                if (Math.abs(diff) >= tick) 
+                {
+                    prevTimestamp.current = currentTimestamp;
+
+                    update(currentTimestamp)
+                }                       
             }
         }
 
-        const reset = () => setCurrentTimestamp(0)
+        const reset = () => 
+        {
+            prevTimestamp.current = 0;
+
+            update(0)
+        }
 
         if (audioElement.current) 
         {
-            audioElement.current.addEventListener("timeupdate", update)
+            audioElement.current.addEventListener("seeked", seekedWrapper)
+            audioElement.current.addEventListener("timeupdate", updateWrapper)
             audioElement.current.addEventListener("ended", reset)
         }
     
@@ -73,13 +112,12 @@ export const useCurrentTimestamp = (trackID: string, audioElement: RefObject<HTM
         {            
             if (audioElement.current) 
             {
-                audioElement.current.removeEventListener("timeupdate", update)
+                audioElement.current.removeEventListener("seeked", seekedWrapper)
+                audioElement.current.removeEventListener("timeupdate", updateWrapper)
                 audioElement.current.removeEventListener("ended", reset)
             }  
         }
-    }, [trackID])    
-
-    return currentTimestamp
+    }, [trackID, update, seek])    
 }
 
 const useAudioControls = (playerState: PlayerState) =>
@@ -103,7 +141,6 @@ const useAudioControls = (playerState: PlayerState) =>
         }
     }, [])
 
-    
     return {
         ref,
 
@@ -111,8 +148,7 @@ const useAudioControls = (playerState: PlayerState) =>
     }
 }
 
-
-const useMusicPlayer = (seekLyric?: SeekFunctionType) =>
+const useMusicPlayer = () =>
 {
     const metaDataLoaded = useRef<boolean>(false);
 
@@ -125,7 +161,7 @@ const useMusicPlayer = (seekLyric?: SeekFunctionType) =>
     const initialize = (callback: () => void) =>
     {
         if (audioControls.ref.current?.duration) 
-        {
+        {            
             playerState.reset() 
 
             metaDataLoaded.current = true;
@@ -161,13 +197,10 @@ const useMusicPlayer = (seekLyric?: SeekFunctionType) =>
         if (audioControls.ref.current && metaDataLoaded.current) 
         {
             const newTimeStamp = (duration.value * clippedPercentage);
-                        
+                       
+            console.log("newTimeStamp: ", newTimeStamp);
+            
             audioControls.seek(newTimeStamp)
-
-            if (seekLyric)
-            {
-                seekLyric(newTimeStamp)
-            }    
 
             audioControls.play()
         }

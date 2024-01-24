@@ -4,7 +4,7 @@ import { MdLyrics } from 'react-icons/md'
 
 import { AnimatePresence, motion } from 'framer-motion'
 
-import { memo } from 'react'
+import { RefObject, memo } from 'react'
 import LyricsView from '../../Organisms/Lyrics/LyricsView'
 import ButtonIcon from '../../Atoms/ButtonIcon'
 import { releaseURL } from '../../../config/config'
@@ -56,24 +56,22 @@ const CoverArtContainer = memo((props: { _id: string, title: string }) =>
 
 interface Props
 {       
+    audioRef: RefObject<HTMLAudioElement>,
     release: { _id: string, title: string }
 
-    selectedLine: SelectedLine,
     value: LyricsObject,
     _id: string,
-        
-        areVisible: boolean,
-        
+            
+    areVisible: boolean,
         
     toggle: () => void
     
-
     seek: (timestamp: number) => void,
 }
 
 const PlayerOverlay = memo((props: Props) => 
 {
-    const { release, seek } = props;
+    const { release, audioRef, seek } = props;
             
     return (
         <motion.div 
@@ -104,9 +102,9 @@ const PlayerOverlay = memo((props: Props) =>
                         props.value.status !== "Unavailable" && props.areVisible
                     && 
                         <LyricsView 
+                            audioRef={audioRef}
                             id={props._id} 
                             lyrics={props.value} 
-                            selectedLine={props.selectedLine}
                             seek={seek} 
                         />
                     }

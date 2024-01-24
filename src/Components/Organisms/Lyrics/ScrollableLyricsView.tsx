@@ -1,16 +1,32 @@
-import { memo, useCallback, useEffect, useRef } from "react";
+import { RefObject, memo, useEffect, useRef } from "react";
 import { Lyrics } from "../../../Utils/types/lyrics";
-import { SelectedLine } from "../../../Utils/hooks/lyricsHooks";
+import {  useLyrics } from "../../../Utils/hooks/lyricsHooks";
+import { useTrackTimestamp } from "../../../Utils/hooks/useMusicPlayer";
 
 const Line = memo((props: {  value: string, isSelected: boolean,  onClick: () => void }) =>
 {
     const ref = useRef<HTMLParagraphElement>(null);
+    const hasMounted = useRef<boolean>(false)
 
+    const smoothScroll = () =>  ref.current?.scrollIntoView({ behavior: 'smooth', block: "center", inline: "center" });
+
+    const instantScroll = () => ref.current?.scrollIntoView({ block: "center", inline: "center" });
+    
     useEffect(() => 
-    {        
+    {
         if (props.isSelected) 
         {
-            ref.current?.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+            instantScroll()
+        }
+    
+        hasMounted.current = true;
+    }, [])
+    
+    useEffect(() => 
+    {        
+        if (hasMounted.current && props.isSelected) 
+        {
+            smoothScroll()
         }
     }, [props.isSelected])
     
@@ -46,22 +62,22 @@ const Line = memo((props: {  value: string, isSelected: boolean,  onClick: () =>
 
 interface Props 
 { 
+    audioRef: RefObject<HTMLAudioElement>,
     trackID: string,
-    lyrics: Lyrics,
-    selectedLine: SelectedLine,
+
+    lines: Lyrics,
 
     seek: (timestamp: number) => void,
 }
 
-const ScrollableLyricsView = (props: Props) =>
+const ScrollableLyrics = (props: Props) =>
 {
-    const { selectedLine, lyrics, seek } = props;
+    const { audioRef, trackID, lines, seek } = props;
       
-    const seekLine = useCallback((timestamp: number) =>
-    {
-        seek(timestamp)
-    }, [])
+    const lyrics = useLyrics(trackID, lines);
 
+    useTrackTimestamp(trackID, audioRef, 10, lyrics.update, lyrics.seek)
+    
     return (
         <div 
             className=
@@ -76,13 +92,13 @@ const ScrollableLyricsView = (props: Props) =>
             `}
         >
             {
-                lyrics.map((line, index) =>
+                lines.map((line, index) =>
                 {
                     let isSelected = false;
 
-                    if (selectedLine) 
+                    if (lyrics.selectedLine) 
                     {
-                        isSelected = index === selectedLine.index
+                        isSelected = index === lyrics.selectedLine.index
                     }
 
                     return (
@@ -90,7 +106,7 @@ const ScrollableLyricsView = (props: Props) =>
                             key={index}
                             isSelected={isSelected}
                             value={line.value} 
-                            onClick={() => seekLine(line.interval.start)}
+                            onClick={() => seek(line.interval.start)}
                         />
                     )
                 })
@@ -99,4 +115,4 @@ const ScrollableLyricsView = (props: Props) =>
     )
 }
 
-export default ScrollableLyricsView
+export default ScrollableLyrics

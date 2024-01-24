@@ -1,4 +1,4 @@
-import { forwardRef, memo, useState } from 'react'
+import { forwardRef, memo, useCallback, useState } from 'react'
 import CoverArt from '../Atoms/CoverArt';
 import Marquee from 'react-fast-marquee';
 import { Track } from '../../Utils/types/track';
@@ -6,50 +6,48 @@ import { AWS_URL } from '../../config/config';
 
 type Props = 
 { 
-    hover: 
-    {
-        isHover: boolean;
-        onStart: () => void;
-        onEnd: () => void;
-    }
-    track: 
-    {
-        value: Track;
-        select: () => void;
-    }
+    trackID: string, 
+
+    title: string,
+    artistName: string,
+    releaseID: string, 
+
+    select: (trackID: string) => void;
 }
 
 const TrackCard = memo(forwardRef<HTMLElement, Props>((props, ref) => 
 {
-    const { hover, track } = props;
+    const { trackID, title, artistName, releaseID, select } = props;
 
-    const coverArt = `${AWS_URL.release.dev}/${track.value.release._id}/cover_art.jpeg`;
+    const coverArt = `${AWS_URL.release.dev}/${releaseID}/cover_art.jpeg`;
+
+    const [isHover, setHover] = useState<boolean>(false)
 
     return (
         <article 
-            ref={ref}
+            ref={ref}            
             className='flex cursor-pointer flex-col w-[9.375rem] gap-2'
-            onClick={track.select}
+            onClick={() => select(trackID)}
 
-            onMouseEnter={hover.onStart}
-            onMouseLeave={hover.onEnd}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
         >
             <CoverArt 
                 className={`rounded-lg`}
-                name={track.value.title + " by "+track.value.artist.name}
+                name={title + " by "+artistName}
                 coverArt={coverArt?? ""} 
             />
 
             <div className='text-white flex flex-col overflow-hidden whitespace-nowrap'>
                 <Marquee 
-                    key={""+hover.isHover}
-                    play={hover.isHover}
+                    key={""+isHover}
+                    play={isHover}
                     autoFill={false}
                 >
-                    <span className='text-lgn font-extrabold pe-10'>{track.value.title}</span>
+                    <span className='text-lgn font-extrabold pe-10'>{title}</span>
                 </Marquee>
 
-                <span className='text-md'>{track.value.artist.name}</span>
+                <span className='text-md'>{artistName}</span>
             </div>
         </article>
     )

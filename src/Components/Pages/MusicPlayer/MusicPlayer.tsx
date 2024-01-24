@@ -3,7 +3,7 @@ import useMusicPlayer from "../../../Utils/hooks/useMusicPlayer";
 import { Track } from "../../../Utils/types/track";
 import { baseURL, releaseURL } from "../../../config/config";
 import SeekBar from "../../Molecules/SeekBar";
-import { memo, useCallback, useEffect } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import TimeInformation from "./Components/TimeInformation";
 import TrackInformation from "./Components/TrackInformation";
 import PlayerControls from "./Components/PlayerControls";
@@ -30,24 +30,26 @@ interface Props
 {
     track: Track,
 
-    areLyricsVisible: boolean,
-    toggleLyrics: () => void
 
     close: () => void
 }
 
 export const MusicPlayer = (props: Props) => 
 {
+    const [areLyricsVisible, setLyricsVisibility] = useState(false);
+
+    const toggleLyrics = useCallback(() => setLyricsVisibility(value => !value), []);
+
     const { track, close } = props
 
-    const lyrics = useLyrics(track._id, track.lyrics)
+    // const lyrics = useLyrics(track._id, track.lyrics)
 
     const 
     { 
         playerState, audioControls, duration, 
 
         initialize, seekPercentage, seekTimestamp, reset, 
-    } = useMusicPlayer(lyrics.seek);
+    } = useMusicPlayer();
     
     const overlay = useOverlay();
 
@@ -55,21 +57,8 @@ export const MusicPlayer = (props: Props) =>
 
     const stepForwards = useCallback(() => { console.log("Forwards!")  }, [])
 
-    useEffect(() => 
-    {        
-        reset() 
-    }, [track._id])
+    useEffect(() => { reset() }, [track._id])
 
-
-    useEffect(() => 
-    {
-        return () =>
-        {
-
-        }
-    }, [])
-    
-        
     return (
         <>
             <audio 
@@ -95,12 +84,6 @@ export const MusicPlayer = (props: Props) =>
 
                     initialize(showMediaSession) 
                 }}
-                
-                onTimeUpdate=
-                {e => 
-                {                    
-                    lyrics.update(e.currentTarget.currentTime * 1000);
-                }}
                 onPlay={playerState.setToPlay}
                 onPause={playerState.setToPause}
                 onLoadStart={playerState.setToLoading}
@@ -117,12 +100,13 @@ export const MusicPlayer = (props: Props) =>
                     overlay.isOn
                 && 
                     <PlayerOverlay 
-                        release={track.release}
-                        selectedLine={lyrics.selectedLine}
-                        value={track.lyrics}
+                        audioRef={audioControls.ref}
                         _id={track._id}
-                        areVisible={props.areLyricsVisible}
-                        toggle={props.toggleLyrics}
+                        release={track.release}
+                        value={track.lyrics}
+                        
+                        areVisible={areLyricsVisible}
+                        toggle={toggleLyrics}
 
                         seek={seekTimestamp}
                     />

@@ -46,15 +46,13 @@ const seekLineIndex = (lyrics: Lyrics, selectedTimestamp: number, lowIndex: numb
     } 
 }
 
-const useLineIndex = (lyrics: LyricsObject) =>
+const useLineIndex = (lyrics: Lyrics) =>
 {
     const [value, setValue] = useState<number>(-1);
 
     useEffect(() =>
     {
-        if (lyrics.status !== "Synced") return
-
-        if (lyrics.value.length > 0) 
+        if (lyrics.length > 0) 
         {
             setValue(0)
         }
@@ -63,9 +61,7 @@ const useLineIndex = (lyrics: LyricsObject) =>
 
     const goForward = () => 
     {
-        if (lyrics.status !== "Synced") return
-
-        if (value === lyrics.value.length -1) 
+        if (value === lyrics.length - 1) 
         {
             return
         }
@@ -75,8 +71,6 @@ const useLineIndex = (lyrics: LyricsObject) =>
 
     const goBack = () => 
     {
-        if (lyrics.status !== "Synced") return
-
         if (value === 0) 
         {
             return
@@ -85,22 +79,17 @@ const useLineIndex = (lyrics: LyricsObject) =>
         setValue(value => value - 1)
     }
 
-    const seek = (timestamp: number) => 
+    const seek = useCallback((timestamp: number) => 
     {        
-        if (lyrics.status !== "Synced") return
-
-        const newIndex = seekLineIndex(lyrics.value, timestamp, 0, lyrics.value.length);
+        const newIndex = seekLineIndex(lyrics, timestamp, 0, lyrics.length);
               
         setValue(newIndex)
-    }
+    }, [lyrics])
 
     const reset = () => 
     {
-        if (lyrics.status !== "Synced") return
-
-        setValue(lyrics.value.length > 0? 0 : -1)
+        setValue(lyrics.length > 0? 0 : -1)
     }
-
 
     return {
         value,
@@ -118,24 +107,41 @@ export type SelectedLine =
     line: Line, 
 } | null
 
-export const useLyrics = (trackID: string, lyrics: LyricsObject) =>
+export const useLyrics = (trackID: string, lyrics: Lyrics) =>
 {
     const index = useLineIndex(lyrics);
 
     const [selectedLine, setSelectedLine] = useState<SelectedLine>(null);
 
-    useEffect(() => 
-    { 
-        setSelectedLine(null)
-        index.reset() 
-    }, [trackID])
+    const updateSelectedLine = (visibleLine: SelectedLine) =>
+    {
+        setSelectedLine(oldLine => 
+            {
+               if ((!oldLine && !visibleLine) || (oldLine?.index === visibleLine?.index)) 
+               {                    
+                    return oldLine
+               }                   
+                
+                return visibleLine
+            })
+    }
+
+    // useEffect(() => 
+    // { 
+    //     setSelectedLine(null);
+
+    //     index.reset();
+    // }, [trackID])
 
     
     const update = (timestamp: number) =>
-    {
-        if (lyrics.status !== "Synced")  return;
+    {   
+        if (timestamp === 0) 
+        {
+            index.reset();
+        }
 
-        const chosenLine = lyrics.value[index.value];
+        const chosenLine = lyrics[index.value];
         
         if (chosenLine) 
         {
@@ -155,31 +161,29 @@ export const useLyrics = (trackID: string, lyrics: LyricsObject) =>
                 ? 
                     {
                         index: index.value,
-                        line:  lyrics.value[index.value]
+                        line:  lyrics[index.value]
                     }
                 : 
                     null
                 ; 
                 
-
-                setSelectedLine(oldLine => 
-                {
-                   if (JSON.stringify(oldLine)  === JSON.stringify(visibleLine)) 
-                   {                    
-                        return oldLine
-                   }                   
-                    
-                    return visibleLine
-                })
+                updateSelectedLine(visibleLine)
             }
         }
     }
 
+    const seek = (timestamp: number) =>
+    {
+        index.seek(timestamp)
+
+        // update(timestamp)
+    }
+    
     return {  
         selectedLine,        
 
         update,
 
-        seek: index.seek,
+        seek: seek,
     }
 }

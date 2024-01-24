@@ -13,8 +13,7 @@ const Ball = (props: BallProps) =>
 {
     const 
     { 
-        isDragging,
-        ballPosition, 
+        isDragging, ballPosition, 
 
         release, hold  
     } = props;  
@@ -27,10 +26,8 @@ const Ball = (props: BallProps) =>
                 z-[2] 
                 relative 
 
-                aspect-square 
+                h-[0.9375rem] aspect-square 
                 
-                h-[0.9375rem]
-
                 rounded-full 
                 bg-white 
 
@@ -40,7 +37,7 @@ const Ball = (props: BallProps) =>
             `}
             
             animate={{ x: ballPosition, rotate: 0.04 }}
-            transition={{ type: "keyframes" }}
+            transition={{ type: "tween" }}
 
             onClick={e => e.stopPropagation()}
         
