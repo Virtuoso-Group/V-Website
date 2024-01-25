@@ -56,7 +56,6 @@ const CoverArtContainer = memo((props: { _id: string, title: string }) =>
 
 interface Props
 {       
-    audioRef: RefObject<HTMLAudioElement>,
     release: { _id: string, title: string }
 
     value: LyricsObject,
@@ -71,7 +70,7 @@ interface Props
 
 const PlayerOverlay = memo((props: Props) => 
 {
-    const { release, audioRef, seek } = props;
+    const { release, seek } = props;
             
     return (
         <motion.div 
@@ -101,12 +100,7 @@ const PlayerOverlay = memo((props: Props) =>
                     { 
                         props.value.status !== "Unavailable" && props.areVisible
                     && 
-                        <LyricsView 
-                            audioRef={audioRef}
-                            id={props._id} 
-                            lyrics={props.value} 
-                            seek={seek} 
-                        />
+                        <LyricsView lyrics={props.value} seek={seek} />
                     }
                 </AnimatePresence>
 

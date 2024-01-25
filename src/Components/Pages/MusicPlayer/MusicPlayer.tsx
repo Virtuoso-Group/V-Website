@@ -3,7 +3,7 @@ import useMusicPlayer from "../../../Utils/hooks/useMusicPlayer";
 import { Track } from "../../../Utils/types/track";
 import { baseURL, releaseURL } from "../../../config/config";
 import SeekBar from "../../Molecules/SeekBar";
-import { memo, useCallback, useEffect, useState } from "react";
+import { RefObject, createContext, createRef, memo, useCallback, useEffect, useRef, useState } from "react";
 import TimeInformation from "./Components/TimeInformation";
 import TrackInformation from "./Components/TrackInformation";
 import PlayerControls from "./Components/PlayerControls";
@@ -13,7 +13,17 @@ import useOverlay from "../../../Utils/hooks/useOverlay";
 import PlayerOverlay from "./TrackBodyOverlay";
 import { AnimatePresence } from "framer-motion";
 
-import { useLyrics } from "../../../Utils/hooks/lyricsHooks";
+type PlayerContextType = 
+{
+    trackID: string,
+    audioRef: RefObject<HTMLAudioElement>
+}
+
+export const PlayerContext = createContext<PlayerContextType>(
+{
+    trackID: "",
+    audioRef: createRef<HTMLAudioElement>()
+})
 
 const CloseButton = memo((props: { onClick: () => void}) =>
 {
@@ -30,7 +40,6 @@ interface Props
 {
     track: Track,
 
-
     close: () => void
 }
 
@@ -42,8 +51,6 @@ export const MusicPlayer = (props: Props) =>
 
     const { track, close } = props
 
-    // const lyrics = useLyrics(track._id, track.lyrics)
-
     const 
     { 
         playerState, audioControls, duration, 
@@ -53,14 +60,14 @@ export const MusicPlayer = (props: Props) =>
     
     const overlay = useOverlay();
 
-    const stepBackwards = useCallback(() => { console.log("Backwards!")  }, [])
+    const stepBackwards = useCallback(() => { reset() }, [])
 
     const stepForwards = useCallback(() => { console.log("Forwards!")  }, [])
 
     useEffect(() => { reset() }, [track._id])
 
     return (
-        <>
+        <PlayerContext.Provider value={{ trackID: track._id, audioRef: audioControls.ref }}>
             <audio 
                 key={track._id}
                 title={track.title}
@@ -89,7 +96,6 @@ export const MusicPlayer = (props: Props) =>
                 onLoadStart={playerState.setToLoading}
 
                 onWaiting={playerState.setToLoading}
-                // onProgress={playerState.setToPlay}
                 onPlaying={playerState.setToPlay}
                 
                 onEnded={reset}
@@ -100,7 +106,6 @@ export const MusicPlayer = (props: Props) =>
                     overlay.isOn
                 && 
                     <PlayerOverlay 
-                        audioRef={audioControls.ref}
                         _id={track._id}
                         release={track.release}
                         value={track.lyrics}
@@ -116,7 +121,6 @@ export const MusicPlayer = (props: Props) =>
             <div className="flex w-full">
                 <div className={`z-[50] fixed bottom-0 w-full bg-black`}>
                     <SeekBar
-                        audioRef={audioControls.ref}
                         trackID={track._id}
                         duration={duration.value}
                         controls=
@@ -150,7 +154,6 @@ export const MusicPlayer = (props: Props) =>
                         
                             <TimeInformation 
                                 trackID={track._id}
-                                audioRef={audioControls.ref}
                                 className=
                                 {`
                                     hidden SD:flex items-center justify-center
@@ -169,6 +172,6 @@ export const MusicPlayer = (props: Props) =>
                     </div>
                 </div>
             </div>
-        </>
+        </PlayerContext.Provider>
     )
 }

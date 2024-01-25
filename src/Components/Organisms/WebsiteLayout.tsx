@@ -71,18 +71,7 @@ const WebsiteLayout = () =>
                 <Outlet context={{ websitePadding: websitePadding, selectTrack: track.selectTrack } satisfies WebsiteContext} />
             </div>
 
-            {
-                track.value 
-            && 
-                <MusicPlayer track={track.value} close={track.reset} />
-
-                // <audio 
-                //     key={track.value._id}
-                //     src={`${baseURL.local}/music/track/play/${track.value.release._id}/${track.value._id}`} 
-                //     controls={true}
-                //     controlsList="nodownload noplaybackrate"
-                // />
-            }
+            {track.value && <MusicPlayer track={track.value} close={track.reset} />}
         </main>
     )
 }

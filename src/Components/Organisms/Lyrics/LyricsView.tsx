@@ -6,8 +6,6 @@ import { motion } from 'framer-motion';
 
 type Props = 
 {
-    audioRef: RefObject<HTMLAudioElement>,
-    id: string,
     lyrics: LyricsObject,
 
     seek: (timestamp: number) => void,
@@ -15,7 +13,7 @@ type Props =
 
 const LyricsView = (props: Props) => 
 {
-    const { audioRef, id, lyrics, seek } = props;
+    const { lyrics, seek } = props;
 
     return (
         <motion.div 
@@ -45,7 +43,7 @@ const LyricsView = (props: Props) =>
             {
                 lyrics.status === "Synced"
             ?
-                <ScrollableLyrics audioRef={audioRef} trackID={id} lines={lyrics.value} seek={seek} />
+                <ScrollableLyrics lines={lyrics.value} seek={seek} />
             :
                 lyrics.status === "Unsynced"
             ?

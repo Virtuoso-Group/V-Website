@@ -1,10 +1,9 @@
-import { RefObject, memo, useState } from "react";
+import {  memo, useState } from "react";
 import { useTrackTimestamp } from "../../../../Utils/hooks/useMusicPlayer";
 
 interface Props
 {
     trackID: string,
-    audioRef: RefObject<HTMLAudioElement>,
     className?: string,
     duration: number, 
 }
@@ -28,9 +27,8 @@ const TimeInformation = memo((props: Props) =>
         setCurrentTime(convertMilliToTimeStamp(timestamp));
     }
 
-    useTrackTimestamp(props.trackID, props.audioRef, 1000, updateCurrentTime);
+    useTrackTimestamp(props.trackID, 1000, updateCurrentTime);
 
-        
     const duration = convertMilliToTimeStamp(props.duration);
 
     return (

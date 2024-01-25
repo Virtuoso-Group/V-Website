@@ -13,7 +13,6 @@ type Controls =
 
 interface SeekBarProps
 {
-    audioRef: RefObject<HTMLAudioElement>
     trackID: string,
     duration: number, 
     controls: Controls,
@@ -37,7 +36,7 @@ const SeekBar = memo((props: SeekBarProps) =>
         }
     }
     
-    useTrackTimestamp(props.trackID, props.audioRef, 750, updatePercentage);
+    useTrackTimestamp(props.trackID, 750, updatePercentage);
 
     const barWidth = barContainerRef.current?.getBoundingClientRect().width??1;
 
