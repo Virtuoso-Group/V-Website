@@ -1,8 +1,8 @@
 import { useCallback, useContext } from "react";
-import { Lyrics } from "../../../Utils/types/lyrics";
-import {  useLyrics } from "../../../Utils/hooks/lyricsHooks";
-import Line from "../../Molecules/Line";
-import { PlayerContext } from "../../Pages/MusicPlayer/MusicPlayer";
+import { Lyrics } from "../../../../Utils/types/lyrics";
+import {  useLyrics } from "../../../../Utils/hooks/lyricsHooks";
+import Line from "../../../Molecules/Line";
+import { PlayerContext } from "../../../Pages/MusicPlayer/MusicPlayer";
 
 interface Props 
 { 
@@ -11,7 +11,7 @@ interface Props
     seek: (timestamp: number) => void,
 }
 
-const ScrollableLyrics = (props: Props) =>
+const Synced = (props: Props) =>
 {
     const { trackID } = useContext(PlayerContext);
 
@@ -44,7 +44,6 @@ const ScrollableLyrics = (props: Props) =>
                         isSelected = index === lyrics.selectedLine.index
                     }
 
-                    // seekWrapper(line.interval.start)
                     return (
                         <Line 
                             key={index}
@@ -61,4 +60,4 @@ const ScrollableLyrics = (props: Props) =>
     )
 }
 
-export default ScrollableLyrics
+export default Synced

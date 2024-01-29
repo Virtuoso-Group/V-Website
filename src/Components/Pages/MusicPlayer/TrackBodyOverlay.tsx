@@ -4,13 +4,11 @@ import { MdLyrics } from 'react-icons/md'
 
 import { AnimatePresence, motion } from 'framer-motion'
 
-import { RefObject, memo } from 'react'
-import LyricsView from '../../Organisms/Lyrics/LyricsView'
+import { memo } from 'react'
+import Lyrics from '../../Organisms/Lyrics/Lyrics'
 import ButtonIcon from '../../Atoms/ButtonIcon'
 import { releaseURL } from '../../../config/config'
 import { LyricsObject } from '../../../Utils/types/lyrics'
-import { SelectedLine } from '../../../Utils/hooks/lyricsHooks'
-
 
 const Background = memo((props: { coverArt: string }) =>
 {
@@ -100,7 +98,7 @@ const PlayerOverlay = memo((props: Props) =>
                     { 
                         props.value.status !== "Unavailable" && props.areVisible
                     && 
-                        <LyricsView lyrics={props.value} seek={seek} />
+                        <Lyrics lyrics={props.value} seek={seek} />
                     }
                 </AnimatePresence>
 

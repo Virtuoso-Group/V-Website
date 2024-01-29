@@ -9,8 +9,16 @@ export enum PlayerState
     STOPPED = "STOPPED"
 }
 
+export type PlayerStateHook =
+{
+    value: PlayerState;
+    setToLoading: () => void;
+    setToPlay: () => void;
+    setToPause: () => void;
+    reset: () => void;
+}
 
-const usePlayerState = () =>
+const usePlayerState = (): PlayerStateHook =>
 {
     const [value, setValue] = useState<PlayerState>(PlayerState.STOPPED)
 
@@ -123,7 +131,7 @@ export const useTrackTimestamp =
     }, [trackID, update, seek])    
 }
 
-const useAudioControls = (playerState: PlayerState) =>
+const useAudioControls = (trackID: string, playerState: PlayerStateHook) =>
 {
     const ref = useRef<HTMLAudioElement>(null);
 
@@ -133,7 +141,7 @@ const useAudioControls = (playerState: PlayerState) =>
     
     const togglePlay =  useCallback(() => 
     {
-        playerState === PlayerState.PLAYING? pause() : play()
+        playerState.value === PlayerState.PLAYING? pause() : play()
     },[playerState, play, pause]);
 
     const seek = useCallback((newTimeStamp: number) =>
@@ -144,20 +152,57 @@ const useAudioControls = (playerState: PlayerState) =>
         }
     }, [])
 
+    const reset = () => 
+    {        
+        playerState.reset();
+
+        seek(0)
+    }
+
+    useEffect(() => 
+    {
+        const audioRef = ref.current;
+
+        if (audioRef) 
+        {
+            audioRef.addEventListener("play", playerState.setToPlay)
+            audioRef.addEventListener("playing", playerState.setToPlay)
+            audioRef.addEventListener("pause", playerState.setToPause)
+
+            audioRef.addEventListener("loadstart", playerState.setToLoading)
+
+            audioRef.addEventListener("waiting", playerState.setToLoading)
+
+            audioRef.addEventListener("ended", reset)
+        }
+        
+        return () => {
+            audioRef?.removeEventListener("play", playerState.setToPlay)
+            audioRef?.removeEventListener("playing", playerState.setToPlay)
+            audioRef?.removeEventListener("pause", playerState.setToPause)
+
+            audioRef?.removeEventListener("loadstart", playerState.setToLoading)
+
+            audioRef?.removeEventListener("waiting", playerState.setToLoading)
+
+            audioRef?.removeEventListener("ended", reset)
+        }
+    }, [trackID])
+    
     return {
         ref,
 
-        play, pause, togglePlay, seek
+        play, pause, togglePlay, seek, reset
     }
 }
 
-const useMusicPlayer = () =>
+const useMusicPlayer = (trackID: string) =>
 {
     const metaDataLoaded = useRef<boolean>(false);
 
     const playerState = usePlayerState();
 
-    const audioControls = useAudioControls(playerState.value)
+    const audioControls = useAudioControls(trackID, playerState)
 
     const duration = useDuration();
 
@@ -209,13 +254,6 @@ const useMusicPlayer = () =>
 
     const seekTimestamp = useCallback((timestamp: number) => seekPercentage((timestamp/duration.value)), [seekPercentage])
     
-    const reset = () => 
-    {        
-        playerState.reset();
-
-        audioControls.seek(0)
-    }
-
     return {
         playerState,
         audioControls,
@@ -224,7 +262,7 @@ const useMusicPlayer = () =>
         initialize, 
         seekPercentage, 
         seekTimestamp,
-        reset
+        reset: audioControls.reset
     }
 }
 

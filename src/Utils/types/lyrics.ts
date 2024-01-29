@@ -1,7 +1,11 @@
+export type Interval =
+{
+    start: number, end: number
+}
 export type Line =
 {
     value: string,
-    interval: { start: number, end: number }
+    interval: Interval
 }
 
 export type Lyrics = Line[]
@@ -17,5 +21,7 @@ export type UnsyncedLyrics =
     status: "Unsynced",
     value: string
 }
+
+export type LyricsStatus = "Synced" | "Unsynced" | "Instrumental" | "Unavailable"
 
 export type LyricsObject = SyncedLyrics | UnsyncedLyrics | { status: "Unavailable" | "Instrumental" }

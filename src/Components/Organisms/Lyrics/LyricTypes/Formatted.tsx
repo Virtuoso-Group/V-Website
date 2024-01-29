@@ -3,7 +3,7 @@ type Props =
     lyrics: string
 }
 
-const UnsyncedLyricsView = (props: Props) => 
+const FormattedLyrics = (props: Props) => 
 {
     const { lyrics } = props;
 
@@ -26,5 +26,5 @@ const UnsyncedLyricsView = (props: Props) =>
   )
 }
 
-export default UnsyncedLyricsView;
+export default FormattedLyrics;
 

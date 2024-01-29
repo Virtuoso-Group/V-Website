@@ -56,15 +56,13 @@ export const MusicPlayer = (props: Props) =>
         playerState, audioControls, duration, 
 
         initialize, seekPercentage, seekTimestamp, reset, 
-    } = useMusicPlayer();
+    } = useMusicPlayer(track._id);
     
     const overlay = useOverlay();
 
     const stepBackwards = useCallback(() => { reset() }, [])
 
     const stepForwards = useCallback(() => { console.log("Forwards!")  }, [])
-
-    useEffect(() => { reset() }, [track._id])
 
     return (
         <PlayerContext.Provider value={{ trackID: track._id, audioRef: audioControls.ref }}>
@@ -91,14 +89,6 @@ export const MusicPlayer = (props: Props) =>
 
                     initialize(showMediaSession) 
                 }}
-                onPlay={playerState.setToPlay}
-                onPause={playerState.setToPause}
-                onLoadStart={playerState.setToLoading}
-
-                onWaiting={playerState.setToLoading}
-                onPlaying={playerState.setToPlay}
-                
-                onEnded={reset}
             />
 
             <AnimatePresence>

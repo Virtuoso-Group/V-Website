@@ -23,6 +23,7 @@ export const AWS_URL =
 export const releaseURL = AWS_URL.release[env];
 export const baseURL = baseURLObj[env]
 
+// TODO: move this to the backend
 export const getCoverArt = (releaseID: string) =>
 {
     return `${releaseURL}/${releaseID}/cover_art.jpeg`

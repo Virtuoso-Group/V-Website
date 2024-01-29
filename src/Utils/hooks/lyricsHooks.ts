@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
-import { Line, Lyrics } from "../types/lyrics";
+import { Interval, Line, Lyrics } from "../types/lyrics";
 import { useTrackTimestamp } from "./useMusicPlayer";
 
-export const isWithinRange = (line: Line, timestamp: number) =>
+export const isWithinRange = (interval: Interval, timestamp: number) =>
 {
-    if (line) 
+    if (interval) 
     {
-        const { start, end } = line.interval;
+        const { start, end } = interval;
 
         return start <= timestamp && timestamp <= end
     }
@@ -33,7 +33,7 @@ const seekLineIndex = (lyrics: Lyrics, selectedTimestamp: number, lowIndex: numb
     
     const line = lyrics[midIndex];
         
-    if (isWithinRange(line, selectedTimestamp)) 
+    if (isWithinRange(line.interval, selectedTimestamp)) 
     {
         return midIndex
     }
@@ -127,19 +127,33 @@ export const useLyrics = (trackID: string, lyrics: Lyrics) =>
             })
     }
 
-    // useEffect(() => 
-    // { 
-    //     setSelectedLine(null);
+    const reset = () =>
+    {
+        if (lyrics.length > 0) 
+        {
+            setSelectedLine(
+            {
+                index: 0,
+                line: lyrics[0]
+            });
+        }
+        else
+        {
+            setSelectedLine(null)
+        }
+        
 
-    //     index.reset();
-    // }, [trackID])
+        index.reset(); 
+    }
+
+    useEffect(() => { reset() }, [trackID])
 
     
     const update = (timestamp: number) =>
     {   
         if (timestamp === 0) 
         {
-            index.reset();
+            reset()
         }
 
         const chosenLine = lyrics[index.value];
@@ -158,7 +172,7 @@ export const useLyrics = (trackID: string, lyrics: Lyrics) =>
             {
                 const visibleLine: SelectedLine | null 
                 = 
-                    isWithinRange(chosenLine, timestamp)
+                    isWithinRange(chosenLine.interval, timestamp)
                 ? 
                     {
                         index: index.value,
@@ -173,14 +187,7 @@ export const useLyrics = (trackID: string, lyrics: Lyrics) =>
         }
     }
 
-    const seek = (timestamp: number) =>
-    {
-        index.seek(timestamp)
-
-        // update(timestamp)
-    }
-
-    useTrackTimestamp(trackID, 10, update, seek)
+    useTrackTimestamp(trackID, 10, update, index.seek)
     
     return { selectedLine }
 }
