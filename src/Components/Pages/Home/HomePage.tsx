@@ -43,16 +43,18 @@ const HomePage = memo(() =>
 
     const HomeSections: { [index: string]:  JSX.Element } = 
     {
-        'tracks': <TracksSection data={tracksAPI.data} />,
+        'tracks':  <TracksSection data={tracksAPI.data} />,
         'albums':  <ReleasesSection data={albumsAPI.data} />,
         'artists': <ArtistsSection data={artistsAPI.data} />
     }
 
     const ChosenSection = HomeSections[selectedCategory.id];
 
+    // div className=' flex flex-col gap-[1.2rem] overflow-hidden'
     return (
-        <div className={`flex flex-col gap-10 pt-[4rem] `}>
-            <div className={`${websitePadding} pt-[4.0625rem] z-[49] top-[1.5625rem] fixed w-full flex gap-5 bg-primary`}>
+        //  pt-[4rem]
+        <div className='relative flex flex-col '>
+            <div className={`z-[40] top-[4rem] sticky ${websitePadding} py-[1rem] w-full flex gap-5  bg-primary`}>
                 {
                     Categories.map((category, index) =>  
                     {
@@ -70,7 +72,9 @@ const HomePage = memo(() =>
                 }
             </div>
             
-            <div className={`mt-20 flex flex-wrap w-full gap-8 h-full ${websitePadding}`}>
+
+            {/* mt-20 */}
+            <div className={` pb-8 relative flex flex-wrap w-full gap-8 ${websitePadding}`}>
                 {ChosenSection}
             </div>
         </div>

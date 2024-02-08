@@ -15,12 +15,14 @@ import { AnimatePresence } from "framer-motion";
 
 type PlayerContextType = 
 {
+    websitePadding: string,
     trackID: string,
     audioRef: RefObject<HTMLAudioElement>
 }
 
 export const PlayerContext = createContext<PlayerContextType>(
 {
+    websitePadding: "",
     trackID: "",
     audioRef: createRef<HTMLAudioElement>()
 })
@@ -28,16 +30,15 @@ export const PlayerContext = createContext<PlayerContextType>(
 const CloseButton = memo((props: { onClick: () => void}) =>
 {
     return (
-        <div
-            className='w-fit h-fit flex items-center justify-center cursor-pointer'
-        >
-            <IoIosClose  className={`fill-white me-5 `} size={"2.25rem"} onClick={props.onClick}/>
+        <div className='w-fit h-fit flex items-center justify-center cursor-pointer'>
+            <IoIosClose  className={`fill-white`} size={"2.25rem"} onClick={props.onClick}/>
         </div>
     )
 })
 
 interface Props
 {
+    websitePadding?: string,
     track: Track,
 
     close: () => void
@@ -49,7 +50,7 @@ export const MusicPlayer = (props: Props) =>
 
     const toggleLyrics = useCallback(() => setLyricsVisibility(value => !value), []);
 
-    const { track, close } = props
+    const { websitePadding, track, close } = props
 
     const 
     { 
@@ -65,102 +66,112 @@ export const MusicPlayer = (props: Props) =>
     const stepForwards = useCallback(() => { console.log("Forwards!")  }, [])
 
     return (
-        <PlayerContext.Provider value={{ trackID: track._id, audioRef: audioControls.ref }}>
-            <audio 
-                key={track._id}
-                title={track.title}
-                ref={audioControls.ref}
-                controlsList="nodownload noplaybackrate"
-                src={`${baseURL}/music/track/play/${track.release._id}/${track._id}`}
-                onLoadedMetadata={e => 
-                {
-                    const showMediaSession = () =>
+        <PlayerContext.Provider value={{ websitePadding: `${websitePadding}`, trackID: track._id, audioRef: audioControls.ref }}>
+            <div className="z-[55] fixed h-screen min-w-[375px] w-full pointer-events-none">
+                <audio 
+                    key={track._id}
+                    title={track.title}
+                    ref={audioControls.ref}
+                    controlsList="nodownload noplaybackrate"
+                    src={`${baseURL}/music/track/play/${track.release._id}/${track._id}`}
+                    onLoadedMetadata={e => 
                     {
-                        overlay.show();
+                        const showMediaSession = () =>
+                        {
+                            overlay.show();
 
-                        navigator.mediaSession.metadata = new MediaMetadata
-                        ({
-                            title: track.title,
-                            artist: track.artist.name,
-                            album: track.release.title,
-                            artwork: [{ src: `${releaseURL}/${track.release._id}/cover_art.jpeg` }],
-                        });
-                    }
+                            navigator.mediaSession.metadata = new MediaMetadata
+                            ({
+                                title: track.title,
+                                artist: track.artist.name,
+                                album: track.release.title,
+                                artwork: [{ src: `${releaseURL}/${track.release._id}/cover_art.jpeg` }],
+                            });
+                        }
 
-                    initialize(showMediaSession) 
-                }}
-            />
+                        initialize(showMediaSession) 
+                    }}
+                />
 
-            <AnimatePresence>
-                {
-                    overlay.isOn
-                && 
-                    <PlayerOverlay 
-                        _id={track._id}
-                        release={track.release}
-                        value={track.lyrics}
+                <div 
+                    className=
+                    {`
                         
-                        areVisible={areLyricsVisible}
-                        toggle={toggleLyrics}
+                        bg-black
+                        z-[99] fixed bottom-0 flex w-full pointer-events-auto
+                    `}
+                >
+                    <div className={`w-full`}>
+                        <SeekBar
+                            trackID={track._id}
+                            duration={duration.value}
+                            controls=
+                            {{ 
+                                pause: audioControls.pause, 
+                                seek: seekPercentage 
+                            }}
+                        />
 
-                        seek={seekTimestamp}
-                    />
-                }
-            </AnimatePresence>
+                        <div className={`${websitePadding} w-full flex items-center justify-between h-[4rem] py-[2.5rem]`}>
+                            <ToggleTriangle {...overlay} />
 
-            <div className="flex w-full">
-                <div className={`z-[50] fixed bottom-0 w-full bg-black`}>
-                    <SeekBar
-                        trackID={track._id}
-                        duration={duration.value}
-                        controls=
-                        {{ 
-                            pause: audioControls.pause, 
-                            seek: seekPercentage 
-                        }}
-                    />
+                            <div className="grid grid-cols-3 content-center w-full h-full  px-20">
+                                <TrackInformation 
+                                    className="invisible SD:visible justify-self-start flex gap-5"
+                                    release={track.release}
+                                    trackName={track.title} 
+                                    artist={track.artist}
 
-                    <div className="w-full flex items-center justify-between h-[4.6875rem] py-[1.5625rem]">
-                        <ToggleTriangle {...overlay} />
+                                    showCoverArt={!overlay.isOn}
 
-                        <div className="grid grid-cols-3 content-center w-full h-full  px-20">
-                            <TrackInformation 
-                                className="invisible SD:visible justify-self-start flex gap-5"
-                                release={track.release}
-                                trackName={track.title} 
-                                artist={track.artist}
+                                    onClick={overlay.hide}
+                                />
 
-                                onClick={overlay.hide}
-                            />
+                                <PlayerControls 
+                                    className="flex items-center gap-10  justify-self-center h-full"
+                                    playerState={playerState.value}
 
-                            <PlayerControls 
-                                className="flex items-center gap-10  justify-self-center h-full"
-                                playerState={playerState.value}
+                                    stepBackwards={stepBackwards}
+                                    togglePlay={audioControls.togglePlay}
+                                    stepForwards={stepForwards}
+                                />
+                            
+                                <TimeInformation 
+                                    trackID={track._id}
+                                    className=
+                                    {`
+                                        hidden SD:flex items-center justify-center
+                                        justify-self-end
+                                        font-light text-gray-300
+                                        text-xs
+                                    `}     
+                                    
+                                    duration={duration.value}
+                                />
+                            </div>
 
-                                stepBackwards={stepBackwards}
-                                togglePlay={audioControls.togglePlay}
-                                stepForwards={stepForwards}
-                            />
-                        
-                            <TimeInformation 
-                                trackID={track._id}
-                                className=
-                                {`
-                                    hidden SD:flex items-center justify-center
-                                    justify-self-end
-                                    font-light text-gray-300
-                                    text-xs
-                                `}     
-                                
-                                duration={duration.value}
-                            />
-                        </div>
-
-                        <div className="right-0 absolute flex items-center">
-                            <CloseButton onClick={close}/>
+                            <div className="right-0 flex items-center">
+                                <CloseButton onClick={close}/>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <AnimatePresence>
+                    {overlay.isOn &&
+                        <PlayerOverlay 
+                            _id={track._id}
+                            release={track.release}
+                            value={track.lyrics}
+                            
+                            areVisible={areLyricsVisible}
+                            toggle={toggleLyrics}
+
+                            seek={seekTimestamp}
+                        />
+                    }
+                    
+                </AnimatePresence>
             </div>
         </PlayerContext.Provider>
     )

@@ -2,9 +2,12 @@ import { memo } from "react";
 import { getCoverArt, releaseURL } from "../../../../config/config";
 import CoverArt from "../../../Atoms/CoverArt";
 import { Link } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import { MotionCoverArt } from "../../../motion/MotionCoverArt";
 
 interface SongInfoProps
 {
+    showCoverArt: boolean,
     className?: string, 
     trackName: string, 
     release: { _id: string, title: string },  
@@ -13,25 +16,40 @@ interface SongInfoProps
     onClick: () => void
 }
 
+// const MotionCoverArt = motion(CoverArt)
+
 
 const TrackInformation = memo((props: SongInfoProps) =>
 {
-    const { className, trackName, artist, release } = props;
+    const { showCoverArt, className, trackName, artist, release } = props;
 
+    console.log(`release/${release._id}`);
+    
     return (
         <div className={`flex items-center whitespace-nowrap ${className}`}>
-            <CoverArt
-                className={`h-[3.125rem] bg-blue-800 rounded-sm`}
-                name={release.title}
-                coverArt={getCoverArt(release._id)??""} 
-            />
+
+            <div className="h-[3.125rem] aspect-square">
+                <AnimatePresence>
+                    {
+                        showCoverArt 
+                    &&
+                        <MotionCoverArt
+                            id={release._id}
+                            className={` h-full bg-blue-800 rounded-sm`}
+                            name={release.title}
+                            coverArt={getCoverArt(release._id)??""} 
+                        /> 
+                    }
+                
+                </AnimatePresence>
+            </div>
 
             <p className='flex flex-col'>
                 <span className='font-bold text-white text-lg'>
                     {trackName}
                 </span>
 
-                <span className='flex gap-1 text-sm font-light text-gray-300 align-middle text-slate-300'>
+                <span className='flex gap-1 text-sm font-light align-middle text-slate-300'>
                     <Link to={`/artist/${artist._id}`} onClick={props.onClick}>{artist.name}</Link>
 
                     <span className="">•</span> 

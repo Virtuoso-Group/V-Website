@@ -64,14 +64,15 @@ const WebsiteLayout = () =>
     const websitePadding = "px-5 SD:px-10 HD:px-20";
 
     return (
-        <main className="relative min-h-screen w-screen bg-primary pb-[8rem]">
-            <WebsiteHeader className={`z-[50] self-start fixed ${websitePadding}`} start={<WebsiteLogo />} />
+        <main className={`min-h-screen min-w-[375px] w-screen flex flex-col bg-primary`}>
+            <WebsiteHeader className={`z-[99] top-0 sticky ${websitePadding}`} start={<WebsiteLogo />} />
 
-            <div className="z-[10] h-dvh min-w-full">
+            {/* mt-[5.2rem] */}
+            <div className={`min-h-full w-full bg-primary  ${track.value? "pb-[9rem]": "pb-[0rem]"} `}>
                 <Outlet context={{ websitePadding: websitePadding, selectTrack: track.selectTrack } satisfies WebsiteContext} />
             </div>
 
-            {track.value && <MusicPlayer track={track.value} close={track.reset} />}
+            {track.value && <MusicPlayer websitePadding={websitePadding} track={track.value} close={track.reset} />}
         </main>
     )
 }

@@ -4,10 +4,12 @@ import { useParams } from "react-router"
 import { Artist } from "../../Utils/types/track";
 import Avatar from "../Atoms/Avatar";
 import { baseURL } from "../../config/config";
+import { useWebsiteContext } from "../Organisms/WebsiteLayout";
 
 export const ArtistPage = () => 
 {
   const { artistID } = useParams();
+  const { websitePadding } = useWebsiteContext();
   const [artist, setArtist] = useState<Artist | null>(null)
 
   const fetchArtist = async (artistID: string) =>
@@ -35,15 +37,17 @@ export const ArtistPage = () =>
     }
   }, [artistID])
   
+  // pt-[1.5625rem]
   return (
     <div 
         className=
         {`
-            min-h-screen w-screen 
+            mt-[2rem]
+            ${websitePadding}
+            w-full
             flex flex-col 
             gap-20
-            pt-[5.5625rem]
-            px-20 
+             
         `}
     >
       {/* Basic artist info */}
@@ -54,13 +58,13 @@ export const ArtistPage = () =>
           title={artist?.name?? ""} 
         />
 
-        <h1 className="mt-10 text-4xl text-white font-bold">
+        <h1 className="mt-10 text-xl SD:text-4xl text-white font-bold">
           {artist?.name?? "Name"}
         </h1>
       </div>
 
       {/* Their content */}
-      <div className="h-[12.5rem] border">
+      <div className="h-[12.5rem] border bg-green-600">
         <h1 className="text-2xl text-white font-bold">{"Albums"}</h1>
       </div>
     </div>

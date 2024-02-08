@@ -15,13 +15,13 @@ const WebsiteHeader = (props: Props) =>
         <header 
             className=
             {`
+                ${className}
                 h-[4rem]
 
                 w-full 
                 flex items-center
                 
                 bg-black
-                ${className}
             `}
         >
             <div>{start}</div>

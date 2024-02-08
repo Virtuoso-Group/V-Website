@@ -4,9 +4,11 @@ import { Release } from '../../Utils/types/track';
 import CoverArt from '../Atoms/CoverArt';
 import { getCoverArt } from '../../config/config';
 import useAPI from '../../Utils/hooks/useAPI';
+import { useWebsiteContext } from '../Organisms/WebsiteLayout';
 
 const AlbumPage = () => 
 {
+    const { websitePadding } = useWebsiteContext();
     const { albumID } = useParams();
 
     const release = useAPI<Release | null>("/music/release/", "get", null);
@@ -32,8 +34,8 @@ const AlbumPage = () =>
                 min-h-screen w-screen 
                 flex flex-col 
                 gap-20
-                pt-[5.5625rem]
-                px-20 
+                mt-[2rem]
+                ${websitePadding}
             `}
         >
 
