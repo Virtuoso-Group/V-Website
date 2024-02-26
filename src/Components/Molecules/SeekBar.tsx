@@ -83,7 +83,7 @@ const SeekBar = memo((props: SeekBarProps) =>
             onClick={e => seekWrapper(e.clientX)}
         >
             <motion.div 
-                className='z-[1] absolute h-full bg-white'
+                className=' absolute h-full bg-white'
                 animate={{ width: `${currentPercentage?? "0"}%` }}
                 transition={{  duration: 0.01, type: "tween", bounce: 0.25 }}
             />

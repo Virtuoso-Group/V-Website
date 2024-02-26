@@ -23,7 +23,7 @@ const TracksSection = (props: { data: Track[] }) =>
                             trackID={track._id}
                             title={track.title}
                             artistName={track.artist.name}
-                            releaseID={track.release._id}
+                            coverArt={track.release.coverArt}
 
                             select={selectTrack}
                         />

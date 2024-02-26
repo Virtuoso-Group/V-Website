@@ -1,8 +1,6 @@
-import { forwardRef, memo, useCallback, useState } from 'react'
+import { forwardRef, memo, useState } from 'react'
 import CoverArt from '../Atoms/CoverArt';
 import Marquee from 'react-fast-marquee';
-import { Track } from '../../Utils/types/track';
-import { AWS_URL } from '../../config/config';
 
 type Props = 
 { 
@@ -10,16 +8,14 @@ type Props =
 
     title: string,
     artistName: string,
-    releaseID: string, 
+    coverArt: string, 
 
     select: (trackID: string) => void;
 }
 
 const TrackCard = memo(forwardRef<HTMLElement, Props>((props, ref) => 
 {
-    const { trackID, title, artistName, releaseID, select } = props;
-
-    const coverArt = `${AWS_URL.release.dev}/${releaseID}/cover_art.jpeg`;
+    const { trackID, title, artistName, coverArt, select } = props;
 
     const [isHover, setHover] = useState<boolean>(false)
 

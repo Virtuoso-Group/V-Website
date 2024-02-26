@@ -1,9 +1,9 @@
 import { IoIosClose } from "react-icons/io";
 import useMusicPlayer from "../../../Utils/hooks/useMusicPlayer";
 import { Track } from "../../../Utils/types/track";
-import { baseURL, releaseURL } from "../../../config/config";
+import { baseURL } from "../../../config/config";
 import SeekBar from "../../Molecules/SeekBar";
-import { RefObject, createContext, createRef, memo, useCallback, useEffect, useRef, useState } from "react";
+import { RefObject, createContext, createRef, memo, useCallback, useState } from "react";
 import TimeInformation from "./Components/TimeInformation";
 import TrackInformation from "./Components/TrackInformation";
 import PlayerControls from "./Components/PlayerControls";
@@ -85,7 +85,7 @@ export const MusicPlayer = (props: Props) =>
                                 title: track.title,
                                 artist: track.artist.name,
                                 album: track.release.title,
-                                artwork: [{ src: `${releaseURL}/${track.release._id}/cover_art.jpeg` }],
+                                artwork: [{ src: track.release.coverArt }],
                             });
                         }
 

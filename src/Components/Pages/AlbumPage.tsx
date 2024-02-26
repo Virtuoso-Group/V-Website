@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { Release } from '../../Utils/types/track';
 import CoverArt from '../Atoms/CoverArt';
-import { getCoverArt } from '../../config/config';
 import useAPI from '../../Utils/hooks/useAPI';
 import { useWebsiteContext } from '../Organisms/WebsiteLayout';
 
@@ -21,8 +20,6 @@ const AlbumPage = () =>
       }
     }, [albumID])
   
-    const coverArtURL = release.data? getCoverArt(release.data._id): ''
-
     const title = release.data? release.data.title: ""
         
     return (
@@ -43,7 +40,7 @@ const AlbumPage = () =>
                 <CoverArt 
                     className={`relative rounded-lg drop-shadow-2xl w-[9.375rem]`}
                     name={title}
-                    coverArt={coverArtURL} 
+                    coverArt={release.data?.coverArt??""} 
                 />
 
                 <h1 className="text-4xl text-white font-bold">{title}</h1>

@@ -7,7 +7,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { memo, useContext } from 'react'
 import Lyrics from '../../Organisms/Lyrics/Lyrics'
 import ButtonIcon from '../../Atoms/ButtonIcon'
-import { getCoverArt } from '../../../config/config'
 import { LyricsObject } from '../../../Utils/types/lyrics'
 import { RemoveScroll } from 'react-remove-scroll'
 import { PlayerContext } from './MusicPlayer'
@@ -30,9 +29,9 @@ const Background = memo((props: { coverArt: string }) =>
     )
 })
 
-const CoverArtContainer = (props: { _id: string, title: string }) =>
+const CoverArtContainer = (props: { _id: string, title: string, coverArt: string }) =>
 {
-    const { _id } = props;
+    const { _id, coverArt } = props;
     
     console.log(`release/${_id}`);
     return ( 
@@ -50,7 +49,7 @@ const CoverArtContainer = (props: { _id: string, title: string }) =>
                 id={_id}
                 className={`z-[40] absolute h-full rounded-md SD:rounded-lg `}                
                 name={props.title}
-                coverArt={getCoverArt(_id)} 
+                coverArt={coverArt} 
                 loading={"eager"}
             />
         </motion.div>
@@ -59,7 +58,7 @@ const CoverArtContainer = (props: { _id: string, title: string }) =>
 
 interface Props
 {       
-    release: { _id: string, title: string }
+    release: { _id: string, title: string, coverArt: string }
 
     value: LyricsObject,
     _id: string,
@@ -87,7 +86,7 @@ const PlayerOverlay = memo((props: Props) =>
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25 }}
             >
-                <Background coverArt={getCoverArt(release._id)} />
+                <Background coverArt={release.coverArt} />
 
                 <section 
                     className=

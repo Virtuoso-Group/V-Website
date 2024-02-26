@@ -6,7 +6,7 @@ export const baseURLObj =
     dev: "https://virtuoso-music-153237c4d27d.herokuapp.com"
 }
 
-type Environment = 'local' |'dev';
+type Environment = 'local' | 'dev';
 
 // const env: Environment = 'dev';
 
@@ -22,11 +22,4 @@ export const AWS_URL =
 }
 
 
-export const releaseURL = AWS_URL.release[env];
 export const baseURL = baseURLObj[env]
-
-// TODO: move this to the
-export const getCoverArt = (releaseID: string) =>
-{
-    return `${releaseURL}/${releaseID}/cover_art.jpeg`
-}

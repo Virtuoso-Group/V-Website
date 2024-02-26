@@ -1,43 +1,29 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router"
 import { Artist } from "../../Utils/types/track";
 import Avatar from "../Atoms/Avatar";
-import { baseURL } from "../../config/config";
 import { useWebsiteContext } from "../Organisms/WebsiteLayout";
+import useAPI from "../../Utils/hooks/useAPI";
 
 export const ArtistPage = () => 
 {
   const { artistID } = useParams();
   const { websitePadding } = useWebsiteContext();
-  const [artist, setArtist] = useState<Artist | null>(null)
 
-  const fetchArtist = async (artistID: string) =>
-  {
-    try 
-    {
-      const res = await axios.get(`${baseURL}/music/artist/get?artistID=${artistID}`);
-
-      if (res.data && res.data.artist) 
-        {
-          setArtist(res.data.artist)
-        }
-    } 
-    catch (error) 
-    {
-      console.error(error)
-    }
-  }
+  const artist = useAPI<Artist | null>("/music/artist/", "get", null);
 
   useEffect(() => 
   {
     if (artistID) 
     {
-      fetchArtist(artistID);
+      artist.execute(artistID);
     }
   }, [artistID])
   
   // pt-[1.5625rem]
+
+  const artistData = artist.data;
+
   return (
     <div 
         className=
@@ -54,12 +40,12 @@ export const ArtistPage = () =>
       <div className="border h-[15.625rem] flex gap-10">
         <Avatar
           className="h-full" 
-          src={artist?.image?? ""} 
-          title={artist?.name?? ""} 
+          src={artistData? artistData.image: ""} 
+          title={artistData? artistData.name: ""} 
         />
 
         <h1 className="mt-10 text-xl SD:text-4xl text-white font-bold">
-          {artist?.name?? "Name"}
+          {artistData? artistData.name: ""}
         </h1>
       </div>
 

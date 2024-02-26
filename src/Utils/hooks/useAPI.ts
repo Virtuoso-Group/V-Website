@@ -68,12 +68,9 @@ const useAPI = <Result>(url: string, method: 'get' | 'post', defaultValue: Resul
 
 
     return {
-        data,
+        data, isLoading,
 
-        isLoading,
-
-        execute,
-        reset
+        execute, reset
     }
 }
 

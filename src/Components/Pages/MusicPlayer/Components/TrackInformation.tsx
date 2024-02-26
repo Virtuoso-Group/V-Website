@@ -1,8 +1,6 @@
 import { memo } from "react";
-import { getCoverArt, releaseURL } from "../../../../config/config";
-import CoverArt from "../../../Atoms/CoverArt";
 import { Link } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { MotionCoverArt } from "../../../motion/MotionCoverArt";
 
 interface SongInfoProps
@@ -10,7 +8,7 @@ interface SongInfoProps
     showCoverArt: boolean,
     className?: string, 
     trackName: string, 
-    release: { _id: string, title: string },  
+    release: { _id: string, title: string, coverArt: string },  
     artist: { _id: string, name: string }
 
     onClick: () => void
@@ -22,8 +20,6 @@ interface SongInfoProps
 const TrackInformation = memo((props: SongInfoProps) =>
 {
     const { showCoverArt, className, trackName, artist, release } = props;
-
-    console.log(`release/${release._id}`);
     
     return (
         <div className={`flex items-center whitespace-nowrap ${className}`}>
@@ -37,10 +33,9 @@ const TrackInformation = memo((props: SongInfoProps) =>
                             id={release._id}
                             className={` h-full bg-blue-800 rounded-sm`}
                             name={release.title}
-                            coverArt={getCoverArt(release._id)??""} 
+                            coverArt={release.coverArt} 
                         /> 
                     }
-                
                 </AnimatePresence>
             </div>
 

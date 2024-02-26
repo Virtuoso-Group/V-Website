@@ -4,7 +4,6 @@ import CoverArt from '../Atoms/CoverArt'
 import Marquee from 'react-fast-marquee'
 
 import { Release } from '../../Utils/types/track'
-import { AWS_URL } from '../../config/config'
 
 type Props = 
 {
@@ -19,8 +18,6 @@ const ReleaseCard = (props: Props) =>
 
     const [isHover, setIsHover] = useState<boolean>(false)
 
-    const coverArtURL = `${AWS_URL.release.dev}/${release._id}/cover_art.jpeg`
-
     return (
         <article
             className='flex cursor-pointer flex-col w-[9.375rem] gap-2'
@@ -33,13 +30,13 @@ const ReleaseCard = (props: Props) =>
                 <CoverArt 
                     className={`w-full absolute right-5 z-[0] rounded-lg scale-[0.9] bg-blend-darken`}
                     name={release.title}
-                    coverArt={coverArtURL} 
+                    coverArt={release.coverArt} 
                 />
 
                 <CoverArt 
                     className={`w-full relative z-[5] rounded-lg drop-shadow-2xl `}
                     name={release.title}
-                    coverArt={coverArtURL} 
+                    coverArt={release.coverArt} 
                 />
             </div>
             

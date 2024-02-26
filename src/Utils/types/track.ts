@@ -33,6 +33,7 @@ export type Track =
     {
         _id: string
        title: string,
+       coverArt: string,
     },
 
     lyrics: LyricsObject,

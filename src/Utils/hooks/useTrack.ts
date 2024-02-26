@@ -1,8 +1,6 @@
 // import { useState } from "react";
-import { useState } from "react";
 import { Track } from "../types/track";
 import useAPI from "./useAPI";
-import { PlayerState } from "./useMusicPlayer";
 
 const useTrack = () =>
 {
