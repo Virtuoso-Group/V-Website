@@ -73,7 +73,7 @@ export const MusicPlayer = (props: Props) =>
                     title={track.title}
                     ref={audioControls.ref}
                     controlsList="nodownload noplaybackrate"
-                    src={`${baseURL}/music/track/play/${track.release._id}/${track._id}`}
+                    src={`${baseURL}/music/track/play/${track._id}`}
                     onLoadedMetadata={e => 
                     {
                         const showMediaSession = () =>
