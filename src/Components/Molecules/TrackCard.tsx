@@ -29,7 +29,7 @@ const TrackCard = memo(forwardRef<HTMLElement, Props>((props, ref) =>
             onMouseLeave={() => setHover(false)}
         >
             <CoverArt 
-                className={`rounded-lg`}
+                className={`rounded-lg w-full`}
                 name={title + " by "+artistName}
                 coverArt={coverArt?? ""} 
             />

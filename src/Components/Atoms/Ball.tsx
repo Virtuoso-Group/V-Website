@@ -23,15 +23,11 @@ const Ball = (props: BallProps) =>
             layout
             className=
             {`
-                z-[2] 
                 relative 
 
-                h-[0.9375rem] aspect-square 
+                size-[0.9375rem]  
                 
-                rounded-full 
-                bg-white 
-
-                drop-shadow
+                rounded-full bg-white drop-shadow
                 
                 ${isDragging? "cursor-grabbing": "cursor-grab"} 
             `}

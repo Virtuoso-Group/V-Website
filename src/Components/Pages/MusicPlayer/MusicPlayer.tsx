@@ -96,7 +96,6 @@ export const MusicPlayer = (props: Props) =>
                 <div 
                     className=
                     {`
-                        
                         bg-black
                         z-[99] fixed bottom-0 flex w-full pointer-events-auto
                     `}

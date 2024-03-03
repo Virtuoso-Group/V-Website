@@ -9,8 +9,7 @@ interface Props
 }
 
 export const Avatar = (props: Props) => 
-{
-
+{  
   return (
         <img 
             className={`grow-0 shrink-0 object-cover rounded-full aspect-square ${props.className}`}

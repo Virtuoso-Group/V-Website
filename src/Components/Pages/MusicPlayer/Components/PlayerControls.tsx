@@ -44,8 +44,7 @@ const PlayerControls = memo((props: PlayerControlsProps) =>
             <ButtonIcon 
                 className=
                 {`
-                    h-[2.1875rem]
-                    aspect-square 
+                    size-[2.1875rem]
                     rounded-full bg-slate-300
 
                     flex items-center justify-center
@@ -59,8 +58,7 @@ const PlayerControls = memo((props: PlayerControlsProps) =>
             <ButtonIcon 
                 className=
                 {`
-                    h-[3.125rem]
-                    aspect-square 
+                    size-[3.125rem]
                     rounded-full bg-slate-300
 
                     flex items-center justify-center
@@ -74,8 +72,7 @@ const PlayerControls = memo((props: PlayerControlsProps) =>
             <ButtonIcon 
                 className=
                 {`
-                    h-[2.1875rem]
-                    aspect-square 
+                    size-[2.1875rem]
                     rounded-full bg-slate-300
 
                     flex items-center justify-center

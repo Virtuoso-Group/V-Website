@@ -1,6 +1,6 @@
 import { Outlet, useNavigate, useOutletContext } from "react-router-dom";
 import WebsiteHeader from "./WebsiteHeader";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 // import TrackControls from "../Pages/MusicPlayer/MusicPlayer";
 
 // import { MusicPlayer } from "../Pages/MusicPlayer/MusicPlayer";

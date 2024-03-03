@@ -20,32 +20,23 @@ export const ArtistPage = () =>
     }
   }, [artistID])
   
-  // pt-[1.5625rem]
-
   const artistData = artist.data;
 
+  console.log("artistData: ", artistData);
+  
   return (
-    <div 
-        className=
-        {`
-            mt-[2rem]
-            ${websitePadding}
-            w-full
-            flex flex-col 
-            gap-20
-             
-        `}
-    >
+    <div className={`mt-[2rem] ${websitePadding} w-full flex flex-col gap-20`}>
       {/* Basic artist info */}
       <div className="border h-[15.625rem] flex gap-10">
+      
         <Avatar
-          className="h-full" 
-          src={artistData? artistData.image: ""} 
-          title={artistData? artistData.name: ""} 
-        />
-
+            className="h-full" 
+            src={artistData? artistData.image: ""} 
+            title={artistData? artistData.name: ""} 
+          />
+      
         <h1 className="mt-10 text-xl SD:text-4xl text-white font-bold">
-          {artistData? artistData.name: ""}
+          {artistData?._id? artistData.name: ""}
         </h1>
       </div>
 

@@ -5,7 +5,7 @@ export type Artist =
     _id: string
     name: string,
     image: string,
-    albums: number[]
+    releases: string[]
 }
 
 export type Release = 

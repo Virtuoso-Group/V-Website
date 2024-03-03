@@ -28,19 +28,18 @@ const ReleaseCard = (props: Props) =>
         >  
             <div className='relative'>
                 <CoverArt 
-                    className={`w-full absolute right-5 z-[0] rounded-lg scale-[0.9] bg-blend-darken`}
+                    className={`w-full absolute right-5 rounded-lg scale-[0.9] bg-blend-darken`}
                     name={release.title}
                     coverArt={release.coverArt} 
                 />
 
                 <CoverArt 
-                    className={`w-full relative z-[5] rounded-lg drop-shadow-2xl `}
+                    className={`w-full relative  rounded-lg drop-shadow-2xl `}
                     name={release.title}
                     coverArt={release.coverArt} 
                 />
             </div>
             
-
             <div className='text-white flex flex-col overflow-hidden whitespace-nowrap'>
                 <Marquee 
                     key={""+isHover}

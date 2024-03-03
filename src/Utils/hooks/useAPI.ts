@@ -35,7 +35,7 @@ const useAPI = <Result>(url: string, method: 'get' | 'post', defaultValue: Resul
             })
 
             if (response.status === 200) 
-            {
+            {                
                 setData(response.data)
             }
             

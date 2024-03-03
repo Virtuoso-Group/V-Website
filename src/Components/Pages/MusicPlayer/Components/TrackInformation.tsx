@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import { MotionCoverArt } from "../../../motion/MotionCoverArt";
+import { MotionCoverArt } from "../../../Atoms/CoverArt";
 
 interface SongInfoProps
 {
@@ -14,8 +14,6 @@ interface SongInfoProps
     onClick: () => void
 }
 
-// const MotionCoverArt = motion(CoverArt)
-
 
 const TrackInformation = memo((props: SongInfoProps) =>
 {
@@ -24,14 +22,14 @@ const TrackInformation = memo((props: SongInfoProps) =>
     return (
         <div className={`flex items-center whitespace-nowrap ${className}`}>
 
-            <div className="h-[3.125rem] aspect-square">
+            <div className="size-[3.125rem]">
                 <AnimatePresence>
                     {
                         showCoverArt 
                     &&
                         <MotionCoverArt
                             id={release._id}
-                            className={` h-full bg-blue-800 rounded-sm`}
+                            className={`h-full bg-blue-800 rounded-sm`}
                             name={release.title}
                             coverArt={release.coverArt} 
                         /> 

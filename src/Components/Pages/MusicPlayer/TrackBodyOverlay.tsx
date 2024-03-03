@@ -1,4 +1,4 @@
-import CoverArt from '../../Atoms/CoverArt'
+import CoverArt, { MotionCoverArt } from '../../Atoms/CoverArt'
 
 import { MdLyrics } from 'react-icons/md'
 
@@ -10,7 +10,6 @@ import ButtonIcon from '../../Atoms/ButtonIcon'
 import { LyricsObject } from '../../../Utils/types/lyrics'
 import { RemoveScroll } from 'react-remove-scroll'
 import { PlayerContext } from './MusicPlayer'
-import { MotionCoverArt } from '../../motion/MotionCoverArt'
 
 const Background = memo((props: { coverArt: string }) =>
 {
@@ -120,7 +119,7 @@ const PlayerOverlay = memo((props: Props) =>
                                     z-[99]
                                     flex items-center justify-center
 
-                                    h-[2.1875rem] aspect-square
+                                    size-[2.1875rem]
                                     m-4
                                     
                                     rounded-full bg-slate-300

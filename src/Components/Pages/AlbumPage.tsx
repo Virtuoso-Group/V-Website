@@ -27,16 +27,15 @@ const AlbumPage = () =>
             className=
             {`
                 relative
-
-                min-h-screen w-screen 
                 flex flex-col 
+                
+                w-full 
                 gap-20
                 mt-[2rem]
                 ${websitePadding}
             `}
         >
-
-            <div className='flex gap-10'>
+            <header className='flex gap-10'>
                 <CoverArt 
                     className={`relative rounded-lg drop-shadow-2xl w-[9.375rem]`}
                     name={title}
@@ -44,8 +43,7 @@ const AlbumPage = () =>
                 />
 
                 <h1 className="text-4xl text-white font-bold">{title}</h1>
-            </div>
-            
+            </header>
         </div>
     )
 }
