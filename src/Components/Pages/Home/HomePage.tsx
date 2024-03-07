@@ -54,7 +54,7 @@ const HomePage = memo(() =>
     return (
         //  pt-[4rem]
         <div className='relative flex flex-col '>
-            <div className={`z-[40] top-[4rem] sticky ${websitePadding} py-[1rem] w-full flex gap-5  bg-primary`}>
+            <div className={`z-[40] top-[4rem] sticky ${websitePadding} py-[1rem] w-full flex gap-5  bg-background`}>
                 {
                     Categories.map((category, index) =>  
                     {

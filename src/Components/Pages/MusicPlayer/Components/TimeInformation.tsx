@@ -1,5 +1,6 @@
 import {  memo, useState } from "react";
 import { useTrackTimestamp } from "../../../../Utils/hooks/useMusicPlayer";
+import { convertMillisecondsToTimestamp } from "../../../../Utils/helper";
 
 interface Props
 {
@@ -8,28 +9,22 @@ interface Props
     duration: number, 
 }
 
-const convertMilliToTimeStamp = (milliseconds: number): string =>
-{
-    const minutes = ""+(Math.floor(milliseconds / 60000));
-    const seconds = ""+Math.floor((milliseconds % 60000) / 1000);
-    
-    return `${minutes}:${seconds.padStart(2, "0")}`
-}
+
 
 const TimeInformation = memo((props: Props) =>
 {
     const { className } = props;
 
-    const [currentTime, setCurrentTime] = useState<string>(convertMilliToTimeStamp(0));
+    const [currentTime, setCurrentTime] = useState<string>(convertMillisecondsToTimestamp(0));
 
     const updateCurrentTime = (timestamp: number) =>
     {
-        setCurrentTime(convertMilliToTimeStamp(timestamp));
+        setCurrentTime(convertMillisecondsToTimestamp(timestamp));
     }
 
     useTrackTimestamp(props.trackID, 1000, updateCurrentTime);
 
-    const duration = convertMilliToTimeStamp(props.duration);
+    const duration = convertMillisecondsToTimestamp(props.duration);
 
     return (
         <div className={`${className}`}>

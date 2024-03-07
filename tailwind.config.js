@@ -28,7 +28,8 @@ module.exports = {
       colors:
       {
         "primary": "#11B4D4",
-        "secondary": "#dc143c"
+        "secondary": "#dc143c",
+        "background": "#1e293b"
       },
       
       fontFamily:

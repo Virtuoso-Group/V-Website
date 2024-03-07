@@ -64,11 +64,10 @@ const WebsiteLayout = () =>
     const websitePadding = "px-5 SD:px-10 HD:px-20";
 
     return (
-        <main className={`min-h-screen min-w-[375px] w-screen flex flex-col bg-primary`}>
+        <main className={`min-h-screen min-w-[375px] w-screen flex flex-col `}>
             <WebsiteHeader className={`z-[99] top-0 sticky ${websitePadding}`} start={<WebsiteLogo />} />
 
-            {/* mt-[5.2rem] */}
-            <div className={`min-h-full w-full bg-primary  ${track.value? "pb-[9rem]": "pb-[0rem]"} `}>
+            <div className={`min-h-full w-full  ${track.value? "pb-[9rem]": "pb-[2rem]"} `}>
                 <Outlet context={{ websitePadding: websitePadding, selectTrack: track.selectTrack } satisfies WebsiteContext} />
             </div>
 

@@ -4,7 +4,7 @@ import './App.css';
 import WebsiteLayout from './Components/Organisms/WebsiteLayout';
 import HomePage from './Components/Pages/Home/HomePage';
 import ArtistPage from './Components/Pages/ArtistPage';
-import AlbumPage from './Components/Pages/AlbumPage';
+import AlbumPage from './Components/Pages/AlbumPage/AlbumPage';
 
 /* TODO: 
     once this array gets too large, it will be a good idea to split the website into 

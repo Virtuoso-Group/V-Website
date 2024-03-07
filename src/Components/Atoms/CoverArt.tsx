@@ -20,7 +20,7 @@ const CoverArt = (props: Props) =>
             src={coverArt}
             loading={loading?? "lazy"}
         />
-)
+    )
 }
 
 export default CoverArt
