@@ -25,25 +25,25 @@ export const ArtistPage = () =>
   console.log("artistData: ", artistData);
   
   return (
-    <div className={`mt-[2rem] ${websitePadding} w-full flex flex-col gap-20`}>
+    <div 
+      className={`
+        ${websitePadding}
+        relative 
+        mt-[2rem]  
+        w-full flex flex-col gap-20`}
+    >
       {/* Basic artist info */}
-      <div className="border h-[15.625rem] flex gap-10">
-      
+      <header className="SD:h-[15.625rem] flex gap-10 flex-col SD:flex-row">
         <Avatar
-            className="h-full" 
+            className="w-full SD:h-full SD:w-auto" 
             src={artistData? artistData.image: ""} 
             title={artistData? artistData.name: ""} 
           />
       
-        <h1 className="mt-10 text-xl SD:text-4xl text-white font-bold">
+        <h1 className="text-4xl text-white font-bold">
           {artistData?._id? artistData.name: ""}
         </h1>
-      </div>
-
-      {/* Their content */}
-      <div className="h-[12.5rem] border bg-green-600">
-        <h1 className="text-2xl text-white font-bold">{"Albums"}</h1>
-      </div>
+      </header>
     </div>
   )
 }

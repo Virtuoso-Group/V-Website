@@ -15,14 +15,4 @@ type Environment = 'local' | 'dev';
 
 const env: Environment = (process.env.REACT_APP_ENV as Environment)
 
-export const AWS_URL =
-{
-    release:
-    {
-        local: 'https://virtuoso-release.s3.me-south-1.amazonaws.com',
-        dev: 'https://virtuoso-release.s3.me-south-1.amazonaws.com',
-    }
-}
-
-
 export const baseURL = baseURLObj[env]

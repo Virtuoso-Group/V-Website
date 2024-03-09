@@ -17,8 +17,9 @@ const CoverArt = (props: Props) =>
         <img
             className={`grow-0 shrink-0 aspect-square object-fit ${className}`}
             title={name} alt={name}
-            src={coverArt}
+            src={coverArt??""}
             loading={loading?? "lazy"}
+            
         />
     )
 }
@@ -47,6 +48,7 @@ export const MotionCoverArt = (props: MotionProps) =>
             title={name} alt={name}
             src={coverArt}
             loading={loading?? "lazy"}
+            onError={(event) => event.currentTarget.src = ''}
         />
     )
 }

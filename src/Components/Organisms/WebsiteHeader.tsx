@@ -21,7 +21,6 @@ const WebsiteHeader = (props: Props) =>
                 w-full 
                 flex items-center
                 
-                bg-black
             `}
         >
             <div>{start}</div>

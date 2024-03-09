@@ -58,9 +58,9 @@ const AlbumPage = () =>
                 w-full gap-10 mt-[2rem]
             `}
         >
-            <header className='flex gap-10'>
+            <header className='flex flex-col SD:flex-row gap-10'>
                 <CoverArt 
-                    className={`relative rounded-lg drop-shadow-2xl w-[9.375rem]`}
+                    className={`relative rounded-lg drop-shadow-2xl w-full SD:size-[9.375rem]`}
                     name={title}
                     coverArt={release.data?.coverArt??""} 
                 />
@@ -68,9 +68,9 @@ const AlbumPage = () =>
                 <h1 className="text-4xl text-white font-bold">{title}</h1>
             </header>
 
-            <body className='w-full'>
+            <section className='w-full'>
                 <TrackList tracks={release.data?.tracks?? []}/>
-            </body>
+            </section>
         </div>
     )
 }

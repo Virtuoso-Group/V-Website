@@ -7,17 +7,17 @@ interface SongInfoProps
 {
     showCoverArt: boolean,
     className?: string, 
-    trackName: string, 
+    trackTitle: string, 
     release: { _id: string, title: string, coverArt: string },  
     artist: { _id: string, name: string }
 
-    onClick: () => void
+    hideOverlay: () => void
 }
 
 
 const TrackInformation = memo((props: SongInfoProps) =>
 {
-    const { showCoverArt, className, trackName, artist, release } = props;
+    const { showCoverArt, className, trackTitle: trackName, artist, release } = props;
     
     return (
         <div className={`flex items-center whitespace-nowrap ${className}`}>
@@ -43,11 +43,11 @@ const TrackInformation = memo((props: SongInfoProps) =>
                 </span>
 
                 <span className='flex gap-1 text-sm font-light align-middle text-slate-300'>
-                    <Link to={`/artist/${artist._id}`} onClick={props.onClick}>{artist.name}</Link>
+                    <Link to={`/artist/${artist._id}`} onClick={props.hideOverlay}>{artist.name}</Link>
 
                     <span className="">•</span> 
                     
-                    <Link to={`/album/${release._id}`} onClick={props.onClick}>{release.title}</Link>
+                    <Link to={`/album/${release._id}`} onClick={props.hideOverlay}>{release.title}</Link>
                 </span>
             </p>
         </div>

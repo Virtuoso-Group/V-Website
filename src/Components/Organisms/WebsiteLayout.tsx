@@ -1,4 +1,4 @@
-import { Outlet, useNavigate, useOutletContext } from "react-router-dom";
+import { Link, Outlet, useOutletContext } from "react-router-dom";
 import WebsiteHeader from "./WebsiteHeader";
 import { useEffect } from "react";
 // import TrackControls from "../Pages/MusicPlayer/MusicPlayer";
@@ -7,14 +7,17 @@ import { useEffect } from "react";
 import { MusicPlayer } from "../Pages/MusicPlayer/MusicPlayer";
 
 import useTrack from "../../Utils/hooks/useTrack";
+import useOverlay from "../../Utils/hooks/useOverlay";
 
-
-const WebsiteLogo = () =>
+interface Props
 {
-    const navigate = useNavigate();
+    onClick?: () => void
+}
 
+const WebsiteLogo = (props: Props) =>
+{
     return (
-        <p 
+        <Link 
             className=
             {`
                 flex 
@@ -27,7 +30,8 @@ const WebsiteLogo = () =>
                 text-center italic select-none
             `}
 
-            onClick={() => navigate("/")}
+            to={"/"}
+            onClick={props.onClick}
         >
             <span className='text-white SD:self-end text-xl SD:text-2xl'>
                 Project
@@ -38,7 +42,7 @@ const WebsiteLogo = () =>
                 
                 <span className="text-xl SD:text-2xl">irtuoso</span>
             </span>
-        </p>
+        </Link>
     )
 }
 type WebsiteContext = 
@@ -51,6 +55,7 @@ type WebsiteContext =
 const WebsiteLayout = () =>
 {
     const track = useTrack();
+    const musicPlayerOverlay = useOverlay();
     
     useEffect(() => 
     { 
@@ -65,13 +70,26 @@ const WebsiteLayout = () =>
 
     return (
         <main className={`min-h-screen min-w-[375px] w-screen flex flex-col `}>
-            <WebsiteHeader className={`z-[99] top-0 sticky ${websitePadding}`} start={<WebsiteLogo />} />
+            <WebsiteHeader 
+                className={`z-[99] top-0 sticky ${track.value && musicPlayerOverlay.isOn? "SD:bg-black": "bg-black"} ${websitePadding}`} 
+                start={<WebsiteLogo  onClick={musicPlayerOverlay.hide}/>} 
+            />
 
             <div className={`min-h-full w-full  ${track.value? "pb-[9rem]": "pb-[2rem]"} `}>
                 <Outlet context={{ websitePadding: websitePadding, selectTrack: track.selectTrack } satisfies WebsiteContext} />
             </div>
 
-            {track.value && <MusicPlayer websitePadding={websitePadding} track={track.value} close={track.reset} />}
+            {
+                track.value 
+            && 
+                <MusicPlayer 
+                    websitePadding={websitePadding} 
+                    track={track.value} 
+                    
+                    overlay={musicPlayerOverlay}
+                    close={track.reset} 
+                />
+            }
         </main>
     )
 }

@@ -13,11 +13,11 @@ interface Props
 
 const Synced = (props: Props) =>
 {
-    const { trackID } = useContext(PlayerContext);
+    const { track } = useContext(PlayerContext);
 
     const { lines, seek } = props;
       
-    const lyrics = useLyrics(trackID, lines);
+    const lyrics = useLyrics(track.id, lines);
 
     const seekWrapper = useCallback((timestamp: number) => seek(timestamp), [])
     

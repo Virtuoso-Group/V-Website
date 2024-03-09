@@ -43,23 +43,26 @@ const TrackList = (props: Props) =>
 {
     const { tracks } = props;
 
+
     return (
         <table className="relative w-full table-auto  border-collapse text-left">
             <thead className="text-white">
-                <tr>
-                    <th scope="col" className="w-1/12">No</th>
+                {
+                    tracks.length > 0 
+                && 
+                    <tr>
+                        <th scope="col" className="w-1/12">No</th>
 
-                    <th scope="col w-9/12">Name</th>
+                        <th scope="col w-9/12">Name</th>
 
-                    <th scope="col" className="w-2/12 text-end">Duration</th>
-                </tr>
+                        <th scope="col" className="w-2/12 text-end">Duration</th>
+                    </tr>
+                }
             </thead>
             
+            
             <tbody className="w-full">
-                {tracks.map(track => 
-                {
-                    return <AlbumTrack key={track._id} track={track}/>
-                })}
+                {tracks.map(track =>  <AlbumTrack key={track._id} track={track}/>)}
             </tbody>
         </table>
     )

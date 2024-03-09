@@ -13,6 +13,7 @@ type Controls =
 
 interface SeekBarProps
 {
+    className?: string,
     trackID: string,
     duration: number, 
     controls: Controls,
@@ -79,7 +80,7 @@ const SeekBar = memo((props: SeekBarProps) =>
     return (
         <div 
             ref={barContainerRef}
-            className='relative w-full h-[0.21875rem] bg-slate-400 cursor-pointer flex items-center'
+            className={`relative w-full h-[0.21875rem] bg-slate-400 cursor-pointer flex items-center ${props.className}`}
             onClick={e => seekWrapper(e.clientX)}
         >
             <motion.div 
