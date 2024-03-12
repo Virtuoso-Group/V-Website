@@ -212,7 +212,7 @@ export const MusicPlayer = (props: Props) =>
                         }
 
                         <div className={`${websitePadding} w-full flex items-center justify-between h-[4rem] py-[2.5rem]`}>
-                            <div className="flex gap-2 w-[80%] SD:w-fit">
+                            <div className="flex gap-2 w-[70%] SD:w-fit">
                                 <ToggleTriangle {...overlay} />
                                 
                                 {

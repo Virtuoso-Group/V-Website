@@ -124,7 +124,7 @@ const PlayerOverlay = memo((props: Props) =>
                 >
                     <MotionCoverArt
                         id={`${release._id}${"desktop"}`}
-                        className={`hidden SD:flex SD:w-[32rem] rounded-md SD:rounded-lg `}                
+                        className={`hidden SD:flex SD:w-[30rem] rounded-md SD:rounded-lg `}                
                         name={release.title}
                         coverArt={release.coverArt} 
                         loading={"eager"}

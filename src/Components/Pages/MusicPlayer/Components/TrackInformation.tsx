@@ -37,14 +37,14 @@ const TrackInformation = memo((props: Props) =>
 
     return (
         <div className={`flex whitespace-nowrap ${className} w-full`}>
-            <div className=" relative aspect-square size-[3.125rem] flex items-center justify-center ">
+            <div className="z-[99] relative aspect-square size-[3.125rem] flex items-center justify-center ">
                 <AnimatePresence>
                     {
                         showCoverArt 
                     &&
                         <MotionCoverArt
                             id={`${release._id}${mode}`}
-                            className={`z-[99] relative h-full bg-blue-800 rounded-sm ${isLoading && "brightness-50"}`}
+                            className={` relative h-full bg-blue-800 rounded-sm ${isLoading && "brightness-50"}`}
                             name={release.title}
                             coverArt={release.coverArt} 
                         /> 
@@ -69,7 +69,7 @@ const TrackInformation = memo((props: Props) =>
                     // key={""+isHover}
                     play={mode === "mobile"}
                     autoFill={false}
-                    speed={50}
+                    speed={30}
                 >
                     <span className='font-bold text-white text-lg'>
                         {" "+trackTitle+" "}

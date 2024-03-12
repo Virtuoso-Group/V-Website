@@ -32,8 +32,9 @@ const Lyrics = (props: Props) =>
             layout
             className=
             {`
+                z-[90]
                 absolute SD:relative
-                w-full SD:w-fit
+                w-full SD:w-[30rem]
                 
                 SD:flex SD:justify-center SD:items-center
                 h-full SD:aspect-square
