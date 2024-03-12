@@ -13,7 +13,7 @@ type Controls =
 
 interface SeekBarProps
 {
-    className?: string,
+    className?:string,
     trackID: string,
     duration: number, 
     controls: Controls,
@@ -24,23 +24,20 @@ const SeekBar = memo((props: SeekBarProps) =>
     const barContainerRef = useRef<HTMLDivElement>(null);
     const { duration } = props;
     
-    const [isDragging, setIsDragging] = useState<boolean>(false);
-    const [ballPosition, setBallPosition] = useState<number>(0);
-    const [currentPercentage, setCurrentPercentage] = useState<number>(0)
-
-    // TODO: put a useCallback, you don't want the useCurrentTimestamp to redefine itself
-    const updatePercentage = (timestamp: number) =>
-    {        
-        if (duration) 
-        {
-            setCurrentPercentage((timestamp / duration) * 100)
-        }
-    }
-    
-    useTrackTimestamp(props.trackID, 750, updatePercentage);
-
     const barWidth = barContainerRef.current?.getBoundingClientRect().width??1;
 
+    const [isDragging, setIsDragging] = useState<boolean>(false);
+    const [currentPercentage, setCurrentPercentage] = useState<number>(0)
+    const [ballPosition, setBallPosition] = useState<number>(currentPercentage/100 * barWidth??0);
+    
+
+    // TODO: put a useCallback, you don't want the useCurrentTimestamp to redefine itself
+    const updatePercentage = useCallback((timestamp: number) =>
+    {        
+        if (duration) 
+            setCurrentPercentage((timestamp / duration) * 100)
+    }, [duration])
+    
     useEffect(() => 
     {
         const ballPosition = currentPercentage/100 * barWidth??0
@@ -76,6 +73,9 @@ const SeekBar = memo((props: SeekBarProps) =>
         setIsDragging(false)
         seekWrapper(xPoint)
     }, [seekWrapper])
+
+
+    useTrackTimestamp(props.trackID, 750, updatePercentage);
     
     return (
         <div 
@@ -84,7 +84,7 @@ const SeekBar = memo((props: SeekBarProps) =>
             onClick={e => seekWrapper(e.clientX)}
         >
             <motion.div 
-                className=' absolute h-full bg-white'
+                className='absolute h-full bg-white'
                 animate={{ width: `${currentPercentage?? "0"}%` }}
                 transition={{  duration: 0.01, type: "tween", bounce: 0.25 }}
             />

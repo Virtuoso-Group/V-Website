@@ -11,12 +11,13 @@ type Release =
 
 interface Props
 {
+    className?: string,
     release: Release,
 }
 
 const CoverArtContainer = (props: Props) =>
 {
-    const { release } = props;
+    const { className, release } = props;
     
     return ( 
         <motion.div 
@@ -24,9 +25,11 @@ const CoverArtContainer = (props: Props) =>
             className=
             {`
                 relative 
-                w-full SD:w-fit 
-                SD:h-full 
-                SD:flex justify-center aspect-square object-fit drop-shadow-2xl
+                w-full 
+                
+                justify-center aspect-square object-fit drop-shadow-2xl
+
+                ${className}
             `}
         >
             <MotionCoverArt

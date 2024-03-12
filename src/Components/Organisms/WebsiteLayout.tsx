@@ -30,7 +30,7 @@ const WebsiteLogo = (props: Props) =>
                 text-center italic select-none
             `}
 
-            to={"/"}
+            to={"/home"}
             onClick={props.onClick}
         >
             <span className='text-white SD:self-end text-xl SD:text-2xl'>
@@ -78,7 +78,7 @@ const WebsiteLayout = () =>
             <div className={`min-h-full w-full  ${track.value? "pb-[9rem]": "pb-[2rem]"} `}>
                 <Outlet context={{ websitePadding: websitePadding, selectTrack: track.selectTrack } satisfies WebsiteContext} />
             </div>
-
+            
             {
                 track.value 
             && 

@@ -32,6 +32,7 @@ const Ball = (props: BallProps) =>
                 ${isDragging? "cursor-grabbing": "cursor-grab"} 
             `}
             
+            initial={{ x: ballPosition, rotate: 0.04 }}
             animate={{ x: ballPosition, rotate: 0.04 }}
             transition={{ type: "tween" }}
 

@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import SeekBar from "../../../../../Molecules/SeekBar";
 import CoverArtContainer from "./CovertArtContainer";
 import TimeInformation from "./TimeInformation";
+import PlayerControls from "../../PlayerControls";
+import { MotionCoverArt } from "../../../../../Atoms/CoverArt";
 
 type Release =
 { 
@@ -14,12 +16,13 @@ type Release =
 
 interface Props
 {
+    className?: string,
     release: Release,
 }
 
 const TrackInformation = (props: Props) =>
 {
-    const { release } = props;
+    const { className, release } = props;
 
     const 
     { 
@@ -32,17 +35,27 @@ const TrackInformation = (props: Props) =>
         <section 
             className=
             {`
-                relative size-full 
-                flex flex-col SD:flex-row 
-                SD:justify-center
-                gap-5 
+                z-[50]
+                ${className}
 
-                mt-[2rem] SD:mt-0
+                mt-[2rem]
+                relative size-full 
+                flex flex-col 
+                
+                gap-5  
+
+                overflow-scroll
             `}
         >
-            <CoverArtContainer release={release} />
+            <MotionCoverArt
+                id={`${release._id}${"mobile"}`}
+                className={`w-full rounded-md`}                
+                name={release.title}
+                coverArt={release.coverArt} 
+                loading={"eager"}
+            />
 
-            <p className='flex flex-col SD:hidden'>
+            <p className='flex flex-col'>
                 <span className='font-bold text-white text-2xl'>
                     {track.title}
                 </span>
@@ -57,7 +70,7 @@ const TrackInformation = (props: Props) =>
                 </Link>
             </p>
 
-            <div className='flex flex-col gap-2 SD:hidden'>
+            <div className='flex flex-col gap-2'>
                 <SeekBar
                     trackID={track.id}
                     duration={track.duration}
@@ -70,6 +83,12 @@ const TrackInformation = (props: Props) =>
                     duration={track.duration} 
                 />
             </div>
+
+            <PlayerControls 
+                className="flex items-center justify-center gap-[4rem]" 
+                middleButtonSize="2rem"
+                sideButtonsSize="1.25rem"
+            />
         </section>
     )
 }

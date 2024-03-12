@@ -12,6 +12,7 @@ import { RemoveScroll } from 'react-remove-scroll'
 import { PlayerContext } from '../../MusicPlayer'
 
 import TrackInformation from './components/TrackInformation'
+import CoverArtContainer from './components/CovertArtContainer'
 
 type Release =
 { 
@@ -83,7 +84,6 @@ interface Props
     release: Release
 
     value: LyricsObject,
-    _id: string,
             
     areVisible: boolean,
         
@@ -102,9 +102,9 @@ const PlayerOverlay = memo((props: Props) =>
         <RemoveScroll>
             <motion.div 
                 layout
-                className={`pointer-events-auto z-[49] fixed grid min-w-[375px] w-full  h-full bg-blue-300 jutsfiy-center items-center pt-[4rem] pb-[5.25rem]`}
-                initial={{  opacity: 0 }}
-                animate={{  opacity: 1 }}
+                className={`pointer-events-auto z-[50] fixed grid min-w-[375px] w-full  h-full bg-blue-300 jutsfiy-center items-center pt-[4rem] pb-[5.25rem]`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25 }}
             >
@@ -113,19 +113,24 @@ const PlayerOverlay = memo((props: Props) =>
                 <section 
                     className=
                     {`
-                        relative
-                        z-[40]
-                        h-full SD:h-[80%]
+                        z-[50]
                         ${websitePadding}
-                        flex
+                        relative
+                        h-full SD:h-[80%] gap-10
                         
+                        flex
                         justify-center SD:items-center 
-
-                        gap-10
                     `}
                 >
-                    
-                    <TrackInformation release={release} />
+                    <MotionCoverArt
+                        id={`${release._id}${"desktop"}`}
+                        className={`hidden SD:flex SD:w-[32rem] rounded-md SD:rounded-lg `}                
+                        name={release.title}
+                        coverArt={release.coverArt} 
+                        loading={"eager"}
+                    />
+
+                    <TrackInformation className={"flex SD:hidden"} release={release} />
 
                     <AnimatePresence>
                         { 

@@ -65,6 +65,8 @@ export const useTrackTimestamp =
     seek?: (timestamp: number) => void,
 ) =>
 {
+    console.log("trackID: ", trackID);
+    
     const { audioRef } = useContext(PlayerContext);
 
     const prevTimestamp = useRef<number>(0);
@@ -81,37 +83,35 @@ export const useTrackTimestamp =
         }
     }
 
-    useEffect(() => 
+    const updateWrapper = useCallback((e: Event) => 
     {
-        seekedWrapper()
-    }, [])
+        if (audioRef.current) 
+        {         
+            const currentTimestamp = audioRef.current.currentTime * 1000;
+
+            const diff = prevTimestamp.current  - currentTimestamp;
+
+            if (Math.abs(diff) >= tick) 
+            {
+                prevTimestamp.current = currentTimestamp;
+
+                update(currentTimestamp)
+            }                       
+        }
+    }, [tick, update])
+
+    const reset = useCallback(() => 
+    {
+        prevTimestamp.current = 0;
+
+        if (update) 
+            update(0)
+    }, [update])
+
+    useEffect(() => { seekedWrapper() }, [])
     
     useEffect(() => 
     {
-        const updateWrapper = (e: Event) => 
-        {
-            if (audioRef.current) 
-            {         
-                const currentTimestamp = audioRef.current.currentTime * 1000;
-
-                const diff = prevTimestamp.current  - currentTimestamp;
-
-                if (Math.abs(diff) >= tick) 
-                {
-                    prevTimestamp.current = currentTimestamp;
-
-                    update(currentTimestamp)
-                }                       
-            }
-        }
-
-        const reset = () => 
-        {
-            prevTimestamp.current = 0;
-
-            update(0)
-        }
-
         if (audioRef.current) 
         {
             audioRef.current.addEventListener("seeked", seekedWrapper)
@@ -128,7 +128,7 @@ export const useTrackTimestamp =
                 audioRef.current.removeEventListener("ended", reset)
             }  
         }
-    }, [trackID, update, seek])    
+    }, [trackID, updateWrapper, seekedWrapper, reset])    
 }
 
 const useAudioControls = (trackID: string, playerState: PlayerStateHook) =>

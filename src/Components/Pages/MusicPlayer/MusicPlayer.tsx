@@ -1,5 +1,5 @@
 import { IoIosClose } from "react-icons/io";
-import useMusicPlayer from "../../../Utils/hooks/useMusicPlayer";
+import useMusicPlayer, { PlayerState } from "../../../Utils/hooks/useMusicPlayer";
 import { Track } from "../../../Utils/types/track";
 import { baseURL } from '../../../config/config'
 import SeekBar from "../../Molecules/SeekBar";
@@ -9,9 +9,10 @@ import TrackInformation from "./Components/TrackInformation";
 import PlayerControls from "./Components/PlayerControls";
 import ToggleTriangle from "../../Atoms/ToggleTriangle";
 
-import useOverlay, { Overlay } from "../../../Utils/hooks/useOverlay";
+import  { Overlay } from "../../../Utils/hooks/useOverlay";
 import PlayerOverlay from "./Components/TrackBodyOverlay/TrackBodyOverlay";
 import { AnimatePresence } from "framer-motion";
+import ProgressBar from "../../Molecules/ProgressBar";
 
 type PlayerContextType = 
 {
@@ -34,7 +35,16 @@ type PlayerContextType =
     pause: () => void,
     seek: (percentage: number) => void,
 
-    hideOverlay: () => void
+    hideOverlay: () => void,
+
+
+    playerState: PlayerState,
+
+    stepBackwards: () => void,
+
+    togglePlay: () => void,
+
+    stepForwards: () => void
 }
 
 export const PlayerContext = createContext<PlayerContextType>(
@@ -56,7 +66,14 @@ export const PlayerContext = createContext<PlayerContextType>(
     
     pause: () => {},
     seek: (percentage: number) => {},
-    hideOverlay: () => {}
+    hideOverlay: () => {},
+
+
+    playerState: PlayerState.STOPPED,
+
+    togglePlay: () => {},
+    stepBackwards: () => {},
+    stepForwards: () => {}
 })
 
 const CloseButton = memo((props: { className?: string, onClick: () => void}) =>
@@ -105,6 +122,7 @@ export const MusicPlayer = (props: Props) =>
     const stepForwards = useCallback(() => { console.log("Forwards!")  }, [])
 
     return (
+        // TODO: create a component for this. It's getting larger over time.
         <PlayerContext.Provider 
             value=
             {{ 
@@ -126,9 +144,16 @@ export const MusicPlayer = (props: Props) =>
                 pause: audioControls.pause, 
                 seek: seekPercentage,
                 hideOverlay: overlay.hide,
+
+
+                playerState: playerState.value,
+
+                stepBackwards,
+                stepForwards,
+                togglePlay: audioControls.togglePlay
             }}
         >
-            <div className="z-[55] fixed h-screen min-w-[375px] w-full pointer-events-none">
+            <div className="z-[80] fixed h-screen min-w-[375px] w-full pointer-events-none">
                 <audio 
                     key={track._id}
                     title={track.title}
@@ -159,14 +184,16 @@ export const MusicPlayer = (props: Props) =>
                     {`
                         ${overlay.isOn? "SD:bg-black": "bg-black"}
                         
-                        z-[99] fixed bottom-0 flex w-full pointer-events-auto
+                        z-[80] fixed bottom-0 flex w-full pointer-events-auto
                     `}
                 >
                     <div className={`w-full`}>
                         <SeekBar
-                            className="hidden SD:flex"
+                            className={`hidden SD:flex`}
                             trackID={track._id}
                             duration={duration.value}
+
+
                             controls=
                             {{ 
                                 pause: audioControls.pause, 
@@ -174,35 +201,66 @@ export const MusicPlayer = (props: Props) =>
                             }}
                         />
 
-                        <div className={`${websitePadding} w-full flex items-center justify-between h-[4rem] py-[2.5rem]`}>
-                            <ToggleTriangle {...overlay} />
+                        {
+                            !overlay.isOn 
+                        &&
+                            <ProgressBar 
+                                className="flex SD:hidden"
+                                trackID={track._id}
+                                duration={duration.value}
+                            />
+                        }
 
-                            <div className="grid grid-cols-3 content-center w-full h-full  px-20">
+                        <div className={`${websitePadding} w-full flex items-center justify-between h-[4rem] py-[2.5rem]`}>
+                            <div className="flex gap-2 w-[80%] SD:w-fit">
+                                <ToggleTriangle {...overlay} />
+                                
+                                {
+                                    !overlay.isOn 
+                                && 
+                                    <TrackInformation
+                                        className="gap-5 SD:hidden"
+                                        mode={"mobile"}
+
+                                        release={track.release}
+                                        trackTitle={track.title} 
+                                        artist={track.artist}
+
+                                        showCoverArt={true}
+
+                                        isLoading={playerState.value === PlayerState.LOADING}
+                                        hideOverlay={overlay.hide}
+                                    />
+                                }
+                            </div>
+                            
+
+                            <div className="hidden SD:grid grid-cols-3 content-center w-full h-full  px-20">
                                 <TrackInformation 
-                                    className="invisible SD:visible justify-self-start flex gap-5"
+                                    className="justify-self-start flex gap-5 items-center"
+                                    mode={"desktop"}
                                     release={track.release}
                                     trackTitle={track.title} 
                                     artist={track.artist}
 
+                                    
                                     showCoverArt={!overlay.isOn}
 
                                     hideOverlay={overlay.hide}
                                 />
 
                                 <PlayerControls 
-                                    className="flex items-center gap-10  justify-self-center h-full"
-                                    playerState={playerState.value}
-
-                                    stepBackwards={stepBackwards}
-                                    togglePlay={audioControls.togglePlay}
-                                    stepForwards={stepForwards}
+                                    className="flex items-center justify-self-center h-full gap-10"
+                                    
+                                    middleButtonSize="2rem"
+                                    sideButtonsSize="1.25rem"
                                 />
                             
                                 <TimeInformation 
                                     trackID={track._id}
                                     className=
                                     {`
-                                        hidden SD:flex items-center justify-center
+                                        flex items-center justify-center
                                         justify-self-end
                                         font-light text-gray-300
                                         text-xs
@@ -212,15 +270,16 @@ export const MusicPlayer = (props: Props) =>
                                 />
                             </div>
 
-                            <CloseButton className="right-0" onClick={close}/>
+                            <CloseButton onClick={close}/>
                         </div>
                     </div>
                 </div>
 
                 <AnimatePresence>
-                    {overlay.isOn &&
+                    {
+                        overlay.isOn 
+                    &&
                         <PlayerOverlay 
-                            _id={track._id}
                             release={track.release}
                             value={track.lyrics}
                             
@@ -230,7 +289,6 @@ export const MusicPlayer = (props: Props) =>
                             seek={seekTimestamp}
                         />
                     }
-                    
                 </AnimatePresence>
             </div>
         </PlayerContext.Provider>

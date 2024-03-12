@@ -2,8 +2,10 @@ import { memo } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { MotionCoverArt } from "../../../Atoms/CoverArt";
+import { BeatLoader, BounceLoader, FadeLoader, GridLoader, HashLoader, MoonLoader, PuffLoader, PulseLoader, RingLoader } from "react-spinners";
+import Marquee from "react-fast-marquee";
 
-interface SongInfoProps
+interface Props
 {
     showCoverArt: boolean,
     className?: string, 
@@ -11,43 +13,77 @@ interface SongInfoProps
     release: { _id: string, title: string, coverArt: string },  
     artist: { _id: string, name: string }
 
+    mode: "mobile" | "desktop",
+
+    isLoading?: boolean,
     hideOverlay: () => void
 }
 
 
-const TrackInformation = memo((props: SongInfoProps) =>
+const TrackInformation = memo((props: Props) =>
 {
-    const { showCoverArt, className, trackTitle: trackName, artist, release } = props;
+    const 
+    { 
+        className,
+        showCoverArt, 
+        trackTitle, 
+        artist, 
+        release,
+        
+        mode
+    } = props;
     
-    return (
-        <div className={`flex items-center whitespace-nowrap ${className}`}>
+    const isLoading = mode === "mobile" && props.isLoading;
 
-            <div className="size-[3.125rem]">
+    return (
+        <div className={`flex whitespace-nowrap ${className} w-full`}>
+            <div className=" relative aspect-square size-[3.125rem] flex items-center justify-center ">
                 <AnimatePresence>
                     {
                         showCoverArt 
                     &&
                         <MotionCoverArt
-                            id={release._id}
-                            className={`h-full bg-blue-800 rounded-sm`}
+                            id={`${release._id}${mode}`}
+                            className={`z-[99] relative h-full bg-blue-800 rounded-sm ${isLoading && "brightness-50"}`}
                             name={release.title}
                             coverArt={release.coverArt} 
                         /> 
                     }
                 </AnimatePresence>
+
+                {
+                    isLoading
+                &&
+                    <BeatLoader 
+                        className="size-full absolute aspect-square flex justify-center items-center"
+                        
+                        color={"#dc143c"} 
+                        loading={true} 
+                        size={"0.5rem"}
+                    />
+                } 
             </div>
 
-            <p className='flex flex-col'>
-                <span className='font-bold text-white text-lg'>
-                    {trackName}
-                </span>
+            <p className='flex flex-col overflow-hidden w-fill'>
+                <Marquee 
+                    // key={""+isHover}
+                    play={mode === "mobile"}
+                    autoFill={false}
+                    speed={50}
+                >
+                    <span className='font-bold text-white text-lg'>
+                        {" "+trackTitle+" "}
+                    </span>
+                </Marquee>
+                
+                <span className="flex SD:hidden text-sm font-light align-middle text-slate-300">{artist.name}</span>
 
-                <span className='flex gap-1 text-sm font-light align-middle text-slate-300'>
+                <span className='hidden SD:flex gap-1 text-sm font-light align-middle text-slate-300'>
                     <Link to={`/artist/${artist._id}`} onClick={props.hideOverlay}>{artist.name}</Link>
 
-                    <span className="">•</span> 
+                    <span className="hidden SD:flex">•</span> 
                     
-                    <Link to={`/album/${release._id}`} onClick={props.hideOverlay}>{release.title}</Link>
+                    <Link className="hidden SD:flex" to={`/album/${release._id}`} onClick={props.hideOverlay}>{release.title}</Link>
                 </span>
             </p>
         </div>

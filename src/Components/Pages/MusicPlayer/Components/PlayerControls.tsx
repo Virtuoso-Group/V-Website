@@ -1,84 +1,93 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useContext, useEffect, useState } from "react";
 import { IconType } from "react-icons";
 import ButtonIcon from "../../../Atoms/ButtonIcon";
 import { FaPause, FaPlay, FaStepBackward, FaStepForward } from "react-icons/fa";
 import { PlayerState } from "../../../../Utils/hooks/useMusicPlayer";
 
 import PuffLoader from 'react-spinners/PuffLoader'
-import { JsxElement } from "typescript";
+import { PlayerContext } from "../MusicPlayer";
 
-interface PlayerControlsProps 
-{
-    className?: string,
+
+interface MiddleButtonProps
+{ 
+    className?:string, 
+    size: string,
     playerState: PlayerState,
 
-    stepBackwards: () => void,
-    togglePlay: () => void,
-    stepForwards: () => void,
+    onClick?: () => void
 }
 
-const MiddleButton = (props: { playerState: PlayerState }) =>
+// TODO: this needs to be refactored to make it readable
+const MiddleButton = (props: MiddleButtonProps) =>
 {
-    const { playerState } = props;
+    const { className, size, playerState, onClick } = props;
 
     const MiddleIcon: { [index in PlayerState]: JSX.Element } = 
     {
-        [PlayerState.PLAYING]: <FaPause size={"1.5625rem"} />,
+        [PlayerState.PLAYING]: 
+            <FaPause 
+                className={className} 
+                size={size}
+                
+                onClick={onClick}
+            />,
 
-        [PlayerState.PAUSED]: <FaPlay size={"1.5625rem"} />,
+        [PlayerState.PAUSED]: 
+            <FaPlay 
+                className={className} 
+                size={size}
+                
+                onClick={onClick}
+            />,
 
-        [PlayerState.STOPPED]: <FaPlay size={"1.5625rem"} />,
+        [PlayerState.STOPPED]: 
+            <FaPlay 
+                className={className} 
+                size={size}
+                
+                onClick={onClick}
+            />,
 
-        [PlayerState.LOADING]: <PuffLoader color="#dc143c" loading={true} size={"1.5625rem"} />
+        [PlayerState.LOADING]: <PuffLoader color="#dc143c" loading={true} size={size} />
     }
 
    return MiddleIcon[playerState]
 }
 
+interface PlayerControlsProps 
+{
+    className?: string,
+
+    middleButtonSize?: string,
+    sideButtonsSize?: string
+}
+
 const PlayerControls = memo((props: PlayerControlsProps) =>
 {
-    const { className, playerState, stepBackwards, togglePlay, stepForwards } = props;
+    const { playerState, stepBackwards, togglePlay, stepForwards} =  useContext(PlayerContext);
     
+    const { middleButtonSize, sideButtonsSize } = props;
+
     return (
-        <div className={`${className}`}>
-            <ButtonIcon 
-                className=
-                {`
-                    size-[2.1875rem]
-                    rounded-full bg-slate-300
-
-                    flex items-center justify-center
-                `}
-                name="Step Forward"
-                icon={<FaStepBackward size={"1rem"}/>}
-
+        <div  className={`${props.className}`}>
+            <FaStepBackward 
+                className="fill-slate-300" 
+                size={sideButtonsSize?? "1rem"}
+                
                 onClick={stepBackwards}
             />
 
-            <ButtonIcon 
-                className=
-                {`
-                    size-[3.125rem]
-                    rounded-full bg-slate-300
-
-                    flex items-center justify-center
-                `}
-                name="Play"
-                icon={<MiddleButton playerState={playerState} />}
+            <MiddleButton 
+                className="fill-slate-300" 
+                size={middleButtonSize?? "1rem"}
+                playerState={playerState} 
 
                 onClick={togglePlay}
             />
 
-            <ButtonIcon 
-                className=
-                {`
-                    size-[2.1875rem]
-                    rounded-full bg-slate-300
-
-                    flex items-center justify-center
-                `}
-                name="Step Forward"
-                icon={<FaStepForward size={"1rem"}/>}
+            <FaStepForward 
+                className="fill-slate-300" 
+                size={sideButtonsSize?? "1rem"} 
 
                 onClick={stepForwards}
             />
