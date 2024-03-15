@@ -1,19 +1,16 @@
 import {  memo } from "react";
 
-import useTimeInformation from "../../../../Utils/hooks/useTimeInformation";
+import useTimeInformation from "../hooks/useTimeInformation";
 interface Props
 {
-    className?: string,
-    
-    trackID: string,
-    duration: number, 
+    className?: string, 
 }
 
 const TimeInformation = memo((props: Props) =>
 {
     const { className } = props;
 
-    const { currentTime, duration } = useTimeInformation(props.trackID, props.duration)
+    const { currentTime, duration } = useTimeInformation();
 
     return (
         <p className={`${className}`}>

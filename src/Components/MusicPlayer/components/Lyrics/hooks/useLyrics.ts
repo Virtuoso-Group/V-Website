@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { Interval, Line, Lyrics } from "../types/lyrics";
-import { useTrackTimestamp } from "./useMusicPlayer";
+import { Interval, Line, Lyrics } from "../../../../../Utils/types/lyrics";
+import { useTrackTimestamp } from "../../../hooks/useTrackTimestamp";
 
 export const isWithinRange = (interval: Interval, timestamp: number) =>
 {
@@ -187,7 +187,7 @@ export const useLyrics = (trackID: string, lyrics: Lyrics) =>
         }
     }
 
-    useTrackTimestamp(trackID, 10, update, index.seek)
+    useTrackTimestamp(10, update, index.seek)
     
     return { selectedLine }
 }

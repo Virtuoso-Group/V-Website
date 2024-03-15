@@ -1,5 +1,5 @@
-import { LyricsObject, LyricsStatus, SyncedLyrics, UnsyncedLyrics } from '../../../Utils/types/lyrics'
-import Synced from './LyricTypes/Synced';
+import { LyricsObject, LyricsStatus, SyncedLyrics, UnsyncedLyrics } from '../../../../Utils/types/lyrics'
+import Synced from './LyricTypes/Synced/Synced';
 import FormattedLyrics from './LyricTypes/Formatted';
 import { motion } from 'framer-motion';
 import { Instrumental } from './LyricTypes/Instrumental';

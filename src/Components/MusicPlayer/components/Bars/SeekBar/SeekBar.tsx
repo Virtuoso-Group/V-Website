@@ -1,28 +1,21 @@
-import { RefObject, memo, useCallback, useEffect, useRef, useState } from "react";
-import Ball from "../Atoms/Ball";
+import { memo, useCallback, useContext, useEffect, useRef, useState } from "react";
+import Ball from "./Ball";
 
 import { motion } from "framer-motion";
-import { useTrackTimestamp } from "../../Utils/hooks/useMusicPlayer";
+import { PlayerContext } from "../../../PlayerContext";
+import { useTrackTimestamp } from "../../../hooks/useTrackTimestamp";
 
-
-type Controls = 
-{
-    seek: (percentage: number) => void
-    pause: () => void,
-}
 
 interface SeekBarProps
 {
     className?:string,
-    trackID: string,
-    duration: number, 
-    controls: Controls,
 }
 
 const SeekBar = memo((props: SeekBarProps) =>
 {
+    const { track, seek, pause } = useContext(PlayerContext);
+
     const barContainerRef = useRef<HTMLDivElement>(null);
-    const { duration } = props;
     
     const barWidth = barContainerRef.current?.getBoundingClientRect().width??1;
 
@@ -34,9 +27,9 @@ const SeekBar = memo((props: SeekBarProps) =>
     // TODO: put a useCallback, you don't want the useCurrentTimestamp to redefine itself
     const updatePercentage = useCallback((timestamp: number) =>
     {        
-        if (duration) 
-            setCurrentPercentage((timestamp / duration) * 100)
-    }, [duration])
+        if (track.duration) 
+            setCurrentPercentage((timestamp / track.duration) * 100)
+    }, [track.duration])
     
     useEffect(() => 
     {
@@ -57,16 +50,16 @@ const SeekBar = memo((props: SeekBarProps) =>
 
             const percentage = (actualClientX / width);
                                     
-            props.controls.seek(percentage)
+            seek(percentage)
         }     
-    }, [props.controls.seek])
+    }, [seek])
 
     const hold = useCallback(() =>
     {        
         setIsDragging(true);
 
-        props.controls.pause();
-    }, [props.controls])
+        pause();
+    }, [pause])
 
     const release = useCallback((xPoint: number) =>
     {        
@@ -75,7 +68,7 @@ const SeekBar = memo((props: SeekBarProps) =>
     }, [seekWrapper])
 
 
-    useTrackTimestamp(props.trackID, 750, updatePercentage);
+    useTrackTimestamp(750, updatePercentage);
     
     return (
         <div 

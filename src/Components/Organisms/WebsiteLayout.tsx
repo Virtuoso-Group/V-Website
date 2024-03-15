@@ -4,7 +4,7 @@ import { useEffect } from "react";
 // import TrackControls from "../Pages/MusicPlayer/MusicPlayer";
 
 // import { MusicPlayer } from "../Pages/MusicPlayer/MusicPlayer";
-import { MusicPlayer } from "../Pages/MusicPlayer/MusicPlayer";
+import { MusicPlayer } from "../MusicPlayer/MusicPlayer";
 
 import useTrack from "../../Utils/hooks/useTrack";
 import useOverlay from "../../Utils/hooks/useOverlay";

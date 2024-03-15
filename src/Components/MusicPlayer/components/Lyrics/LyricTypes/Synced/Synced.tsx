@@ -1,8 +1,8 @@
 import { useCallback, useContext } from "react";
-import { Lyrics } from "../../../../Utils/types/lyrics";
-import {  useLyrics } from "../../../../Utils/hooks/lyricsHooks";
-import Line from "../../../Molecules/Line";
-import { PlayerContext } from "../../../Pages/MusicPlayer/MusicPlayer";
+import { Lyrics } from "../../../../../../Utils/types/lyrics";
+import {  useLyrics } from "../../hooks/useLyrics";
+import Line from "./Line";
+import { PlayerContext } from "../../../../PlayerContext";
 
 interface Props 
 { 
@@ -17,7 +17,7 @@ const Synced = (props: Props) =>
 
     const { lines, seek } = props;
       
-    const lyrics = useLyrics(track.id, lines);
+    const lyrics = useLyrics(track._id, lines);
 
     const seekWrapper = useCallback((timestamp: number) => seek(timestamp), [])
     

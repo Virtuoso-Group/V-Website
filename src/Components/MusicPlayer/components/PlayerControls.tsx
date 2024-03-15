@@ -1,11 +1,9 @@
-import { memo, useContext, useEffect, useState } from "react";
-import { IconType } from "react-icons";
-import ButtonIcon from "../../../Atoms/ButtonIcon";
+import { memo, useContext } from "react";
 import { FaPause, FaPlay, FaStepBackward, FaStepForward } from "react-icons/fa";
-import { PlayerState } from "../../../../Utils/hooks/useMusicPlayer";
+import { PlayerState } from "../hooks/useMusicPlayer";
 
 import PuffLoader from 'react-spinners/PuffLoader'
-import { PlayerContext } from "../MusicPlayer";
+import { PlayerContext } from "../PlayerContext";
 
 
 interface MiddleButtonProps
@@ -64,7 +62,7 @@ interface PlayerControlsProps
 
 const PlayerControls = memo((props: PlayerControlsProps) =>
 {
-    const { playerState, stepBackwards, togglePlay, stepForwards} =  useContext(PlayerContext);
+    const { playerState, stepBackwards, togglePlay, stepForwards } =  useContext(PlayerContext);
     
     const { middleButtonSize, sideButtonsSize } = props;
 

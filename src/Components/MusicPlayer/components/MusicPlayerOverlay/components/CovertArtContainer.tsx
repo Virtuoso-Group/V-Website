@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { MotionCoverArt } from "../../../../../Atoms/CoverArt";
+import { MotionCoverArt } from "../../../../Atoms/CoverArt";
 
 type Release =
 { 

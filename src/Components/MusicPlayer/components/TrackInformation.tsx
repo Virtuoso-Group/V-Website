@@ -1,39 +1,32 @@
-import { memo } from "react";
+import { memo, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import { MotionCoverArt } from "../../../Atoms/CoverArt";
-import { BeatLoader, BounceLoader, FadeLoader, GridLoader, HashLoader, MoonLoader, PuffLoader, PulseLoader, RingLoader } from "react-spinners";
+import { MotionCoverArt } from "../../Atoms/CoverArt";
+import { BeatLoader } from "react-spinners";
 import Marquee from "react-fast-marquee";
+import { PlayerContext } from "../PlayerContext";
+import { PlayerState } from "../hooks/useMusicPlayer";
 
 interface Props
 {
-    showCoverArt: boolean,
     className?: string, 
-    trackTitle: string, 
-    release: { _id: string, title: string, coverArt: string },  
-    artist: { _id: string, name: string }
-
+    showCoverArt: boolean,
     mode: "mobile" | "desktop",
 
-    isLoading?: boolean,
-    hideOverlay: () => void
 }
-
 
 const TrackInformation = memo((props: Props) =>
 {
+    const { track, artist, release, playerState, hideOverlay } = useContext(PlayerContext);
+
     const 
     { 
         className,
-        showCoverArt, 
-        trackTitle, 
-        artist, 
-        release,
-        
+        showCoverArt,         
         mode
     } = props;
     
-    const isLoading = mode === "mobile" && props.isLoading;
+    const isLoading = playerState ===  PlayerState.LOADING;
 
     return (
         <div className={`flex whitespace-nowrap ${className} w-full`}>
@@ -72,18 +65,18 @@ const TrackInformation = memo((props: Props) =>
                     speed={30}
                 >
                     <span className='font-bold text-white text-lg'>
-                        {" "+trackTitle+" "}
+                        {" "+track.title+" "}
                     </span>
                 </Marquee>
                 
                 <span className="flex SD:hidden text-sm font-light align-middle text-slate-300">{artist.name}</span>
 
                 <span className='hidden SD:flex gap-1 text-sm font-light align-middle text-slate-300'>
-                    <Link to={`/artist/${artist._id}`} onClick={props.hideOverlay}>{artist.name}</Link>
+                    <Link to={`/artist/${artist._id}`} onClick={hideOverlay}>{artist.name}</Link>
 
                     <span className="hidden SD:flex">•</span> 
                     
-                    <Link className="hidden SD:flex" to={`/album/${release._id}`} onClick={props.hideOverlay}>{release.title}</Link>
+                    <Link className="hidden SD:flex" to={`/album/${release._id}`} onClick={hideOverlay}>{release.title}</Link>
                 </span>
             </p>
         </div>

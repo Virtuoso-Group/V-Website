@@ -1,34 +1,23 @@
 import { useContext } from "react";
-import { PlayerContext } from "../../../MusicPlayer";
 import { Link } from "react-router-dom";
-import SeekBar from "../../../../../Molecules/SeekBar";
-import CoverArtContainer from "./CovertArtContainer";
+import SeekBar from "../../Bars/SeekBar/SeekBar";
 import TimeInformation from "./TimeInformation";
 import PlayerControls from "../../PlayerControls";
-import { MotionCoverArt } from "../../../../../Atoms/CoverArt";
-
-type Release =
-{ 
-    _id: string, 
-    title: string, 
-    coverArt: string 
-}
-
+import { MotionCoverArt } from "../../../../Atoms/CoverArt";
+import { PlayerContext } from "../../../PlayerContext";
 interface Props
 {
     className?: string,
-    release: Release,
 }
 
 const TrackInformation = (props: Props) =>
 {
-    const { className, release } = props;
-
     const 
     { 
         track, artist,
     
-        pause, seek, hideOverlay
+        release,
+        hideOverlay
     } = useContext(PlayerContext);
 
     return (
@@ -36,7 +25,7 @@ const TrackInformation = (props: Props) =>
             className=
             {`
                 z-[50]
-                ${className}
+                ${props.className}
 
                 mt-[2rem]
                 relative size-full 
@@ -62,7 +51,7 @@ const TrackInformation = (props: Props) =>
 
                 <Link 
                     className='text-sm font-light text-slate-300'
-                    to={`/artist/${artist.id}`}
+                    to={`/artist/${artist._id}`}
 
                     onClick={hideOverlay}
                 >
@@ -71,17 +60,9 @@ const TrackInformation = (props: Props) =>
             </p>
 
             <div className='flex flex-col gap-2'>
-                <SeekBar
-                    trackID={track.id}
-                    duration={track.duration}
-                    controls={{ pause, seek }}
-                />
+                <SeekBar />
 
-                <TimeInformation 
-                    className="w-full font-light text-gray-300 text-xs" 
-                    trackID={track.id} 
-                    duration={track.duration} 
-                />
+                <TimeInformation className="w-full font-light text-gray-300 text-xs"  />
             </div>
 
             <PlayerControls 

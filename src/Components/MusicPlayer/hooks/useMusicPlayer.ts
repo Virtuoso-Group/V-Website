@@ -1,5 +1,4 @@
-import { RefObject, useCallback, useContext, useEffect, useRef, useState } from "react"
-import { PlayerContext } from "../../Components/Pages/MusicPlayer/MusicPlayer";
+import { useCallback, useEffect, useRef, useState } from "react"
 
 export enum PlayerState 
 {
@@ -21,8 +20,6 @@ export type PlayerStateHook =
 const usePlayerState = (): PlayerStateHook =>
 {
     const [value, setValue] = useState<PlayerState>(PlayerState.STOPPED)
-
-    console.log("PlayerState: ", value);
     
     const setToPlay = useCallback(() => setValue(PlayerState.PLAYING), []);
 
@@ -55,80 +52,6 @@ const useDuration = () =>
     }, [])
 
     return { value, initialize }
-}
-
-export const useTrackTimestamp = 
-(
-    trackID: string, 
-    tick: number, 
-    update: (timestamp: number) => void,
-    seek?: (timestamp: number) => void,
-) =>
-{
-    console.log("trackID: ", trackID);
-    
-    const { audioRef } = useContext(PlayerContext);
-
-    const prevTimestamp = useRef<number>(0);
-
-    const seekedWrapper = () =>
-    {   
-        if (audioRef.current && seek) 
-        {
-            const currentTimestamp = audioRef.current.currentTime * 1000;
-
-            prevTimestamp.current = -1;
-
-            seek(currentTimestamp)   
-        }
-    }
-
-    const updateWrapper = useCallback((e: Event) => 
-    {
-        if (audioRef.current) 
-        {         
-            const currentTimestamp = audioRef.current.currentTime * 1000;
-
-            const diff = prevTimestamp.current  - currentTimestamp;
-
-            if (Math.abs(diff) >= tick) 
-            {
-                prevTimestamp.current = currentTimestamp;
-
-                update(currentTimestamp)
-            }                       
-        }
-    }, [tick, update])
-
-    const reset = useCallback(() => 
-    {
-        prevTimestamp.current = 0;
-
-        if (update) 
-            update(0)
-    }, [update])
-
-    useEffect(() => { seekedWrapper() }, [])
-    
-    useEffect(() => 
-    {
-        if (audioRef.current) 
-        {
-            audioRef.current.addEventListener("seeked", seekedWrapper)
-            audioRef.current.addEventListener("timeupdate", updateWrapper)
-            audioRef.current.addEventListener("ended", reset)
-        }
-    
-        return () => 
-        {            
-            if (audioRef.current) 
-            {
-                audioRef.current.removeEventListener("seeked", seekedWrapper)
-                audioRef.current.removeEventListener("timeupdate", updateWrapper)
-                audioRef.current.removeEventListener("ended", reset)
-            }  
-        }
-    }, [trackID, updateWrapper, seekedWrapper, reset])    
 }
 
 const useAudioControls = (trackID: string, playerState: PlayerStateHook) =>

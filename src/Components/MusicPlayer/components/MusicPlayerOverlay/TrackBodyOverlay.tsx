@@ -1,25 +1,18 @@
-import { MotionCoverArt } from '../../../../Atoms/CoverArt'
+import { MotionCoverArt } from '../../../Atoms/CoverArt'
 
 import { MdLyrics } from 'react-icons/md'
 
 import { AnimatePresence, motion } from 'framer-motion'
 
 import { memo, useContext } from 'react'
-import Lyrics from '../../../../Organisms/Lyrics/Lyrics'
-import ButtonIcon from '../../../../Atoms/ButtonIcon'
-import { LyricsObject } from '../../../../../Utils/types/lyrics'
+import Lyrics from '../Lyrics/Lyrics'
+import ButtonIcon from '../../../Atoms/ButtonIcon'
+import { LyricsObject } from '../../../../Utils/types/lyrics'
 import { RemoveScroll } from 'react-remove-scroll'
-import { PlayerContext } from '../../MusicPlayer'
 
 import TrackInformation from './components/TrackInformation'
-import CoverArtContainer from './components/CovertArtContainer'
+import { PlayerContext } from '../../PlayerContext'
 
-type Release =
-{ 
-    _id: string, 
-    title: string, 
-    coverArt: string 
-}
 
 const Background = memo((props: { coverArt: string }) =>
 {
@@ -46,7 +39,7 @@ interface ControlsProps
     toggleLyrics: () => void
 }
 
-const Controls = (props: ControlsProps) =>
+const Buttons = (props: ControlsProps) =>
 {
     const { areLyricsAvailable, toggleLyrics } = props;
 
@@ -81,28 +74,25 @@ const Controls = (props: ControlsProps) =>
 
 interface Props
 {       
-    release: Release
-
-    value: LyricsObject,
+    lyrics: LyricsObject,
             
     areVisible: boolean,
         
     toggle: () => void
-    
-    seek: (timestamp: number) => void,
 }
 
 const PlayerOverlay = memo((props: Props) => 
-{
-    const { release } = props;
-            
-    const { websitePadding, seek } = useContext(PlayerContext);
+{            
+    const { websitePadding, release, seekTimestamp } = useContext(PlayerContext);
     
     return (
         <RemoveScroll>
             <motion.div 
                 layout
-                className={`pointer-events-auto z-[50] fixed grid min-w-[375px] w-full  h-full bg-blue-300 jutsfiy-center items-center pt-[4rem] pb-[5.25rem]`}
+                className=
+                {`  
+                    z-[50] pointer-events-auto 
+                    fixed grid min-w-[375px] w-full  h-full bg-blue-300 jutsfiy-center items-center pt-[4rem] pb-[5.25rem]`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -116,7 +106,8 @@ const PlayerOverlay = memo((props: Props) =>
                         z-[50]
                         ${websitePadding}
                         relative
-                        h-full SD:h-[80%] gap-10
+                        h-full SD:h-[80%] 
+                        gap-10
                         
                         flex
                         justify-center SD:items-center 
@@ -130,18 +121,18 @@ const PlayerOverlay = memo((props: Props) =>
                         loading={"eager"}
                     />
 
-                    <TrackInformation className={"flex SD:hidden"} release={release} />
+                    <TrackInformation className={"flex SD:hidden"} />
 
                     <AnimatePresence>
                         { 
-                            props.value.status !== "Unavailable" && props.areVisible
+                            props.lyrics.status !== "Unavailable" && props.areVisible
                         && 
-                            <Lyrics lyrics={props.value} seek={seek} />
+                            <Lyrics lyrics={props.lyrics} seek={seekTimestamp} />
                         }
                     </AnimatePresence>
 
-                    <Controls 
-                        areLyricsAvailable={props.value.status !== "Unavailable"} 
+                    <Buttons 
+                        areLyricsAvailable={props.lyrics.status !== "Unavailable"} 
                         toggleLyrics={props.toggle}
                     />
                 </section>

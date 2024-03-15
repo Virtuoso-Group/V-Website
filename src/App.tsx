@@ -1,10 +1,10 @@
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
 
-import WebsiteLayout from './Components/Organisms/WebsiteLayout';
-import HomePage from './Components/Pages/Home/HomePage';
-import ArtistPage from './Components/Pages/ArtistPage';
-import AlbumPage from './Components/Pages/AlbumPage/AlbumPage';
+import WebsiteLayout from './components/Organisms/WebsiteLayout';
+import HomePage from './components/Pages/Home/HomePage';
+import ArtistPage from './components/Pages/ArtistPage';
+import AlbumPage from './components/Pages/AlbumPage/AlbumPage';
 
 /* TODO: 
     once this array gets too large, it will be a good idea to split the website into 
