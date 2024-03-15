@@ -1,11 +1,19 @@
 import { LyricsObject } from "./lyrics"
 
+export type ArtistRelease =
+{
+    _id: string,
+    title: string,
+    coverArt: string,
+    released: string
+}
+
 export type Artist =
 {
     _id: string
     name: string,
     image: string,
-    releases: string[]
+    releases: ArtistRelease[]
 }
 
 export type Release = 

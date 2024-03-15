@@ -1,4 +1,4 @@
-import ReleaseCard from '../../../Molecules/AlbumCard'
+import ReleaseCard from '../../../Molecules/AlbumCard/AlbumCard'
 import { Release } from '../../../../Utils/types/track'
 import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion';

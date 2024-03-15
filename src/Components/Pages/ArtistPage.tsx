@@ -1,9 +1,28 @@
 import { useEffect } from "react";
 import { useParams } from "react-router"
-import { Artist } from "../../Utils/types/track";
+import { Artist, ArtistRelease } from "../../Utils/types/track";
 import Avatar from "../Atoms/Avatar";
 import { useWebsiteContext } from "../Organisms/WebsiteLayout";
 import useAPI from "../../Utils/hooks/useAPI";
+import ArtistReleaseCard from "../Molecules/AlbumCard/ArtistAlbumCard";
+import { useNavigate } from "react-router-dom";
+
+const ArtistAlbums = (props: { releases: ArtistRelease[] }) =>
+{
+  const navigate = useNavigate();
+
+  const { releases } = props;
+
+  return (
+    <section className="flex flex-col gap-2">
+      <h2 className="text-2xl text-white font-bold">Albums</h2>
+
+      <div className="flex gap-8">
+        {releases.map(release => <ArtistReleaseCard key={release._id} release={release} onClick={() => navigate(`/album/${release._id}`)} />)}
+      </div>
+    </section>
+  )
+}
 
 export const ArtistPage = () => 
 {
@@ -21,16 +40,16 @@ export const ArtistPage = () =>
   }, [artistID])
   
   const artistData = artist.data;
-
-  console.log("artistData: ", artistData);
   
   return (
     <div 
-      className={`
+      className=
+      {`
         ${websitePadding}
         relative 
         mt-[2rem]  
-        w-full flex flex-col gap-20`}
+        w-full flex flex-col gap-10
+      `}
     >
       {/* Basic artist info */}
       <header className="SD:h-[15.625rem] flex gap-10 flex-col SD:flex-row">
@@ -44,6 +63,9 @@ export const ArtistPage = () =>
           {artistData?._id? artistData.name: ""}
         </h1>
       </header>
+
+
+      {artistData && <ArtistAlbums releases={artistData.releases} />}
     </div>
   )
 }
