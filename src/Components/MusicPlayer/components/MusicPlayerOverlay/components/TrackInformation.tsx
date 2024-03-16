@@ -17,7 +17,7 @@ const TrackInformation = (props: Props) =>
         track, artist,
     
         release,
-        hideOverlay
+        overlay
     } = useContext(PlayerContext);
 
     return (
@@ -53,7 +53,7 @@ const TrackInformation = (props: Props) =>
                     className='text-sm font-light text-slate-300'
                     to={`/artist/${artist._id}`}
 
-                    onClick={hideOverlay}
+                    onClick={overlay.hide}
                 >
                     {artist.name}
                 </Link>

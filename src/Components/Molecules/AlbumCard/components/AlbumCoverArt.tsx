@@ -19,7 +19,7 @@ const AlbumCoverArt = (props: Props) =>
             />
 
             <CoverArt 
-                className={`w-full relative  rounded-lg drop-shadow-2xl `}
+                className={`w-full relative rounded-lg drop-shadow-2xl `}
                 name={title}
                 coverArt={coverArt} 
             />

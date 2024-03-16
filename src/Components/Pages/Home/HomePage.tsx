@@ -7,7 +7,7 @@ import ReleasesSection from './Components/AlbumsSection';
 import ArtistsSection from './Components/ArtistsSection';
 import useAPI from '../../../Utils/hooks/useAPI';
 import { Artist, Release, Track } from '../../../Utils/types/track';
-import { useWebsiteContext } from '../../Organisms/WebsiteLayout';
+import { websitePadding } from '../../../config/style';
 
 const Categories: Category[] = 
 [
@@ -21,8 +21,6 @@ const Categories: Category[] =
 
 const HomePage = memo(() => 
 {   
-    const { websitePadding } = useWebsiteContext();
-
     const [selectedCategory, setSelectedCategory] = useState<Category>(Categories[0])
     
     const selectCategory = (index: number) => setSelectedCategory(Categories[index]);
@@ -50,11 +48,9 @@ const HomePage = memo(() =>
 
     const ChosenSection = HomeSections[selectedCategory.id];
 
-    // div className=' flex flex-col gap-[1.2rem] overflow-hidden'
     return (
-        //  pt-[4rem]
         <div className='relative flex flex-col '>
-            <div className={`z-[40] top-[4rem] sticky ${websitePadding} py-[1rem] w-full flex gap-5  bg-background`}>
+            <div className={`${websitePadding} z-[40] top-[4rem] sticky  py-[1rem] w-full flex gap-5  bg-background`}>
                 {
                     Categories.map((category, index) =>  
                     {
@@ -74,7 +70,7 @@ const HomePage = memo(() =>
             
 
             {/* mt-20 */}
-            <div className={` pb-8 relative flex flex-wrap w-full gap-8 ${websitePadding}`}>
+            <div className={`${websitePadding} pb-8 relative flex flex-wrap w-full gap-8`}>
                 {ChosenSection}
             </div>
         </div>

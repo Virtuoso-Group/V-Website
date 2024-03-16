@@ -9,6 +9,14 @@ export type Overlay =
     toggle: () => void
 }
 
+export const defaultValue: Overlay = 
+{
+    isOn: false,
+    hide: () => {},
+    show: () => {},
+    toggle: () => {}
+}
+
 const useOverlay = (): Overlay =>
 {
     const [isOn, setState] = useState<boolean>(false)
@@ -23,8 +31,7 @@ const useOverlay = (): Overlay =>
             isOn,
 
             toggle, show, hide
-        }
-    )
+        })
 }
 
 export default useOverlay;

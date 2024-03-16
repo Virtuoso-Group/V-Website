@@ -1,7 +1,7 @@
 import { RefObject, createContext, createRef, useCallback } from "react"
 import useMusicPlayer, { PlayerState } from "./hooks/useMusicPlayer"
 import { Track } from "../../Utils/types/track"
-import { Overlay } from "../../Utils/hooks/useOverlay"
+import { Overlay, defaultValue } from "../../Utils/hooks/useOverlay"
 import { baseURL } from "../../config/config"
 
 type PlayerContextType = 
@@ -32,8 +32,7 @@ type PlayerContextType =
     pause: () => void,
     seek: (percentage: number) => void,
 
-    hideOverlay: () => void,
-
+    overlay: Overlay,
 
     playerState: PlayerState,
 
@@ -43,7 +42,9 @@ type PlayerContextType =
 
     stepForwards: () => void,
 
-    seekTimestamp: (timestamp: number) => void
+    seekTimestamp: (timestamp: number) => void,
+
+    closeMusicPlayer: () => void
 }
 
 export const PlayerContext = createContext<PlayerContextType>(
@@ -72,15 +73,16 @@ export const PlayerContext = createContext<PlayerContextType>(
 
     pause: () => {},
     seek: (percentage: number) => {},
-    hideOverlay: () => {},
-
-
+    overlay: defaultValue,
     playerState: PlayerState.STOPPED,
 
     togglePlay: () => {},
     stepBackwards: () => {},
     stepForwards: () => {},
-    seekTimestamp: (timestamp: number) => {}
+    seekTimestamp: (timestamp: number) => {},
+
+
+    closeMusicPlayer: () => {}
 })
 
 interface Props 
@@ -91,12 +93,14 @@ interface Props
 
     overlay: Overlay,
 
+    close: () => void,
+
     children?: React.ReactNode
 }
 
 export const PlayerContextProvider = (props: Props) => 
 {
-    const { websitePadding, track, overlay } = props
+    const { websitePadding, track, overlay, close } = props
 
     const 
     { 
@@ -125,14 +129,18 @@ export const PlayerContextProvider = (props: Props) =>
 
             pause: audioControls.pause, 
             seek: seekPercentage,
-            hideOverlay: overlay.hide,
+
+            overlay,
 
             playerState: playerState.value,
 
             stepBackwards,
             stepForwards,
             togglePlay: audioControls.togglePlay,
-            seekTimestamp
+            seekTimestamp,
+
+
+            closeMusicPlayer: close
         }}
     >
         <audio 

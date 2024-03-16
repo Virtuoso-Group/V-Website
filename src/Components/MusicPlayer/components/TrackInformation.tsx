@@ -17,7 +17,7 @@ interface Props
 
 const TrackInformation = memo((props: Props) =>
 {
-    const { track, artist, release, playerState, hideOverlay } = useContext(PlayerContext);
+    const { track, artist, release, playerState, overlay } = useContext(PlayerContext);
 
     const 
     { 
@@ -72,11 +72,11 @@ const TrackInformation = memo((props: Props) =>
                 <span className="flex SD:hidden text-sm font-light align-middle text-slate-300">{artist.name}</span>
 
                 <span className='hidden SD:flex gap-1 text-sm font-light align-middle text-slate-300'>
-                    <Link to={`/artist/${artist._id}`} onClick={hideOverlay}>{artist.name}</Link>
+                    <Link to={`/artist/${artist._id}`} onClick={overlay.hide}>{artist.name}</Link>
 
                     <span className="hidden SD:flex">•</span> 
                     
-                    <Link className="hidden SD:flex" to={`/album/${release._id}`} onClick={hideOverlay}>{release.title}</Link>
+                    <Link className="hidden SD:flex" to={`/album/${release._id}`} onClick={overlay.hide}>{release.title}</Link>
                 </span>
             </p>
         </div>

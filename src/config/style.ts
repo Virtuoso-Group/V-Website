@@ -1,0 +1,1 @@
+export const websitePadding = "px-5 SD:px-10 HD:px-20";

@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import CoverArt from '../../Atoms/CoverArt';
 import useAPI from '../../../Utils/hooks/useAPI';
-import { useWebsiteContext } from '../../Organisms/WebsiteLayout';
 import TrackList from './Components/TrackList';
+import { websitePadding } from '../../../config/style';
 
 type AlbumTrackData =
 {
@@ -32,7 +32,6 @@ type AlbumPageData =
 
 const AlbumPage = () => 
 {
-    const { websitePadding } = useWebsiteContext();
     const { albumID } = useParams();
 
     const release = useAPI<AlbumPageData | null>("/music/release/", "get", null);

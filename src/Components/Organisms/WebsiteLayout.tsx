@@ -47,7 +47,6 @@ const WebsiteLogo = (props: Props) =>
 }
 type WebsiteContext = 
 { 
-    websitePadding: string,
     selectTrack: (trackID: string) => void 
 }
 
@@ -76,7 +75,7 @@ const WebsiteLayout = () =>
             />
 
             <div className={`min-h-full w-full  ${track.value? "pb-[9rem]": "pb-[2rem]"} `}>
-                <Outlet context={{ websitePadding: websitePadding, selectTrack: track.selectTrack } satisfies WebsiteContext} />
+                <Outlet context={{ selectTrack: track.selectTrack } satisfies WebsiteContext} />
             </div>
             
             {
