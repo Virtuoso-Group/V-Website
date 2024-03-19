@@ -17,8 +17,8 @@ const MobileView = (props: Props) =>
         <div 
             className=
             {`
-                flex SD:hidden
-                z-[80] fixed bottom-0  w-full pointer-events-auto
+                z-[80]
+                flex  fixed bottom-0  w-full pointer-events-auto
                 ${overlay.isOn? "SD:bg-black": "bg-black"}
             `}
         >

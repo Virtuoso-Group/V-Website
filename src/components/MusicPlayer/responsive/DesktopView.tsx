@@ -19,10 +19,10 @@ const DesktopView = (props: Props) =>
         <div 
             className=
             {`
-                
+                z-[80]
                 bg-black
                 
-                z-[80] fixed bottom-0 hidden SD:flex w-full pointer-events-auto
+                fixed bottom-0 flex w-full pointer-events-auto
             `}
         >
             <div className={`w-full`}>

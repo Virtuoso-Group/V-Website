@@ -5,7 +5,7 @@ import  { Overlay } from "../../Utils/hooks/useOverlay";
 import PlayerOverlay from "./components/MusicPlayerOverlay/MusicPlayerOverlay";
 import { AnimatePresence } from "framer-motion";
 import { PlayerContextProvider } from "./PlayerContext";
-import MusicPlayerView from "./responsive/MusicPlayerView";
+import ResponsiveMusicPlayer from "./responsive/ResponsiveMusicPlayer";
 
 
 interface Props
@@ -28,7 +28,7 @@ export const MusicPlayer = (props: Props) =>
     return (
         <PlayerContextProvider {...props}>
             <div className="z-[80] fixed h-screen min-w-[375px] w-full pointer-events-none">
-                <MusicPlayerView />
+                <ResponsiveMusicPlayer />
 
                 <AnimatePresence>
                     {
