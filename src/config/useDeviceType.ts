@@ -7,7 +7,7 @@ import { DeviceType, getDeviceType } from "./style";
 
 const useDeviceType = (): DeviceType => 
 {
-    const [deviceType, setDeviceType] = useState<DeviceType>(DeviceType.DESKTOP);
+    const [deviceType, setDeviceType] = useState<DeviceType>(getDeviceType(window.innerWidth));
 
     /* 
         I wrote the update function this way to gurantee that only the new value will rerender
