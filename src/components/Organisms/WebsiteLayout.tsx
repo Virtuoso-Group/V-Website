@@ -4,7 +4,7 @@ import { useEffect } from "react";
 // import TrackControls from "../Pages/MusicPlayer/MusicPlayer";
 
 // import { MusicPlayer } from "../Pages/MusicPlayer/MusicPlayer";
-import { MusicPlayer } from "../MusicPlayer/MusicPlayer";
+import { MusicPlayer } from "../../domains/streaming/MusicPlayer/MusicPlayer";
 
 import useTrack from "../../Utils/hooks/useTrack";
 import useOverlay from "../../Utils/hooks/useOverlay";
@@ -82,7 +82,6 @@ const WebsiteLayout = () =>
                 track.value 
             && 
                 <MusicPlayer 
-                    websitePadding={websitePadding} 
                     track={track.value} 
                     
                     overlay={musicPlayerOverlay}

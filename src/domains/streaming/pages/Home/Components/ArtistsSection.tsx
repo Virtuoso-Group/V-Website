@@ -1,0 +1,36 @@
+import { AnimatePresence, motion } from 'framer-motion'
+import ArtistCard from '../../../../../components/Molecules/ArtistCard';
+import { Artist } from '../../../../../Utils/types/track';
+import { useNavigate } from 'react-router';
+
+const MotionArtistCard = motion(ArtistCard);
+
+const ArtistsSection = (props: { data: Artist[] }) => 
+{
+    const navigate = useNavigate();
+
+    return (
+        <AnimatePresence>
+            {props.data.map((artist, index) => 
+                {
+                    return (
+                        <MotionArtistCard 
+                            key={artist._id}
+
+                            initial={{ opacity: 0}}
+
+                            animate={{ opacity: 1 }}
+
+                            transition={{ duration: 0.05 * (index + 1)}}
+
+                            artist={artist}
+                            onClick={() => { navigate(`/artist/${artist._id}`) }}
+                        />
+                    )
+                })
+            }
+        </AnimatePresence>
+    )
+}
+
+export default ArtistsSection

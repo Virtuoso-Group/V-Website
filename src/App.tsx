@@ -1,10 +1,8 @@
-import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
 
 import WebsiteLayout from './components/Organisms/WebsiteLayout';
-import HomePage from './components/Pages/Home/HomePage';
-import ArtistPage from './components/Pages/ArtistPage';
-import AlbumPage from './components/Pages/AlbumPage/AlbumPage';
+import streamingRoutes from './domains/streaming/routes';
 
 /* TODO: 
     once this array gets too large, it will be a good idea to split the website into 
@@ -22,16 +20,7 @@ const router = createBrowserRouter(
     
     element: <WebsiteLayout />,
 
-    children: 
-    [
-      { index: true, element: <Navigate replace to={"home"} />},
-
-      {  path: "home", element: <HomePage /> },
-
-      { path: "/artist/:artistID" , element: <ArtistPage /> },
-
-      { path: "/album/:albumID" , element: <AlbumPage /> }
-    ]
+    children: [...streamingRoutes]
   }
 ])
 
