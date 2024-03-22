@@ -8,6 +8,7 @@ import { MusicPlayer } from "../../domains/streaming/MusicPlayer/MusicPlayer";
 
 import useTrack from "../../Utils/hooks/useTrack";
 import useOverlay from "../../Utils/hooks/useOverlay";
+import { websitePadding } from "../../config/style";
 
 interface Props
 {
@@ -60,12 +61,11 @@ const WebsiteLayout = () =>
     { 
        const root =  document.documentElement;
 
-       root.style.setProperty("--base-font-size","16px")
+       root.style.setProperty("--base-font-size","17.6px")
        
         return () => { track.reset() }
     }, []);
 
-    const websitePadding = "px-5 SD:px-10 HD:px-20";
 
     return (
         <main className={`min-h-screen min-w-[375px] w-screen flex flex-col `}>
