@@ -1,8 +1,8 @@
-import { memo } from "react";
+import { memo, useCallback, useContext, useState } from "react";
 
 import { motion } from "framer-motion";
-
-import useTrackPercentage from "../../hooks/useTrackPercentage";
+import { useTrackTimestamp } from "../../hooks/useTrackTimestamp";
+import { PlayerContext } from "../../PlayerContext";
 
 interface Props
 {
@@ -11,7 +11,18 @@ interface Props
 
 const ProgressBar = memo((props: Props) =>
 {
-    const percentage = useTrackPercentage();
+    const { track } = useContext(PlayerContext);
+    
+    const [percentage, setPercentage] = useState<number>(0)
+    
+    const updatePercentage = useCallback((timestamp: number) =>
+    {        
+        if (track.duration) 
+            setPercentage((timestamp / track.duration) * 100)
+    }, [track.duration])
+    
+
+    useTrackTimestamp(750, updatePercentage);
     
     return (
         <div className={`relative w-full h-[0.21875rem] bg-slate-400 flex items-center ${props.className}`}>

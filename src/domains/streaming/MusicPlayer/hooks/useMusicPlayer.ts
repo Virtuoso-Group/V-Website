@@ -58,18 +58,6 @@ const useAudioControls = (trackID: string, playerState: PlayerStateHook) =>
 {
     const ref = useRef<HTMLAudioElement>(null);
 
-    const currentTimestamp = useRef<number>(0);
-
-    const updateTimestamp = () =>
-    {
-        if (!ref.current) 
-            return
-        
-        const newTimestamp = ref.current.currentTime * 1000;
-
-        currentTimestamp.current = newTimestamp;
-    }
-
     const play = useCallback(() => ref.current?.play(), []);
 
     const pause = useCallback(() => ref.current?.pause(),[]);
@@ -105,7 +93,6 @@ const useAudioControls = (trackID: string, playerState: PlayerStateHook) =>
             audioRef.addEventListener("pause", playerState.setToPause)
 
             audioRef.addEventListener("loadstart", playerState.setToLoading)
-            audioRef.addEventListener("timeupdate", updateTimestamp)
 
             audioRef.addEventListener("waiting", playerState.setToLoading)
 
@@ -118,7 +105,6 @@ const useAudioControls = (trackID: string, playerState: PlayerStateHook) =>
             audioRef?.removeEventListener("pause", playerState.setToPause)
 
             audioRef?.removeEventListener("loadstart", playerState.setToLoading)
-            audioRef?.removeEventListener("timeupdate", updateTimestamp)
 
             audioRef?.removeEventListener("waiting", playerState.setToLoading)
 
@@ -128,7 +114,6 @@ const useAudioControls = (trackID: string, playerState: PlayerStateHook) =>
     
     return {
         ref,
-        timestamp: currentTimestamp.current,
 
         play, pause, togglePlay, seek, reset
     }
@@ -195,7 +180,6 @@ const useMusicPlayer = (trackID: string) =>
     return {
         playerState,
         audioControls,
-        
         duration,
 
         initialize, 

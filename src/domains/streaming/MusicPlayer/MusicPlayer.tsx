@@ -19,8 +19,8 @@ import DesktopView from "./responsive/DesktopPlayer/DesktopView";
 interface Props
 {
     track: Track,
+
     overlay: Overlay,
-    
     close: () => void
 }
 

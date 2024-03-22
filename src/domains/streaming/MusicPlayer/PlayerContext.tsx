@@ -27,7 +27,6 @@ type PlayerContextType =
     {
         _id: string,
         title: string,
-        timestamp: number,
         duration: number
     },
 
@@ -84,7 +83,6 @@ export const PlayerContext = createContext<PlayerContextType>(
     {
         _id: "",
         title: "",
-        timestamp: 0,
         duration: 0
     },
 
@@ -155,7 +153,7 @@ export const PlayerContextProvider = (props: Props) =>
 
             release: { ...track.release},
 
-            track: { ...track, timestamp: audioControls.timestamp, duration: duration.value },
+            track: { ...track, duration: duration.value },
 
             lyrics:
             {
