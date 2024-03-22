@@ -34,21 +34,29 @@ const PlayerOverlay = () =>
                         z-[50]
                         ${websitePadding}
                         relative
-                        h-[80%] 
+                        h-[38rem] 
                         gap-10
-                        
                         flex justify-center items-center 
                     `}
                 >
                     <MotionCoverArt
                         id={`${release._id}${"desktop"}`}
-                        className={`flex w-[30rem] rounded-lg `}                
+                        className={`flex h-full rounded-lg `}                
                         name={release.title}
                         coverArt={release.coverArt} 
                         loading={"eager"}
                     />
 
-                    <Lyrics />
+                    <Lyrics 
+                        className=
+                        {`
+                            absolute 
+                            flex justify-center items-center 
+                            aspect-square
+                            h-full
+                            rounded-lg 
+                        `} 
+                    />
 
                     <LyricsButtons />
                 </section>

@@ -21,7 +21,10 @@ interface Props
     track: Track,
 
     overlay: Overlay,
-    close: () => void
+    close: () => void,
+
+    goNext: () => void,
+    goPrevious: () => void
 }
 
 export const MusicPlayer = (props: Props) => 

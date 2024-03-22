@@ -5,9 +5,15 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Instrumental } from './components/Instrumental';
 import { ReactElement, useContext } from 'react';
 import { PlayerContext } from '../../PlayerContext';
+import { websitePadding } from '../../../../../config/style';
 
 
-const Lyrics = () => 
+interface Props
+{
+    className?: string
+}
+
+const Lyrics = (props: Props) => 
 {
     const { lyrics } = useContext(PlayerContext)
 
@@ -32,18 +38,15 @@ const Lyrics = () =>
                     className=
                     {`
                         z-[90]
-                        absolute SD:relative
-                        w-full SD:w-[30rem]
-                        
-                        SD:flex SD:justify-center SD:items-center
-                        h-full SD:aspect-square
-                        px-4
-                        
-                        bg-black/50 SD:rounded-lg overflow-y-scroll
+                        ${websitePadding}
+                        no-scrollbar
+                        bg-black/50 overflow-y-scroll
                         
                         select-none
 
-                        backdrop-blur-sm	
+                        backdrop-blur-sm
+                        
+                        ${props.className}
                     `}
 
                     initial={{  opacity: 0 }}

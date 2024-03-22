@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { convertMillisecondsToTimestamp } from "../../../../../Utils/helper";
 import { useWebsiteContext } from "../../../../../components/Organisms/WebsiteLayout";
 
@@ -11,19 +12,18 @@ type AlbumTrackData =
 
 interface AlbumTrackProps
 {
-    track: AlbumTrackData
+    track: AlbumTrackData,
+    selectTrack: () => void
 }
 
 const AlbumTrack = (props: AlbumTrackProps) =>
 {
-    const { selectTrack } = useWebsiteContext();
-
-    const { track } = props;
+    const { track, selectTrack } = props;
 
     return (
         <tr
             className="text-white select-none cursor-pointer w-full border-b border-slate-700 last:border-none"
-            onClick={() => selectTrack(track._id)}
+            onClick={selectTrack}
         >
             <td className="text-gray-300 py-2">{track.no}</td>
 
@@ -41,9 +41,21 @@ interface Props
 
 const TrackList = (props: Props) =>
 {
+    const { createPlaylist } = useWebsiteContext();
     const { tracks } = props;
+    const trackIDs = useRef<string[]>([])
+
+    useEffect(() => 
+    {
+        trackIDs.current = tracks.map(track => track._id);
+    }, [tracks])
 
 
+    const selectTrack = (index: number) =>
+    {
+        createPlaylist(trackIDs.current, index)
+    }
+    
     return (
         <table className="relative w-full table-auto  border-collapse text-left">
             <thead className="text-white">
@@ -62,7 +74,7 @@ const TrackList = (props: Props) =>
             
             
             <tbody className="w-full">
-                {tracks.map(track =>  <AlbumTrack key={track._id} track={track}/>)}
+                {tracks.map((track, index) =>  <AlbumTrack key={track._id} track={track} selectTrack={() => selectTrack(index)}/>)}
             </tbody>
         </table>
     )

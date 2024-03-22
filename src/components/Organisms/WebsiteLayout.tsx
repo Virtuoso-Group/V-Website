@@ -9,6 +9,7 @@ import { MusicPlayer } from "../../domains/streaming/MusicPlayer/MusicPlayer";
 import useTrack from "../../Utils/hooks/useTrack";
 import useOverlay from "../../Utils/hooks/useOverlay";
 import { websitePadding } from "../../config/style";
+import useTrackList from "../../Utils/hooks/useTrackList";
 
 interface Props
 {
@@ -48,20 +49,23 @@ const WebsiteLogo = (props: Props) =>
 }
 type WebsiteContext = 
 { 
-    selectTrack: (trackID: string) => void 
+    createPlaylist: (trackIDs: string[], index: number) => void,
 }
 
 // TODO: what should the semantic html tag be for this component?
 const WebsiteLayout = () =>
 {
-    const track = useTrack();
+    const { selectedTrackID, createPlaylist, goNext, goPrevious } = useTrackList();
+
+    const track = useTrack(selectedTrackID);
+
     const musicPlayerOverlay = useOverlay();
     
     useEffect(() => 
     { 
        const root =  document.documentElement;
 
-       root.style.setProperty("--base-font-size","17.6px")
+       root.style.setProperty("--base-font-size","16px")
        
         return () => { track.reset() }
     }, []);
@@ -75,7 +79,7 @@ const WebsiteLayout = () =>
             />
 
             <div className={`min-h-full w-full  ${track.value? "pb-[9rem]": "pb-[2rem]"} `}>
-                <Outlet context={{ selectTrack: track.selectTrack } satisfies WebsiteContext} />
+                <Outlet context={{ createPlaylist } satisfies WebsiteContext} />
             </div>
             
             {
@@ -86,6 +90,9 @@ const WebsiteLayout = () =>
                     
                     overlay={musicPlayerOverlay}
                     close={track.reset} 
+
+                    goNext={goNext} 
+                    goPrevious={goPrevious}
                 />
             }
         </main>

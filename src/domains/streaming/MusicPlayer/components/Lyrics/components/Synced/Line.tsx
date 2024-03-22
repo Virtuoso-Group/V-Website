@@ -66,7 +66,7 @@ const Line = memo((props: Props) =>
                 cursor-pointer
                 
                 h-fit
-                text-center 
+                 
             `}
 
             onClick={() => props.seek(props.timestamp)}

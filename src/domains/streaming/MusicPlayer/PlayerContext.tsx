@@ -119,13 +119,15 @@ interface Props
     overlay: Overlay,
 
     close: () => void,
+    goNext: () => void,
+    goPrevious: () => void
 
     children?: React.ReactNode
 }
 
 export const PlayerContextProvider = (props: Props) => 
 {
-    const { track, overlay, close } = props
+    const { track, overlay, close, goNext, goPrevious } = props
 
     const 
     { 
@@ -135,9 +137,9 @@ export const PlayerContextProvider = (props: Props) =>
     } = useMusicPlayer(track._id);
     
 
-    const stepBackwards = useCallback(() => { reset() }, [])
+    const stepBackwards = useCallback(() => { goPrevious() }, [goPrevious])
 
-    const stepForwards = useCallback(() => { console.log("Forwards!")  }, [])
+    const stepForwards = useCallback(() => { goNext()  }, [goNext])
 
     const [areLyricsVisible, setLyricsVisibility] = useState<boolean>(false);
 
@@ -203,6 +205,8 @@ export const PlayerContextProvider = (props: Props) =>
 
                 initialize(showMediaSession) 
             }}
+
+            onEnded={stepForwards}
     />
         {props.children}
     </PlayerContext.Provider>

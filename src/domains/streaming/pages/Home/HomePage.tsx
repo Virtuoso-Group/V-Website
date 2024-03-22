@@ -41,7 +41,7 @@ const HomePage = memo(() =>
 
     const HomeSections: { [index: string]:  JSX.Element } = 
     {
-        'tracks':  <TracksSection data={tracksAPI.data} />,
+        'tracks':  <TracksSection tracks={tracksAPI.data} />,
         'albums':  <ReleasesSection data={albumsAPI.data} />,
         'artists': <ArtistsSection data={artistsAPI.data} />
     }

@@ -42,7 +42,7 @@ const PlayerOverlay = () =>
                 >
                     <MobilePlayer className={"flex"} />
 
-                    <Lyrics />
+                    <Lyrics className={"absolute w-full h-full"}/>
                        
                     <LyricsButtons />
                 </section>

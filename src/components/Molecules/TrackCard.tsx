@@ -10,12 +10,12 @@ type Props =
     artistName: string,
     coverArt: string, 
 
-    select: (trackID: string) => void;
+    select: () => void;
 }
 
 const TrackCard = memo(forwardRef<HTMLElement, Props>((props, ref) => 
 {
-    const { trackID, title, artistName, coverArt, select } = props;
+    const { title, artistName, coverArt, select } = props;
 
     const [isHover, setHover] = useState<boolean>(false)
 
@@ -23,7 +23,7 @@ const TrackCard = memo(forwardRef<HTMLElement, Props>((props, ref) =>
         <article 
             ref={ref}            
             className='flex cursor-pointer flex-col w-[9.375rem] gap-2'
-            onClick={() => select(trackID)}
+            onClick={select}
 
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}

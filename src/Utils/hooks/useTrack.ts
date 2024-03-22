@@ -1,8 +1,9 @@
 // import { useState } from "react";
+import { useEffect } from "react";
 import { Track } from "../types/track";
 import useAPI from "./useAPI";
 
-const useTrack = () =>
+const useTrack = (selectedTrackID: string) =>
 {
     const track = useAPI<Track | null>("music/track/", 'get', null);
 
@@ -13,11 +14,18 @@ const useTrack = () =>
     {        
         track.reset()
     }
+
+    useEffect(() =>
+    {
+        if (selectedTrackID) 
+        {
+            selectTrack(selectedTrackID)
+        }
+    }, [selectedTrackID])
     
     return {
         value: track.data,
-
-        selectTrack, reset
+        reset
     }
 }
 

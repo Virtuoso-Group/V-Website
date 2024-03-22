@@ -24,12 +24,12 @@ const Synced = (props: Props) =>
             className=
             {`
                 z-[50] 
-                SD:h-full w-full overflow-scroll 
-                flex flex-col items-center 
+                SD:h-full w-full overflow-scroll no-scrollbar
+                flex flex-col
                 gap-10 
-                pt-[5rem] SD:pt-0 
-                pb-[calc(6.5rem+5rem)] SD:pb-0
                 SD:py-10
+                pt-[5rem] SD:pt-0 
+                pb-[calc(6.5rem+5rem)] SD:pb-0 
             `}
         >
             {

@@ -69,14 +69,14 @@ const PlayerControls = memo((props: PlayerControlsProps) =>
     return (
         <div  className={`${props.className}`}>
             <FaStepBackward 
-                className="fill-slate-300" 
+                className="fill-slate-300 cursor-pointer" 
                 size={sideButtonsSize?? "1rem"}
                 
                 onClick={controls.stepBackwards}
             />
 
             <MiddleButton 
-                className="fill-slate-300" 
+                className="fill-slate-300 cursor-pointer" 
                 size={middleButtonSize?? "1rem"}
                 playerState={playerState} 
 
@@ -84,7 +84,7 @@ const PlayerControls = memo((props: PlayerControlsProps) =>
             />
 
             <FaStepForward 
-                className="fill-slate-300" 
+                className="fill-slate-300 cursor-pointer" 
                 size={sideButtonsSize?? "1rem"} 
 
                 onClick={controls.stepForwards}
