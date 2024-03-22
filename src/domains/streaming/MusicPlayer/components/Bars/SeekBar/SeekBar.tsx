@@ -1,9 +1,10 @@
-import { memo, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useContext, useRef, useState } from "react";
 import Ball from "./Ball";
 
 import { motion } from "framer-motion";
 import { PlayerContext } from "../../../PlayerContext";
 import { useTrackTimestamp } from "../../../hooks/useTrackTimestamp";
+import useTrackPercentage from "../../../hooks/useTrackPercentage";
 
 
 interface SeekBarProps
@@ -13,30 +14,15 @@ interface SeekBarProps
 
 const SeekBar = memo((props: SeekBarProps) =>
 {
-    const { track, controls } = useContext(PlayerContext);
+    const { controls } = useContext(PlayerContext);
 
     const barContainerRef = useRef<HTMLDivElement>(null);
-    
     const barWidth = barContainerRef.current?.getBoundingClientRect().width??1;
 
     const [isDragging, setIsDragging] = useState<boolean>(false);
-    const [currentPercentage, setCurrentPercentage] = useState<number>(0)
-    const [ballPosition, setBallPosition] = useState<number>(currentPercentage/100 * barWidth??0);
-    
 
-    // TODO: put a useCallback, you don't want the useCurrentTimestamp to redefine itself
-    const updatePercentage = useCallback((timestamp: number) =>
-    {        
-        if (track.duration) 
-            setCurrentPercentage((timestamp / track.duration) * 100)
-    }, [track.duration])
-    
-    useEffect(() => 
-    {
-        const ballPosition = currentPercentage/100 * barWidth??0
-        
-        setBallPosition(ballPosition)
-    }, [currentPercentage, barWidth])
+    const percentage = useTrackPercentage();
+
     
     const seekWrapper = useCallback((clientX: number) =>
     {
@@ -67,8 +53,6 @@ const SeekBar = memo((props: SeekBarProps) =>
         seekWrapper(xPoint)
     }, [seekWrapper])
 
-
-    useTrackTimestamp(750, updatePercentage);
     
     return (
         <div 
@@ -78,13 +62,15 @@ const SeekBar = memo((props: SeekBarProps) =>
         >
             <motion.div 
                 className='absolute h-full bg-white'
-                animate={{ width: `${currentPercentage?? "0"}%` }}
+                animate={{ width: `${percentage}%` }}
                 transition={{  duration: 0.01, type: "tween", bounce: 0.25 }}
             />
         
             <Ball 
                 isDragging={isDragging}
-                ballPosition={ballPosition?? 0}
+                currentPercentage={percentage}
+                containerWidth={barWidth}
+
                 hold={hold}
                 release={release}
             />

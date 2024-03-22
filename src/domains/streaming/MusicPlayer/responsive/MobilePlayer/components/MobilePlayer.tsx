@@ -21,6 +21,11 @@ const MobilePlayer = (props: Props) =>
         overlay
     } = useContext(PlayerContext);
 
+
+    /* 
+        overflow-x-hidden prevents the ball from showing up and 
+        making the music player scrollable horizontally
+    */
     return (
         <section 
             className=
@@ -32,9 +37,9 @@ const MobilePlayer = (props: Props) =>
                 relative size-full 
                 flex flex-col 
                 
-                gap-5  
-
-                overflow-scroll
+                gap-5
+                
+                overflow-x-hidden
             `}
         >
             <MotionCoverArt

@@ -1,9 +1,12 @@
 import { motion } from "framer-motion"
+import { useEffect, useState } from "react";
 
 interface BallProps
 { 
-    ballPosition: number, 
+    currentPercentage: number,
+    containerWidth: number,
     isDragging: boolean,
+
 
     hold: () => void,
     release: (xPoint: number) => void
@@ -13,14 +16,31 @@ const Ball = (props: BallProps) =>
 {
     const 
     { 
-        isDragging, ballPosition, 
+        isDragging, 
+        currentPercentage, containerWidth,
 
         release, hold  
-    } = props;  
+    } = props; 
+    
+    const [ballPosition, setBallPosition] = useState<number>(currentPercentage/100 * containerWidth);
+
+    useEffect(() => 
+    {
+        console.log("Initial ball position: ", ballPosition);
+        
+    }, [])
+    
+
+    useEffect(() => 
+    {
+        const ballPosition = currentPercentage/100 * containerWidth??0
+        
+        setBallPosition(ballPosition)
+    }, [currentPercentage, containerWidth])
         
     return (
         <motion.div
-            layout
+            // layout
             className=
             {`
                 relative 
