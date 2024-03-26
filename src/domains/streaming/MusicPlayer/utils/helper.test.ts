@@ -16,6 +16,6 @@ describe.each(
 {
     test(`${milliseconds} milliseconds is ${expected}`, () => 
     {
-        expect(convertMillisecondsToTimestamp(2000)).toBe("0:02");
+        expect(convertMillisecondsToTimestamp(milliseconds)).toBe(expected);
     })
 })
