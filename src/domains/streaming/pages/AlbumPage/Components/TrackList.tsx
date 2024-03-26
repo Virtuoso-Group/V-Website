@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { convertMillisecondsToTimestamp } from "../../../../../Utils/helper";
+import { convertMillisecondsToTimestamp } from "../../../MusicPlayer/utils/helper";
 import { useWebsiteContext } from "../../../../../components/Organisms/WebsiteLayout";
 
 type AlbumTrackData =

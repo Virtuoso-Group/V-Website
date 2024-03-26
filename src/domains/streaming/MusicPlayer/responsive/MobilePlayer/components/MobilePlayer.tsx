@@ -34,7 +34,7 @@ const MobilePlayer = (props: Props) =>
                 
                 gap-5  
 
-                overflow-scroll
+                overflow-x-visible
             `}
         >
             <MotionCoverArt
