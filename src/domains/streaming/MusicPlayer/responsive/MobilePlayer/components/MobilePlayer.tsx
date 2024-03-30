@@ -5,6 +5,7 @@ import TimeInformation from "./TimeInformation";
 import PlayerControls from "../../../components/PlayerControls";
 import { MotionCoverArt } from "../../../../../../components/Atoms/CoverArt";
 import { PlayerContext } from "../../../PlayerContext";
+import AutoMarquee from "../../../../../../components/Atoms/Text/AutoMarquee";
 interface Props
 {
     className?: string,
@@ -45,11 +46,12 @@ const MobilePlayer = (props: Props) =>
                 loading={"eager"}
             />
 
-            <p className='flex flex-col'>
-                <span className='font-bold text-white text-2xl'>
-                    {track.title}
-                </span>
-
+            <p className='flex flex-col w-full overflow-hidden'>
+                <AutoMarquee 
+                    className='font-bold text-white text-2xl'
+                    text={track.title}
+                />
+                
                 <Link 
                     className='text-sm font-light text-slate-300'
                     to={`/artist/${artist._id}`}

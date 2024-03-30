@@ -6,6 +6,7 @@ import { BeatLoader } from "react-spinners";
 import Marquee from "react-fast-marquee";
 import { PlayerContext } from "../PlayerContext";
 import { PlayerState } from "../hooks/useMusicPlayer";
+import AutoMarquee from "../../../../components/Atoms/Text/AutoMarquee";
 
 interface Props
 {
@@ -58,16 +59,10 @@ const TrackInformation = memo((props: Props) =>
             </div>
 
             <p className='flex flex-col overflow-hidden w-fill'>
-                <Marquee 
-                    // key={""+isHover}
-                    play={mode === "mobile"}
-                    autoFill={false}
-                    speed={30}
-                >
-                    <span className='font-bold text-white text-lg'>
-                        {" "+track.title+" "}
-                    </span>
-                </Marquee>
+                <AutoMarquee 
+                    className='font-bold text-white text-lg'
+                    text={track.title}
+                />
                 
                 <span className="flex SD:hidden text-sm font-light align-middle text-slate-300">{artist.name}</span>
 
