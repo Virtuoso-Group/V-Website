@@ -74,7 +74,7 @@ const WebsiteLayout = () =>
     return (
         <main className={`min-h-screen min-w-[375px] w-screen flex flex-col `}>
             <WebsiteHeader 
-                className={`z-[99] top-0 sticky ${track.value && musicPlayerOverlay.isOn? "SD:bg-black": "bg-black"} ${websitePadding}`} 
+                className={`z-[99] top-0 sticky ${track.value && musicPlayerOverlay.isOn? "SD:bg-menuBackground": "bg-menuBackground"} ${websitePadding}`} 
                 start={<WebsiteLogo  onClick={musicPlayerOverlay.hide}/>} 
             />
 

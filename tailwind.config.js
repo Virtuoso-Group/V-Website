@@ -30,7 +30,8 @@ module.exports = {
       {
         "primary": "#11B4D4",
         "secondary": "#dc143c",
-        "background": "#1e293b"
+        "background": "#1e293b",
+        "menuBackground": "#000"
       },
       
       fontFamily:

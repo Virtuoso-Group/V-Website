@@ -20,15 +20,15 @@ const Footer = (props: FooterProps) =>
             className=
             {`
                 z-[80]
-                flex  fixed bottom-0  w-full pointer-events-auto
-                ${overlay.isOn? "SD:bg-black": "bg-black"}
+                  fixed bottom-0  w-full pointer-events-auto
+                ${overlay.isOn? "SD:bg-menuBackground": "bg-menuBackground"}
             `}
         >
-            <div className={`w-full`}>
+            
                 {!overlay.isOn && <ProgressBar className="flex" />}
 
                 <div className={`${websitePadding} w-full flex items-center justify-between h-[4rem] py-[2.5rem]`}>
-                    <div className="flex gap-2 w-[70%]">
+                    <div className="flex items-center gap-2 w-[70%]">
                         <ToggleTriangle {...overlay} />
                         
                         {
@@ -44,7 +44,6 @@ const Footer = (props: FooterProps) =>
 
                     <CloseButton onClick={closeMusicPlayer}/>
                 </div>
-            </div>
         </footer>
     )
 }

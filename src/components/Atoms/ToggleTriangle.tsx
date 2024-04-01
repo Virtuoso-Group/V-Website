@@ -13,19 +13,17 @@ const ToggleTriangle = memo((props: Props) =>
     const { isOn, toggle } = props;
     
     return (
-        <div className="flex items-center cursor-pointer">
-            <motion.div
-                className='w-fit h-fit flex items-center justify-center'
-                animate={{ rotate: isOn? 180: 0 }}
-                transition={{ duration: 0.125 }}
-                onClick={toggle}
-            >
-                <GoTriangleDown 
-                    className={`fill-white`}
-                    size={"2.25rem"}
-                />
-            </motion.div>
-        </div>
+        <motion.div
+            className='w-fit h-fit flex items-center justify-center cursor-pointer'
+            animate={{ rotate: isOn? 180: 0 }}
+            transition={{ duration: 0.125 }}
+            onClick={toggle}
+        >
+            <GoTriangleDown 
+                className={`fill-white`}
+                size={"2.25rem"}
+            />
+        </motion.div>
     )
 })
 

@@ -17,50 +17,51 @@ const Footer = (props: FooterProps) =>
 {
     const { overlay, closeMusicPlayer } = props;
 
-    // TODO: there must be some way to simplify this
+    // TODO: there must be some way to simplify this. Way too many divs, way too many containers.
     return (
         <footer 
             className=
-            {`
+            {` 
                 z-[80]
-                bg-black
+                bg-menuBackground
                 
-                fixed bottom-0 flex w-full pointer-events-auto
+                fixed bottom-0  w-full pointer-events-auto
             `}
         >
-            <div className={`w-full`}>
-                <SeekBar className={`flex`} />
+            <SeekBar className={`flex`} />
 
-                <div className={`${websitePadding} w-full flex items-center justify-between h-[4rem] py-[2.5rem]`}>
+            <div className={`${websitePadding} w-full grid grid-cols-3  content-center justify-between h-[4rem] py-[2.5rem]`}>
+                <div className="flex items-center gap-10">
                     <ToggleTriangle {...overlay} />
-                        
-                    <div className="grid grid-cols-3 content-center w-full h-full  px-20">
-                        <TrackInformation 
-                            className="justify-self-start flex gap-5 items-center"
-                            mode={"desktop"}
-                            showCoverArt={!overlay.isOn}
-                        />
 
-                        <PlayerControls 
-                            className="flex items-center justify-self-center h-full gap-10"
-                            
-                            middleButtonSize="2rem"
-                            sideButtonsSize="1.25rem"
-                        />
+                    <TrackInformation 
+                        className="flex gap-5 items-center"
+                        mode={"desktop"}
+                        showCoverArt={!overlay.isOn}
+                    />
+                </div>
+                
                     
-                        <TimeInformation 
+                <PlayerControls 
+                    className="bg-menuBackground flex justify-center justify-self-center items-center h-full w-fit gap-10"
+                    
+                    middleButtonSize="2rem"
+                    sideButtonsSize="1.25rem"
+                />
+
+                <div className="flex items-center gap-10 w-fit justify-self-end">
+                    <TimeInformation 
                             className=
                             {`
                                 flex items-center justify-center
-                                justify-self-end
+                                
                                 font-light text-gray-300
-                                text-xs
+                                text-sm
                             `}
                         />
-                    </div>
-
                     <CloseButton onClick={closeMusicPlayer}/>
                 </div>
+                
             </div>
         </footer>
     )
