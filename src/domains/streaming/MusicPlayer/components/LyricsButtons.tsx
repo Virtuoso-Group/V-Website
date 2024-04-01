@@ -2,6 +2,7 @@ import { MdLyrics } from "react-icons/md";
 import ButtonIcon from "../../../../components/Atoms/ButtonIcon";
 import { useContext } from "react";
 import { PlayerContext } from "../PlayerContext";
+import { websitePadding } from "../../../../config/style";
 
 
 const LyricsButtons = () =>
@@ -9,7 +10,7 @@ const LyricsButtons = () =>
     const { lyrics } = useContext(PlayerContext)
 
     return (
-        <div className='absolute top-0 flex right-0'>
+        <div className={`absolute top-0 flex right-0 ${websitePadding}`}>
             {
                 lyrics.value.status !== "Unavailable"
             &&
@@ -20,7 +21,7 @@ const LyricsButtons = () =>
                         flex items-center justify-center
 
                         size-[2.1875rem]
-                        m-4
+                        
                         
                         rounded-full bg-slate-300
                     `}

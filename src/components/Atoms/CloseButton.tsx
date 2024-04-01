@@ -7,7 +7,7 @@ const CloseButton = memo((props: { className?: string, onClick: () => void}) =>
     const { className, onClick } = props;
 
     return (
-        <div className={`w-fit h-fit flex items-center justify-center cursor-pointer ${className}`}>
+        <div className={` flex items-end  cursor-pointer ${className}`}>
             <IoIosClose 
                 className={`fill-white`} 
                 size={"2.25rem"} 
