@@ -24,7 +24,7 @@ const ArtistCard = forwardRef<HTMLElement, Props>((props, ref) =>
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
         >
-            <Avatar className='w-full' src={artist.image} title={artist.name} />
+            <Avatar className='w-full' src={artist.profilePhoto?? ""} title={artist.name} />
 
             <p className='max-w-full text-lg text-center text-white font-extrabold whitespace-nowrap  overflow-hidden'>
                 {artist.name}

@@ -54,7 +54,7 @@ export const ArtistPage = () =>
       <header className="SD:h-[15.625rem] flex gap-10 flex-col SD:flex-row">
         <Avatar
             className="w-full SD:h-full SD:w-auto" 
-            src={artistData? artistData.image: ""} 
+            src={artistData? artistData.profilePhoto??"": ""} 
             title={artistData? artistData.name: ""} 
           />
       

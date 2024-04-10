@@ -12,7 +12,7 @@ export type Artist =
 {
     _id: string
     name: string,
-    image: string,
+    profilePhoto?: string,
     releases: ArtistRelease[]
 }
 
