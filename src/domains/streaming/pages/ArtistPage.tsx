@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router"
-import { Artist, ArtistRelease } from "../../../Utils/types/track";
+import { ArtistPageData, ArtistRelease } from "../../../Utils/types/track";
 import Avatar from "../../../components/Atoms/Avatar";
 import useAPI from "../../../Utils/hooks/useAPI";
 import ArtistReleaseCard from "../../../components/Molecules/AlbumCard/ArtistAlbumCard";
@@ -28,7 +28,7 @@ export const ArtistPage = () =>
 {
   const { artistID } = useParams();
 
-  const artist = useAPI<Artist | null>("/music/artist/", "get", null);
+  const artist = useAPI<ArtistPageData | null>("/music/artist/", "get", null);
 
   useEffect(() => 
   {
@@ -54,12 +54,12 @@ export const ArtistPage = () =>
       <header className="SD:h-[15.625rem] flex gap-10 flex-col SD:flex-row">
         <Avatar
             className="w-full SD:h-full SD:w-auto" 
-            src={artistData? artistData.profilePhoto??"": ""} 
-            title={artistData? artistData.name: ""} 
+            src={artistData? artistData.personal.profilePhoto??"": ""} 
+            title={artistData? artistData.personal.name: ""} 
           />
       
         <h1 className="text-4xl text-white font-bold">
-          {artistData?._id? artistData.name: ""}
+          {artistData?.personal._id? artistData.personal.name: ""}
         </h1>
       </header>
 

@@ -8,11 +8,18 @@ export type ArtistRelease =
     released: string
 }
 
-export type Artist =
+export type ArtistInfo =
 {
     _id: string
     name: string,
     profilePhoto?: string,
+}
+
+export type ArtistsList = ArtistInfo[];
+
+export type ArtistPageData =
+{
+    personal: ArtistInfo
     releases: ArtistRelease[]
 }
 

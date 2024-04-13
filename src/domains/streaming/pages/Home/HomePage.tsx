@@ -6,7 +6,7 @@ import TracksSection from './Components/TracksSection';
 import ReleasesSection from './Components/AlbumsSection';
 import ArtistsSection from './Components/ArtistsSection';
 import useAPI from '../../../../Utils/hooks/useAPI';
-import { Artist, Release, Track } from '../../../../Utils/types/track';
+import { ArtistInfo, ArtistPageData, ArtistsList, Release, Track } from '../../../../Utils/types/track';
 import { websitePadding } from '../../../../config/style';
 
 const Categories: Category[] = 
@@ -29,7 +29,7 @@ const HomePage = memo(() =>
 
     const albumsAPI = useAPI<Release[]>("music/release/getAll", 'get', [])
 
-    const artistsAPI = useAPI<Artist[]>("music/artist/getAll", 'get', [])
+    const artistsAPI = useAPI<ArtistsList>("music/artist/getAll", 'get', [])
 
     useEffect(() => 
     { 

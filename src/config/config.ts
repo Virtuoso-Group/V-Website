@@ -3,7 +3,7 @@ const LOCAL_ADDRESS = process.env.REACT_APP_DEVICE_ADDRESS?? "http://localhost:4
 
 
 
-export const baseURLObj =
+export const serverURLObj =
 {
     local: LOCAL_ADDRESS,
     // TODO: You should move this to an environment variable
@@ -16,4 +16,5 @@ type Environment = 'local' | 'dev';
 
 const env: Environment = (process.env.REACT_APP_ENV as Environment)
 
-export const baseURL = baseURLObj[env]
+
+export const baseURL = serverURLObj[env]

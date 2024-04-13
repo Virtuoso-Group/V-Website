@@ -1,11 +1,11 @@
 import { forwardRef, useState } from 'react'
 
-import { Artist } from '../../Utils/types/track'
+import { ArtistInfo } from '../../Utils/types/track'
 import Avatar from '../Atoms/Avatar'
 
 type Props = 
 {
-    artist: Artist,
+    artist: ArtistInfo,
     onClick: () => void
 }
 

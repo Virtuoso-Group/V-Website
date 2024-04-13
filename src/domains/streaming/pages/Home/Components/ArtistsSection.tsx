@@ -1,11 +1,11 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import ArtistCard from '../../../../../components/Molecules/ArtistCard';
-import { Artist } from '../../../../../Utils/types/track';
+import { ArtistsList } from '../../../../../Utils/types/track';
 import { useNavigate } from 'react-router';
 
 const MotionArtistCard = motion(ArtistCard);
 
-const ArtistsSection = (props: { data: Artist[] }) => 
+const ArtistsSection = (props: { data: ArtistsList }) => 
 {
     const navigate = useNavigate();
 
