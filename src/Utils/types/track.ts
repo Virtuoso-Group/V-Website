@@ -26,24 +26,23 @@ export type ArtistPageData =
 export type Release = 
 { 
     _id: string,
-    artist: 
-    {
-        _id: string,
-        name: string   
-    },
+    artist: Artist,
     title: string, 
     coverArt: string,
 }
 
+
+type Artist = 
+{
+    _id: string,
+    name: string,
+}
 export type Track =
 {
     _id: string,
     title: string,
     artist: 
-    {
-        _id: string,
-        name: string,
-    },
+    Artist,
     release: 
     {
         _id: string
@@ -52,4 +51,23 @@ export type Track =
     },
 
     lyrics: LyricsObject,
+}
+
+
+export type PublishedTrack = 
+{
+    track: 
+    {
+        _id: string,
+        no: number,
+        title: string,
+    },
+    release: 
+    {
+        _id: string,
+        coverArt: string,
+        title: string,
+    },
+
+    artist: Artist
 }

@@ -30,8 +30,7 @@ const TrackCard = memo(forwardRef<HTMLElement, Props>((props, ref) =>
         >
             <CoverArt 
                 className={`rounded-lg w-full`}
-                name={title + " by "+artistName}
-                coverArt={coverArt?? ""} 
+                release={{ title: `${title} by ${artistName}`, coverArt }}
             />
 
             <div className='text-white flex flex-col overflow-hidden whitespace-nowrap'>

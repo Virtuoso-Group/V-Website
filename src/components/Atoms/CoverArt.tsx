@@ -3,21 +3,23 @@ import { motion } from 'framer-motion'
 
 interface Props
 {
-    className?: string, 
-    name: string, 
-    coverArt: string,
+    className?: string,
+    
+    release?: { title: string, coverArt: string },
+   
     loading?: "eager" | "lazy"
 }
 
+// TODO: Figure out a way to use default prop values
 const CoverArt = (props: Props) =>
 {
-    const { className, name, coverArt, loading } = props;
+    const { className, release, loading } = props;
 
     return (
         <img
             className={`grow-0 shrink-0 aspect-square object-fit ${className}`}
-            title={name} alt={name}
-            src={coverArt??""}
+            title={release?.title?? ""} alt={release?.title?? ""}
+            src={release?.coverArt?? ""}
             loading={loading?? "lazy"}
             
         />

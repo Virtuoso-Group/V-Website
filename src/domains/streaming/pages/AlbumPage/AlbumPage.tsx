@@ -4,47 +4,24 @@ import CoverArt from '../../../../components/Atoms/CoverArt';
 import useAPI from '../../../../Utils/hooks/useAPI';
 import TrackList from './Components/TrackList';
 import { websitePadding } from '../../../../config/style';
+import { AlbumPageData } from '../../../../Utils/types/album';
 
-type AlbumTrackData =
-{
-    _id: string,
-    no: number,
-    title: string,
-    duration: number
-}
-
-type AlbumPageData =
-{
-    _id: string,
-    coverArt: string,
-    title: string,
-    released: string,
-    tracks: AlbumTrackData[],
-
-    artist: 
-    {
-        _id: string,
-        name: string
-    },
-
-    duration: number
-}
 
 const AlbumPage = () => 
 {
     const { albumID } = useParams();
 
-    const release = useAPI<AlbumPageData | null>("/music/release/", "get", null);
+    const albumPage = useAPI<AlbumPageData | null>("/music/release/", "get", null);
 
     useEffect(() => 
     {
       if (albumID) 
       {
-        release.execute(albumID)
+        albumPage.execute(albumID)
       }
     }, [albumID])
   
-    const title = release.data? release.data.title: ""
+    const title = albumPage.data? albumPage.data.release.title: ""
         
     return (
         <div 
@@ -60,15 +37,14 @@ const AlbumPage = () =>
             <header className='z-[5] SD:sticky SD:top-[4rem] pt-[2rem] flex flex-col SD:flex-row gap-10 bg-background'>
                 <CoverArt 
                     className={`relative rounded-lg drop-shadow-2xl w-full SD:size-[9.375rem]`}
-                    name={title}
-                    coverArt={release.data?.coverArt??""} 
+                    release={albumPage.data?.release}
                 />
 
                 <h1 className="relative text-4xl text-white font-bold">{title}</h1>
             </header>
 
             <section className='w-full'>
-                <TrackList tracks={release.data?.tracks?? []}/>
+                <TrackList tracks={albumPage.data?.tracks?? []}/>
             </section>
         </div>
     )

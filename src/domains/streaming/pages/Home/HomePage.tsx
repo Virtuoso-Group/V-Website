@@ -6,8 +6,9 @@ import TracksSection from './Components/TracksSection';
 import ReleasesSection from './Components/AlbumsSection';
 import ArtistsSection from './Components/ArtistsSection';
 import useAPI from '../../../../Utils/hooks/useAPI';
-import { ArtistInfo, ArtistPageData, ArtistsList, Release, Track } from '../../../../Utils/types/track';
+import { ArtistInfo, ArtistPageData, ArtistsList, PublishedTrack, Release, Track } from '../../../../Utils/types/track';
 import { websitePadding } from '../../../../config/style';
+import { AlbumInfo } from '../../../../Utils/types/album';
 
 const Categories: Category[] = 
 [
@@ -25,9 +26,9 @@ const HomePage = memo(() =>
     
     const selectCategory = (index: number) => setSelectedCategory(Categories[index]);
 
-    const tracksAPI = useAPI<Track[]>("music/track/getAll", 'get', []);
+    const tracksAPI = useAPI<PublishedTrack[]>("music/track/getAll", 'get', []);
 
-    const albumsAPI = useAPI<Release[]>("music/release/getAll", 'get', [])
+    const albumsAPI = useAPI<AlbumInfo[]>("music/release/getAll", 'get', [])
 
     const artistsAPI = useAPI<ArtistsList>("music/artist/getAll", 'get', [])
 

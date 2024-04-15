@@ -1,30 +1,28 @@
 import ReleaseCard from '../../../../../components/Molecules/AlbumCard/AlbumCard'
-import { Release } from '../../../../../Utils/types/track'
-import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion';
+import { AlbumInfo } from '../../../../../Utils/types/album';
 
 const MotionReleaseCard = motion(ReleaseCard);
 
 
-const AlbumsSection = (props: { data: Release[]}) => 
+const AlbumsSection = (props: { data: AlbumInfo[]}) => 
 {
-    const navigate = useNavigate();
-
     return (
         <AnimatePresence>
            {
-                props.data.map((album, index) => 
+                props.data.map((releaseObj, index) => 
                 {
+                    const { release } = releaseObj;
+
                     return <MotionReleaseCard 
-                                key={"release/"+album._id} 
+                                key={"release/"+release._id} 
                                 initial={{ opacity: 0}}
 
                                 animate={{ opacity: 1 }}
 
                                 transition={{ duration: 0.05 * (index + 1)}}
 
-                                release={album} 
-                                onClick={() => navigate(`/album/${album._id}`)} 
+                                release={releaseObj} 
                             />
                 })
             }

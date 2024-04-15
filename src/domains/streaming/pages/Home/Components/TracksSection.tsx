@@ -1,12 +1,12 @@
 import TrackCard from '../../../../../components/Molecules/TrackCard';
 import { useWebsiteContext } from '../../../../../components/Organisms/WebsiteLayout';
 import {  motion } from 'framer-motion';
-import { Track } from '../../../../../Utils/types/track';
+import { PublishedTrack } from '../../../../../Utils/types/track';
 import { useEffect, useRef } from 'react';
 
 const MotionTrackCard = motion(TrackCard);
 
-const TracksSection = (props: { tracks: Track[] }) => 
+const TracksSection = (props: { tracks: PublishedTrack[] }) => 
 {
     const { createPlaylist } = useWebsiteContext();
 
@@ -16,7 +16,7 @@ const TracksSection = (props: { tracks: Track[] }) =>
 
     useEffect(() => 
     {
-        trackIDs.current = tracks.map(track => track._id);
+        trackIDs.current = tracks.map(track => track.track._id);
     }, [tracks])
 
 
@@ -27,8 +27,10 @@ const TracksSection = (props: { tracks: Track[] }) =>
     
     return (
         <>
-            {tracks.map((track, index) => 
+            {tracks.map((trackObj, index) => 
                 {
+                    const { track, artist, release } = trackObj;
+                    
                     return (
                         <MotionTrackCard 
                             key={"track/"+track._id}
@@ -38,8 +40,8 @@ const TracksSection = (props: { tracks: Track[] }) =>
 
                             trackID={track._id}
                             title={track.title}
-                            artistName={track.artist.name}
-                            coverArt={track.release.coverArt}
+                            artistName={artist.name}
+                            coverArt={release.coverArt}
 
                             select={() => selectTrack(index)}
                         />

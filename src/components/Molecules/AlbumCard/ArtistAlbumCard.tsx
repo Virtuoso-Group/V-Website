@@ -1,7 +1,7 @@
 
 import { useState } from 'react'
 
-import { ArtistRelease, Release } from '../../../Utils/types/track'
+import { ArtistRelease } from '../../../Utils/types/track'
 import AlbumCoverArt from './components/AlbumCoverArt'
 import AlbumName from './components/AlbumName'
 
@@ -27,7 +27,7 @@ const ArtistReleaseCard = (props: Props) =>
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
         >  
-            <AlbumCoverArt {...release} />
+            <AlbumCoverArt release={release} />
             
             <div className='text-white flex flex-col overflow-hidden whitespace-nowrap'>
                 <AlbumName isHover={isHover} title={release.title} />
