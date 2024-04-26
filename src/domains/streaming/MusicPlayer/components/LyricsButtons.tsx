@@ -7,12 +7,12 @@ import { websitePadding } from "../../../../config/style";
 
 const LyricsButtons = () =>
 {
-    const { lyrics } = useContext(PlayerContext)
+    const { lyricsObj, track } = useContext(PlayerContext)
 
     return (
         <div className={`absolute top-0 flex right-0 ${websitePadding}`}>
             {
-                lyrics.value.status !== "Unavailable"
+                (track.type === "instrumental" || lyricsObj.lyrics && lyricsObj.lyrics.status !== "Unavailable")
             &&
                 <ButtonIcon 
                     className=
@@ -28,7 +28,7 @@ const LyricsButtons = () =>
                     name='showLyrics'
                     icon={<MdLyrics size={"1rem"}/>}
 
-                    onClick={lyrics.toggle}
+                    onClick={lyricsObj.toggle}
                 />
             }
         </div>

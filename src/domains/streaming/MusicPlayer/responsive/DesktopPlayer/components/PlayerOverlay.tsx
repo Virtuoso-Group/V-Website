@@ -10,7 +10,7 @@ import LyricsButtons from "../../../components/LyricsButtons";
 
 const PlayerOverlay = () =>
 {
-    const { release } = useContext(PlayerContext);
+    const { release, track, lyricsObj: lyrics } = useContext(PlayerContext);
 
     return (
         <RemoveScroll>
@@ -47,16 +47,20 @@ const PlayerOverlay = () =>
                         loading={"eager"}
                     />
 
-                    <Lyrics 
-                        className=
-                        {`
-                            absolute 
-                            flex justify-center items-center 
-                            aspect-square
-                            h-full
-                            rounded-lg 
-                        `} 
-                    />
+                   {
+                        lyrics 
+                    && 
+                        <Lyrics 
+                            className=
+                            {`
+                                absolute 
+                                flex justify-center items-center 
+                                aspect-square
+                                h-full
+                                rounded-lg 
+                            `} 
+                        />
+                    }
 
                     <LyricsButtons />
                 </section>

@@ -24,4 +24,5 @@ export type UnsyncedLyrics =
 
 export type LyricsStatus = "Synced" | "Unsynced" | "Instrumental" | "Unavailable"
 
-export type LyricsObject = SyncedLyrics | UnsyncedLyrics | { status: "Unavailable" | "Instrumental" }
+export type UnavailableLyrics = { status: "Unavailable" }
+export type LyricsObject = SyncedLyrics | UnsyncedLyrics | UnavailableLyrics

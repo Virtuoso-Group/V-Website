@@ -10,7 +10,7 @@ import { websitePadding } from "../../../../../../config/style";
 
 const PlayerOverlay = () =>
 {
-    const { release } = useContext(PlayerContext);
+    const { release, track, lyricsObj: lyrics } = useContext(PlayerContext);
 
     return (
         <RemoveScroll>
@@ -42,7 +42,7 @@ const PlayerOverlay = () =>
                 >
                     <MobilePlayer className={"flex"} />
 
-                    <Lyrics className={"absolute w-full h-full"}/>
+                    <Lyrics className={"absolute w-full h-full"} />
                        
                     <LyricsButtons />
                 </section>

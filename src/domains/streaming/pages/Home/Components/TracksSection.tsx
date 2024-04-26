@@ -1,12 +1,12 @@
 import TrackCard from '../../../../../components/Molecules/TrackCard';
 import { useWebsiteContext } from '../../../../../components/Organisms/WebsiteLayout';
 import {  motion } from 'framer-motion';
-import { PublishedTrack } from '../../../../../Utils/types/track';
+import { SimplePublishedTrack } from '../../../../../Utils/types/track';
 import { useEffect, useRef } from 'react';
 
 const MotionTrackCard = motion(TrackCard);
 
-const TracksSection = (props: { tracks: PublishedTrack[] }) => 
+const TracksSection = (props: { tracks: SimplePublishedTrack[] }) => 
 {
     const { createPlaylist } = useWebsiteContext();
 

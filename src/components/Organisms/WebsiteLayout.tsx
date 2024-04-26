@@ -86,7 +86,7 @@ const WebsiteLayout = () =>
                 track.value 
             && 
                 <MusicPlayer 
-                    track={track.value} 
+                    publishedTrack={track.value} 
                     
                     overlay={musicPlayerOverlay}
                     close={track.reset} 

@@ -1,4 +1,4 @@
-import { Track } from "../../../Utils/types/track";
+import { PublishedTrack } from "../../../Utils/types/track";
 
 import  { Overlay } from "../../../Utils/hooks/useOverlay";
 import { PlayerContextProvider } from "./PlayerContext";
@@ -18,7 +18,8 @@ import DesktopView from "./responsive/DesktopPlayer/DesktopView";
 
 interface Props
 {
-    track: Track,
+    // TODO: I don't think the name is appropriate. The music player ought to be generic.
+    publishedTrack: PublishedTrack,
 
     overlay: Overlay,
     close: () => void,

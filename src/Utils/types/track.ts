@@ -1,4 +1,6 @@
-import { LyricsObject } from "./lyrics"
+import { SimpleRelease } from "./album"
+import { SimpleArtist } from "./artist"
+import { LyricsObject, SyncedLyrics, UnavailableLyrics, UnsyncedLyrics } from "./lyrics"
 
 export type ArtistRelease =
 {
@@ -23,26 +25,11 @@ export type ArtistPageData =
     releases: ArtistRelease[]
 }
 
-export type Release = 
-{ 
-    _id: string,
-    artist: Artist,
-    title: string, 
-    coverArt: string,
-}
-
-
-type Artist = 
-{
-    _id: string,
-    name: string,
-}
 export type Track =
 {
     _id: string,
     title: string,
-    artist: 
-    Artist,
+    artist: SimpleArtist,
     release: 
     {
         _id: string
@@ -53,21 +40,30 @@ export type Track =
     lyrics: LyricsObject,
 }
 
+type SimpleTrack = { _id: string, no: number, title: string }
+
+export type SimplePublishedTrack = 
+{
+    track: SimpleTrack,
+    release: SimpleRelease,
+    artist: SimpleArtist
+}
+
+export type TrackWithType = 
+{
+    _id: string,
+    title: string,
+    duration: number,
+    type: "song" | "instrumental"
+}
 
 export type PublishedTrack = 
 {
-    track: 
-    {
-        _id: string,
-        no: number,
-        title: string,
-    },
-    release: 
-    {
-        _id: string,
-        coverArt: string,
-        title: string,
-    },
+    track: TrackWithType,
 
-    artist: Artist
+    release: SimpleRelease,
+
+    artist: SimpleArtist,
+    
+    lyrics?: SyncedLyrics | UnsyncedLyrics | UnavailableLyrics
 }

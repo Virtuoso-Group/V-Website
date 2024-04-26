@@ -1,38 +1,26 @@
-import { RefObject, createContext, createRef, useCallback, useState } from "react"
+import { RefObject, createContext, createRef, useCallback, useEffect, useState } from "react"
 import useMusicPlayer, { PlayerState } from "./hooks/useMusicPlayer"
-import { Track } from "../../../Utils/types/track"
+import { PublishedTrack, TrackWithType } from "../../../Utils/types/track"
 import { Overlay, defaultValue } from "../../../Utils/hooks/useOverlay"
 import { baseURL } from "../../../config/config"
 import { LyricsObject } from "../../../Utils/types/lyrics"
+import { SimpleArtist } from "../../../Utils/types/artist"
+import { SimpleRelease } from "../../../Utils/types/album"
 
 // TODO: this is turning into a God module. Something has to change...
 type PlayerContextType = 
 {
     audioRef: RefObject<HTMLAudioElement>,
     
-    artist:
-    {
-        _id: string,
-        name: string
-    },
+    artist: SimpleArtist,
 
-    release:
-    {
-        _id: string, 
-        title: string, 
-        coverArt: string
-    },
+    release: SimpleRelease,
 
-    track:
-    {
-        _id: string,
-        title: string,
-        duration: number
-    },
+    track: TrackWithType,
 
-    lyrics:
+    lyricsObj:
     {
-        value: LyricsObject,
+        lyrics?: LyricsObject,
             
         areVisible: boolean,
             
@@ -83,12 +71,13 @@ export const PlayerContext = createContext<PlayerContextType>(
     {
         _id: "",
         title: "",
-        duration: 0
+        duration: 0,
+        type: "instrumental"
     },
 
-    lyrics:
+    lyricsObj:
     {
-        value: { status: "Unavailable" },
+        lyrics: { status: "Unavailable" },
         areVisible: false,
         toggle: () => {}
     },
@@ -114,7 +103,7 @@ export const PlayerContext = createContext<PlayerContextType>(
 interface Props 
 {
 
-    track: Track,
+    publishedTrack: PublishedTrack,
 
     overlay: Overlay,
 
@@ -127,21 +116,28 @@ interface Props
 
 export const PlayerContextProvider = (props: Props) => 
 {
-    const { track, overlay, close, goNext, goPrevious } = props
+    const { publishedTrack, overlay, close, goNext, goPrevious } = props
 
     const 
     { 
-        playerState, audioControls, duration, 
+        playerState, audioControls, 
 
         initialize, seekPercentage, seekTimestamp, reset, 
-    } = useMusicPlayer(track._id);
+    } = useMusicPlayer(publishedTrack.track._id);
     
 
+    // TODO: implement double click and single click (reset, go previous)
     const stepBackwards = useCallback(() => { goPrevious() }, [goPrevious])
 
     const stepForwards = useCallback(() => { goNext()  }, [goNext])
 
     const [areLyricsVisible, setLyricsVisibility] = useState<boolean>(false);
+    
+    useEffect(() => 
+    {
+        setLyricsVisibility(false)
+    }, [publishedTrack.track._id])
+    
 
     const toggleLyrics = useCallback(() => setLyricsVisibility(value => !value), []);
 
@@ -151,18 +147,30 @@ export const PlayerContextProvider = (props: Props) =>
         {{ 
             audioRef: audioControls.ref,
 
-            artist: { ...track.artist },
+            artist: publishedTrack.artist,
 
-            release: { ...track.release},
+            release: publishedTrack.release,
 
-            track: { ...track, duration: duration.value },
+            track: publishedTrack.track,
 
-            lyrics:
+
+            
+            lyricsObj:
             {
-                value: track.lyrics,
+                // lyrics: publishedTrack.lyrics,
+
+                ...(
+                    publishedTrack.lyrics
+                ?
+                    {lyrics: publishedTrack.lyrics}:
+                    {}
+                ),
+                    
                 areVisible: areLyricsVisible,
                 toggle: toggleLyrics
-            },
+            }
+                
+           ,
 
             overlay,
 
@@ -183,11 +191,11 @@ export const PlayerContextProvider = (props: Props) =>
         }}
     >
         <audio 
-            key={track._id}
-            title={track.title}
+            key={publishedTrack.track._id}
+            title={publishedTrack.track.title}
             ref={audioControls.ref}
             controlsList="nodownload noplaybackrate"
-            src={`${baseURL}/music/track/play/${track._id}`}
+            src={`${baseURL}/music/track/play/${publishedTrack.track._id}`}
             onLoadedMetadata={e => 
             {
                 const showMediaSession = () =>
@@ -196,10 +204,10 @@ export const PlayerContextProvider = (props: Props) =>
 
                     navigator.mediaSession.metadata = new MediaMetadata
                     ({
-                        title: track.title,
-                        artist: track.artist.name,
-                        album: track.release.title,
-                        artwork: [{ src: track.release.coverArt }],
+                        title: publishedTrack.track.title,
+                        artist: publishedTrack.artist.name,
+                        album: publishedTrack.release.title,
+                        artwork: [{ src: publishedTrack.release.coverArt }],
                     });
                 }
 

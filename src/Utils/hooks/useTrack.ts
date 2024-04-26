@@ -1,11 +1,11 @@
 // import { useState } from "react";
 import { useEffect } from "react";
-import { Track } from "../types/track";
+import { PublishedTrack } from "../types/track";
 import useAPI from "./useAPI";
 
 const useTrack = (selectedTrackID: string) =>
 {
-    const track = useAPI<Track | null>("music/track/", 'get', null);
+    const track = useAPI<PublishedTrack | null>("music/track/", 'get', null);
 
     const selectTrack = (trackID: string) => track.execute(trackID);
     

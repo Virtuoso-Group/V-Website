@@ -1,9 +1,10 @@
-import { LyricsStatus, SyncedLyrics, UnsyncedLyrics } from '../../../../../Utils/types/lyrics'
+import { useContext } from 'react';
+
 import Synced from './components/Synced/Synced';
 import FormattedLyrics from './components/Formatted';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Instrumental } from './components/Instrumental';
-import { ReactElement, useContext } from 'react';
+
 import { PlayerContext } from '../../PlayerContext';
 import { websitePadding } from '../../../../../config/style';
 
@@ -15,23 +16,12 @@ interface Props
 
 const Lyrics = (props: Props) => 
 {
-    const { lyrics } = useContext(PlayerContext)
-
-    const LyricsObj: { [index in LyricsStatus]: ReactElement } =
-    {
-        "Synced": <Synced lines={(lyrics.value as SyncedLyrics).value} />,
-
-        "Unsynced": <FormattedLyrics lyrics={(lyrics.value as UnsyncedLyrics).value} />,
-
-        "Instrumental": <Instrumental />,
-
-        "Unavailable": <></>
-    }
+    const { track, lyricsObj } = useContext(PlayerContext);
 
     return (
         <AnimatePresence>
             {
-                lyrics.value.status !== "Unavailable" && lyrics.areVisible 
+                lyricsObj.areVisible 
             &&
                 <motion.div 
                     layout
@@ -54,10 +44,29 @@ const Lyrics = (props: Props) =>
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
                 >
-                    {LyricsObj[lyrics.value.status]}
+
+                    {/* TODO: I need to refactor the hell outta this. It's ugly */}
+                    {
+                        track.type === "instrumental"
+                    ?
+                        <Instrumental />
+                    :
+                        lyricsObj.lyrics
+                    ?
+                        lyricsObj.lyrics.status === "Synced"
+                    ?
+                        <Synced lines={lyricsObj.lyrics.value} />
+                    :
+                        lyricsObj.lyrics.status === "Unsynced"
+                    ? 
+                        <FormattedLyrics lyrics={lyricsObj.lyrics.value} />
+                    :
+                        <></>
+                    :
+                        <></>
+                    }
                 </motion.div>
             }
-
         </AnimatePresence>
     )
 }

@@ -8,6 +8,12 @@ type Track =
 
 type Artist = { _id: string, name: string };
 
+export type SimpleRelease =
+{ 
+    _id: string, 
+    title: string, 
+    coverArt: string,
+}
 
 export type AlbumInfo =
 {

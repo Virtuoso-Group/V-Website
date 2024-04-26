@@ -1,0 +1,1 @@
+export type SimpleArtist = { _id: string, name: string };
