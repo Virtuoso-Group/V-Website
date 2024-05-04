@@ -2,7 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
 
 import WebsiteLayout from './components/Organisms/WebsiteLayout';
-import streamingRoutes from './domains/streaming/routes';
+import StreamingRoutes from './domains/streaming/routes';
 
 /* TODO: 
     once this array gets too large, it will be a good idea to split the website into 
@@ -20,7 +20,7 @@ const router = createBrowserRouter(
     
     element: <WebsiteLayout />,
 
-    children: [...streamingRoutes]
+    children: [...StreamingRoutes]
   }
 ])
 

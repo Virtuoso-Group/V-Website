@@ -3,7 +3,7 @@ import HomePage from './pages/Home/HomePage';
 import ArtistPage from './pages/ArtistPage';
 import AlbumPage from './pages/AlbumPage/AlbumPage';
 
-const streamingRoutes: RouteObject[] =
+const StreamingRoutes: RouteObject[] =
 [
     { index: true, element: <Navigate replace to={"home"} />},
 
@@ -15,4 +15,4 @@ const streamingRoutes: RouteObject[] =
 ]
 
 
-export default streamingRoutes;
+export default StreamingRoutes;

@@ -1,12 +1,11 @@
 import { memo, useContext } from "react";
-import { Link } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { MotionCoverArt } from "../../../../components/Atoms/CoverArt";
 import { BeatLoader } from "react-spinners";
-import Marquee from "react-fast-marquee";
 import { PlayerContext } from "../PlayerContext";
 import { PlayerState } from "../hooks/useMusicPlayer";
 import AutoMarquee from "../../../../components/Atoms/Text/AutoMarquee";
+import Link from "../../../../components/Atoms/Text/Link";
 
 interface Props
 {
@@ -31,9 +30,6 @@ const TrackInformation = memo((props: Props) =>
                 {`
                     z-[99] relative 
                     aspect-square size-[3.125rem] 
-                      
-
-                    
                     flex items-center justify-center 
                 `}
             >
@@ -78,22 +74,30 @@ const TrackInformation = memo((props: Props) =>
                 } 
             </div>
 
-            <p className='flex flex-col overflow-hidden w-fill'>
+            <section className='flex flex-col overflow-hidden w-fill'>
                 <AutoMarquee 
                     className='font-bold text-white text-lg'
                     text={track.title}
                 />
                 
-                <span className="flex SD:hidden text-sm font-light align-middle text-slate-300">{artist.name}</span>
+                <p className="flex SD:hidden text-sm font-light align-middle text-slate-300">{artist.name}</p>
 
-                <span className='hidden SD:flex gap-1 text-sm font-light align-middle text-slate-300'>
-                    <Link to={`/artist/${artist._id}`} onClick={overlay.hide}>{artist.name}</Link>
+                <section className='hidden SD:flex gap-1 text-sm font-light align-middle text-slate-300'>
+                    <Link 
+                        to={`/artist/${artist._id}`} 
+                        text={artist.name}
+                        onClick={overlay.hide}  
+                    />
 
-                    <span className="hidden SD:flex">•</span> 
+                    <span>•</span> 
                     
-                    <Link className="hidden SD:flex" to={`/album/${release._id}`} onClick={overlay.hide}>{release.title}</Link>
-                </span>
-            </p>
+                    <Link 
+                        to={`/album/${release._id}`}
+                        text={release.title}
+                        onClick={overlay.hide}  
+                    />
+                </section>
+            </section>
         </div>
     )
 })

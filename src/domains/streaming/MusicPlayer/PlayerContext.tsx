@@ -152,8 +152,6 @@ export const PlayerContextProvider = (props: Props) =>
             release: publishedTrack.release,
 
             track: publishedTrack.track,
-
-
             
             lyricsObj:
             {
