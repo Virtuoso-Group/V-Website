@@ -20,12 +20,18 @@ const AlbumTrack = (props: AlbumTrackProps) =>
 {
     const { track, selectTrack } = props;
 
+    const { selectedtrack } = useWebsiteContext();
+
+    const isPlaying = selectedtrack?.trackID === track._id;
+
+    const isPlayingStyle = isPlaying? "text-secondary":null;
+
     return (
         <tr
-            className="text-white select-none cursor-pointer w-full border-b border-slate-700 last:border-none"
+            className={`${isPlayingStyle?? "text-white"} select-none cursor-pointer w-full border-b border-slate-700 last:border-none`}
             onClick={selectTrack}
         >
-            <td className="text-gray-300 py-2">{track.no}</td>
+            <td className={`${isPlayingStyle?? "text-gray-300"} py-2`}>{track.no}</td>
 
             <td className="font-bold w-2 py-2">{track.title}</td>
 

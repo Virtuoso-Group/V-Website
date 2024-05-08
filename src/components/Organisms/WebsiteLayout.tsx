@@ -49,6 +49,13 @@ const WebsiteLogo = (props: Props) =>
 }
 type WebsiteContext = 
 { 
+    selectedtrack?:
+    {
+        trackID: string,
+        albumID: string,
+        artistID: string
+    },
+
     createPlaylist: (trackIDs: string[], index: number) => void,
 }
 
@@ -63,23 +70,41 @@ const WebsiteLayout = () =>
     
     useEffect(() => 
     { 
-       const root =  document.documentElement;
+        const root =  document.documentElement;
 
-       root.style.setProperty("--base-font-size","16px")
+        root.style.setProperty("--base-font-size","16px")
        
         return () => { track.reset() }
     }, []);
 
-
+    const trackInfo = 
+        track.value
+    ?
+        {
+            trackID: track.value.track._id,
+            albumID: track.value.release._id,
+            artistID: track.value.artist._id
+        }
+    : 
+        undefined;
+    
     return (
-        <main className={`min-h-screen min-w-[375px] w-screen flex flex-col `}>
+        <main className={`min-h-screen min-w-[375px] w-screen flex flex-col`}>
             <WebsiteHeader 
                 className={`z-[99] top-0 sticky ${track.value && musicPlayerOverlay.isOn? "SD:bg-menuBackground": "bg-menuBackground"} ${websitePadding}`} 
-                start={<WebsiteLogo  onClick={musicPlayerOverlay.hide}/>} 
+                start={<WebsiteLogo onClick={musicPlayerOverlay.hide}/>} 
             />
 
             <div className={`min-h-full w-full  ${track.value? "pb-[9rem]": "pb-[2rem]"} `}>
-                <Outlet context={{ createPlaylist } satisfies WebsiteContext} />
+                <Outlet 
+                    context=
+                    {
+                        { 
+                            selectedtrack: trackInfo,
+                            createPlaylist 
+                        } satisfies WebsiteContext
+                    } 
+                />
             </div>
             
             {

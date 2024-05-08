@@ -17,12 +17,7 @@ export type SimpleRelease =
 
 export type AlbumInfo =
 {
-    release: 
-    { 
-        _id: string,
-        coverArt: string,
-        title: string
-    },
+    release: SimpleRelease,
     artist: Artist
 }
 

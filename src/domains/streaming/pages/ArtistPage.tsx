@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useParams } from "react-router"
 import { ArtistPageData, ArtistRelease } from "../../../Utils/types/track";
-import Avatar from "../../../components/Atoms/Avatar";
 import useAPI from "../../../Utils/hooks/useAPI";
 import ArtistReleaseCard from "../../../components/Molecules/AlbumCard/ArtistAlbumCard";
 import { useNavigate } from "react-router-dom";
 import { websitePadding } from "../../../config/style";
+import ArtistAvatar from "../../../components/Atoms/Avatar/ArtistAvatar";
 
 const ArtistAlbums = (props: { releases: ArtistRelease[] }) =>
 {
@@ -52,12 +52,11 @@ export const ArtistPage = () =>
     >
       {/* Basic artist info */}
       <header className="SD:h-[15.625rem] flex gap-10 flex-col SD:flex-row">
-        <Avatar
-            className="w-full SD:h-full SD:w-auto" 
-            src={artistData? artistData.personal.profilePhoto??"": ""} 
-            title={artistData? artistData.personal.name: ""} 
+          <ArtistAvatar 
+            className="w-full SD:h-full SD:w-auto"  
+            artist={artistData? artistData.personal: { _id: "", name: "", profilePhoto: "" }}
           />
-      
+
         <h1 className="text-4xl text-white font-bold">
           {artistData?.personal._id? artistData.personal.name: ""}
         </h1>

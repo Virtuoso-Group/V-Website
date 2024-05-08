@@ -8,6 +8,7 @@ import { AlbumPageData } from '../../../../Utils/types/album';
 import moment from 'moment';
 import { SimpleArtist } from '../../../../Utils/types/artist';
 import Link from '../../../../components/Atoms/Text/Link';
+import { useWebsiteContext } from '../../../../components/Organisms/WebsiteLayout';
 
 
 // TODO: refactor this later. It needs to accomidate Arabic at some point. It looks ugly!
@@ -77,7 +78,13 @@ const AlbumPage = () =>
         releasePage.execute(albumID)
     }, [albumID])
   
-    const tracks = releasePage.data?.tracks?? []
+    const tracks = releasePage.data?.tracks?? [];
+
+    const { selectedtrack } = useWebsiteContext();
+
+    const isPlaying = selectedtrack?.albumID === releasePage.data?._id;
+
+    const isPlayingStyle = isPlaying? "border-secondary border-[0.1rem]":"";
 
     return (
         <div 
@@ -92,12 +99,9 @@ const AlbumPage = () =>
         >
             <header className='z-[5] SD:sticky SD:top-[4rem] pt-[2rem] flex flex-col SD:flex-row gap-10 bg-background'>
                 <CoverArt 
-                    className={`relative rounded-lg drop-shadow-2xl w-full SD:size-[12rem]`}
+                    className={`relative rounded-lg drop-shadow-2xl w-full SD:size-[12rem] ${isPlayingStyle}`}
                     release={releasePage.data?.release}
                 />
-
-                {/* TODO: Come up with a name for this section */}
-                {/* Summary might be good! */}
 
                 {
                     releasePage.data

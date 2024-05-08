@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { useEffect } from "react";
 import { PublishedTrack } from "../types/track";
 import useAPI from "./useAPI";
@@ -18,9 +17,7 @@ const useTrack = (selectedTrackID: string) =>
     useEffect(() =>
     {
         if (selectedTrackID) 
-        {
             selectTrack(selectedTrackID)
-        }
     }, [selectedTrackID])
     
     return {

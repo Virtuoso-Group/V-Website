@@ -1,6 +1,7 @@
 import { forwardRef, memo, useState } from 'react'
 import CoverArt from '../Atoms/CoverArt';
 import Marquee from 'react-fast-marquee';
+import { useWebsiteContext } from '../Organisms/WebsiteLayout';
 
 type Props = 
 { 
@@ -15,9 +16,16 @@ type Props =
 
 const TrackCard = memo(forwardRef<HTMLElement, Props>((props, ref) => 
 {
-    const { title, artistName, coverArt, select } = props;
+    const { trackID, title, artistName, coverArt, select } = props;
 
     const [isHover, setHover] = useState<boolean>(false)
+
+
+    const { selectedtrack } = useWebsiteContext();
+
+    const isPlaying = selectedtrack?.trackID === trackID;
+
+    const isPlayingStyle = isPlaying? "border-secondary border-[0.1rem]":"";
 
     return (
         <article 
@@ -29,7 +37,7 @@ const TrackCard = memo(forwardRef<HTMLElement, Props>((props, ref) =>
             onMouseLeave={() => setHover(false)}
         >
             <CoverArt 
-                className={`rounded-lg w-full`}
+                className={`rounded-lg w-full ${isPlayingStyle}`}
                 release={{ title: `${title} by ${artistName}`, coverArt }}
             />
 

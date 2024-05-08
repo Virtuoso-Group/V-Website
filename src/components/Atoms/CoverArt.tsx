@@ -21,7 +21,6 @@ const CoverArt = (props: Props) =>
             title={release?.title?? ""} alt={release?.title?? ""}
             src={release?.coverArt?? ""}
             loading={loading?? "lazy"}
-            
         />
     )
 }

@@ -5,7 +5,7 @@ const Chip = (props: { isSelected: boolean, text: string, select: () => void }) 
             className=
             {`
                 h-fit px-4 py-2 rounded-xl 
-                ${props.isSelected? "bg-[#dc143c]":"bg-[#990000]"} 
+                ${props.isSelected? "bg-secondary":"bg-[#990000]"} 
                 text-sm text-white 
                 select-none cursor-pointer
             `}

@@ -1,6 +1,7 @@
 import React from 'react'
 
 // TODO: this component should have a default value
+// Maybe not? There is an Artist Avatar component. That one definitely needs a default image.
 interface Props
 {   
     className?: string,

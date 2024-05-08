@@ -1,7 +1,7 @@
 import { forwardRef, useState } from 'react'
 
 import { ArtistInfo } from '../../Utils/types/track'
-import Avatar from '../Atoms/Avatar'
+import ArtistAvatar from '../Atoms/Avatar/ArtistAvatar'
 
 type Props = 
 {
@@ -18,13 +18,14 @@ const ArtistCard = forwardRef<HTMLElement, Props>((props, ref) =>
     return (
         <article
             ref={ref}
-            className='flex cursor-pointer flex-col w-[9.375rem] gap-4 items-center '
+            className={`flex cursor-pointer flex-col w-[9.375rem] gap-4 items-center`}
             onClick={onClick}
 
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
         >
-            <Avatar className='w-full' src={artist.profilePhoto?? ""} title={artist.name} />
+        
+            <ArtistAvatar className='w-full' artist={artist} />
 
             <p className='max-w-full text-lg text-center text-white font-extrabold whitespace-nowrap  overflow-hidden'>
                 {artist.name}

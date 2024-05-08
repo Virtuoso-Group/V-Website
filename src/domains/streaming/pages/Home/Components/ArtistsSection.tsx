@@ -24,6 +24,7 @@ const ArtistsSection = (props: { data: ArtistsList }) =>
                             transition={{ duration: 0.05 * (index + 1)}}
 
                             artist={artist}
+
                             onClick={() => { navigate(`/artist/${artist._id}`) }}
                         />
                     )
