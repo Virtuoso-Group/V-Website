@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { ArtistRelease } from '../../../Utils/types/track'
 import AlbumCoverArt from './components/AlbumCoverArt'
-import AlbumName from './components/AlbumName'
+import VMarquee from '../../Atoms/Text/VMarquee'
 
 type Props = 
 {
@@ -30,7 +30,11 @@ const ArtistReleaseCard = (props: Props) =>
             <AlbumCoverArt release={release} />
             
             <div className='text-white flex flex-col overflow-hidden whitespace-nowrap'>
-                <AlbumName isHover={isHover} title={release.title} />
+                <VMarquee 
+                    childStyle='text-lgn font-extrabold pe-10'
+                    setting={{ type: "hover", isHover }}
+                    text={release.title} 
+                />
             </div>
         </article>
     )

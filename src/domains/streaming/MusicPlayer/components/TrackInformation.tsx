@@ -4,8 +4,8 @@ import { MotionCoverArt } from "../../../../components/Atoms/CoverArt";
 import { BeatLoader } from "react-spinners";
 import { PlayerContext } from "../PlayerContext";
 import { PlayerState } from "../hooks/useMusicPlayer";
-import AutoMarquee from "../../../../components/Atoms/Text/AutoMarquee";
 import Link from "../../../../components/Atoms/Text/Link";
+import VMarquee from "../../../../components/Atoms/Text/VMarquee";
 
 interface Props
 {
@@ -75,8 +75,13 @@ const TrackInformation = memo((props: Props) =>
             </div>
 
             <section className='flex flex-col overflow-hidden w-fill'>
-                <AutoMarquee 
+                {/* <AutoMarquee 
                     className='font-bold text-white text-lg'
+                    text={track.title}
+                /> */}
+
+                <VMarquee 
+                    containerStyle='font-bold text-white text-lg'
                     text={track.title}
                 />
                 

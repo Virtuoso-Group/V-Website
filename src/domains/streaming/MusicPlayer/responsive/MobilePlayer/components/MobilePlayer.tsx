@@ -5,7 +5,7 @@ import TimeInformation from "./TimeInformation";
 import PlayerControls from "../../../components/PlayerControls";
 import { MotionCoverArt } from "../../../../../../components/Atoms/CoverArt";
 import { PlayerContext } from "../../../PlayerContext";
-import AutoMarquee from "../../../../../../components/Atoms/Text/AutoMarquee";
+import VMarquee from "../../../../../../components/Atoms/Text/VMarquee";
 interface Props
 {
     className?: string,
@@ -46,9 +46,9 @@ const MobilePlayer = (props: Props) =>
                 loading={"eager"}
             />
 
-            <p className='flex flex-col w-full overflow-hidden'>
-                <AutoMarquee 
-                    className='font-bold text-white text-2xl'
+            <section className='flex flex-col w-full overflow-hidden'>
+                <VMarquee 
+                    containerStyle='font-bold text-white text-2xl'
                     text={track.title}
                 />
                 
@@ -60,7 +60,7 @@ const MobilePlayer = (props: Props) =>
                 >
                     {artist.name}
                 </Link>
-            </p>
+            </section>
 
             <div className='flex flex-col gap-2'>
                 <SeekBar />

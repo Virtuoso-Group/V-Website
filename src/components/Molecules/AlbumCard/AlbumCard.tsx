@@ -2,9 +2,9 @@
 import { useState } from 'react'
 
 import AlbumCoverArt from './components/AlbumCoverArt'
-import AlbumName from './components/AlbumName'
 import { AlbumInfo } from '../../../Utils/types/album'
 import { useNavigate } from 'react-router-dom'
+import VMarquee from '../../Atoms/Text/VMarquee'
 
 type Props = 
 {
@@ -29,7 +29,11 @@ const ReleaseCard = (props: Props) =>
             <AlbumCoverArt release={release.release} />
             
             <div className='text-white flex flex-col overflow-hidden whitespace-nowrap'>
-                <AlbumName isHover={isHover} title={release.release.title} />
+                <VMarquee 
+                    childStyle='text-lgn font-extrabold pe-10'
+                    setting={{ type: "hover", isHover }}
+                    text={release.release.title} 
+                />
 
                 <span className='text-md'>{release.artist.name}</span>
             </div>

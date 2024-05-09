@@ -1,7 +1,7 @@
 import { forwardRef, memo, useState } from 'react'
 import CoverArt from '../Atoms/CoverArt';
-import Marquee from 'react-fast-marquee';
 import { useWebsiteContext } from '../Organisms/WebsiteLayout';
+import VMarquee from '../Atoms/Text/VMarquee';
 
 type Props = 
 { 
@@ -19,7 +19,6 @@ const TrackCard = memo(forwardRef<HTMLElement, Props>((props, ref) =>
     const { trackID, title, artistName, coverArt, select } = props;
 
     const [isHover, setHover] = useState<boolean>(false)
-
 
     const { selectedtrack } = useWebsiteContext();
 
@@ -42,13 +41,11 @@ const TrackCard = memo(forwardRef<HTMLElement, Props>((props, ref) =>
             />
 
             <div className='text-white flex flex-col overflow-hidden whitespace-nowrap'>
-                <Marquee 
-                    key={""+isHover}
-                    play={isHover}
-                    autoFill={false}
-                >
-                    <span className='text-lgn font-extrabold pe-10'>{title}</span>
-                </Marquee>
+                <VMarquee 
+                    childStyle='text-lgn font-extrabold pe-10'
+                    setting={{ type: "hover", isHover}}
+                    text={title} 
+                />
 
                 <span className='text-md'>{artistName}</span>
             </div>
