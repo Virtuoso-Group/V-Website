@@ -34,7 +34,7 @@ const ArtistCard = forwardRef<HTMLElement, Props>((props, ref) =>
 
 
             <VMarquee 
-                childStyle='w-fit text-lg text-center bg-black text-white font-extrabold whitespace-nowrap pe-10' 
+                childStyle='w-fit text-lg text-center text-white font-extrabold whitespace-nowrap pe-10' 
                 setting={{ type: "hover", isHover }}
                 text={artist.name} 
             
