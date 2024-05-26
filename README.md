@@ -8,19 +8,19 @@ For more detailed information, check out the [documentation](https://swejaber.at
 Please use Git Bash as your terminal to complete these instructions.
 
 1- Clone the repository
-
-`git clone https://github.com/Virtuoso-Group/V-Website.git`
-
- 
+```console
+git clone https://github.com/Virtuoso-Group/V-Website.git
+```
 
 2- Install npm packages
-
-`npm i`
-
+```console
+npm i
+```
 
 3- Create an `.env` file
-
-`touch .env`
+```console
+touch .env
+```
 
 Property | Value |
 --- | --- |
@@ -37,7 +37,14 @@ To do so, follow these steps:
 
 2- Run V-Web locally
 
-`npm run start:local`
+* Mac
+```console
+npm run start:local
+```
 
+* Windows
+```console
+REACT_APP_ENV=dev npm start
+```
 
 However, if you’ve only been tasked to make a cosmetic change on the frontend, you may run V-Website locally and connect to the deployed V-Backend by running `npm run start:dev`
