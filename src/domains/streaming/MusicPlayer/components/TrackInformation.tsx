@@ -12,7 +12,6 @@ interface Props
     className?: string, 
     showCoverArt: boolean,
     mode: "mobile" | "desktop",
-
 }
 
 const TrackInformation = memo((props: Props) =>
@@ -29,7 +28,7 @@ const TrackInformation = memo((props: Props) =>
                 className=
                 {`
                     z-[99] relative 
-                    aspect-square size-[3.125rem] 
+                    aspect-square h-[3.125rem] 
                     flex items-center justify-center 
                 `}
             >
@@ -43,7 +42,7 @@ const TrackInformation = memo((props: Props) =>
                 <div 
                     className=
                     {`
-                        absolute  size-full 
+                        absolute size-full
                         rounded-sm border border-primary bg-primary/25
                     `} 
                 />
@@ -54,7 +53,7 @@ const TrackInformation = memo((props: Props) =>
                     &&
                         <MotionCoverArt
                             id={`${release._id}${mode}`}
-                            className={` relative h-full rounded-sm ${isLoading && "brightness-50"}`}
+                            className={`relative h-full rounded-sm ${isLoading && "brightness-50"}`}
                             name={release.title}
                             coverArt={release.coverArt} 
                         /> 
@@ -66,7 +65,6 @@ const TrackInformation = memo((props: Props) =>
                 &&
                     <BeatLoader 
                         className="size-full absolute aspect-square flex justify-center items-center"
-                        
                         color={"#dc143c"} 
                         loading={true} 
                         size={"0.5rem"}
@@ -75,17 +73,14 @@ const TrackInformation = memo((props: Props) =>
             </div>
 
             <section className='flex flex-col overflow-hidden w-fill'>
-                {/* <AutoMarquee 
-                    className='font-bold text-white text-lg'
-                    text={track.title}
-                /> */}
-
                 <VMarquee 
                     containerStyle='font-bold text-white text-lg'
                     text={track.title}
                 />
                 
-                <p className="flex SD:hidden text-sm font-light align-middle text-slate-300">{artist.name}</p>
+                <p className="flex SD:hidden text-sm font-light align-middle text-slate-300">
+                    {artist.name}
+                </p>
 
                 <section className='hidden SD:flex gap-1 text-sm font-light align-middle text-slate-300'>
                     <Link 
