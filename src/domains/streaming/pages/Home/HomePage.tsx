@@ -2,7 +2,6 @@
 import { memo, useEffect, useState } from 'react'
 import { Category } from '../../../../Utils/types';
 import Chip from '../../../../components/Atoms/Chip';
-import TracksSection from './Components/TracksSection';
 import ReleasesSection from './Components/AlbumsSection';
 import ArtistsSection from './Components/ArtistsSection';
 import useAPI from '../../../../Utils/hooks/useAPI';
@@ -12,8 +11,6 @@ import { AlbumInfo } from '../../../../Utils/types/album';
 
 const Categories: Category[] = 
 [
-    { id: 'tracks', label: "Tracks" },
-
     { id: 'albums', label: "Albums" },
 
     { id: 'artists', label: "Artists" }
@@ -42,7 +39,6 @@ const HomePage = memo(() =>
 
     const HomeSections: { [index: string]:  JSX.Element } = 
     {
-        'tracks':  <TracksSection tracks={tracksAPI.data} />,
         'albums':  <ReleasesSection data={albumsAPI.data} />,
         'artists': <ArtistsSection data={artistsAPI.data} />
     }
