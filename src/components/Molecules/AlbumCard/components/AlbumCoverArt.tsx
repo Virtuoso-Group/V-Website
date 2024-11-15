@@ -19,10 +19,10 @@ const AlbumCoverArt = (props: Props) =>
 
     return (
         <div className={`relative`}>
-            <CoverArt 
+            {/* <CoverArt 
                 className={`w-full absolute right-5 rounded-lg scale-[0.9] bg-blend-darken ${isPlayingStyle}`}
                 release={release} 
-            />
+            /> */}
 
             <CoverArt 
                 className={`w-full relative rounded-lg drop-shadow-2xl ${isPlayingStyle}`}

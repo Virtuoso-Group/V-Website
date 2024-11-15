@@ -47,14 +47,9 @@ const WebsiteLogo = (props: Props) =>
         </Link>
     )
 }
-type WebsiteContext = 
+export type WebsiteContext = 
 { 
-    selectedtrack?:
-    {
-        trackID: string,
-        albumID: string,
-        artistID: string
-    },
+    selectedtrack?: { trackID: string, albumID: string, artistID: string },
 
     createPlaylist: (trackIDs: string[], index: number) => void,
 }
@@ -95,17 +90,7 @@ const WebsiteLayout = () =>
                 start={<WebsiteLogo onClick={musicPlayerOverlay.hide}/>} 
             />
 
-            <div className={`min-h-full w-full  ${track.value? "pb-[9rem]": "pb-[2rem]"} `}>
-                <Outlet 
-                    context=
-                    {
-                        { 
-                            selectedtrack: trackInfo,
-                            createPlaylist 
-                        } satisfies WebsiteContext
-                    } 
-                />
-            </div>
+            <Outlet context={{ selectedtrack: trackInfo, createPlaylist } satisfies WebsiteContext} />
             
             {
                 track.value 

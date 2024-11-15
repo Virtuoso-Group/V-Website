@@ -1,27 +1,28 @@
 
 import { memo, useEffect, useState } from 'react'
 import { Category } from '../../../../Utils/types';
-import Chip from '../../../../components/Atoms/Chip';
 import ReleasesSection from './Components/AlbumsSection';
 import ArtistsSection from './Components/ArtistsSection';
 import useAPI from '../../../../Utils/hooks/useAPI';
 import {  ArtistsList, SimplePublishedTrack} from '../../../../Utils/types/track';
-import { websitePadding } from '../../../../config/style';
 import { AlbumInfo } from '../../../../Utils/types/album';
+import PageContainer from '../../../../components/Organisms/PageContainer';
+import Chips from '../../../../components/Molecules/Chips';
+import VGrid from '../../../../components/Organisms/VGrid';
 
-const Categories: Category[] = 
-[
-    { id: 'albums', label: "Albums" },
+const Categories: { [key: string]: Category } = {
+    'albums':  { id: 'albums', label: "Albums" },
+    'artists': { id: 'artists', label: "Artists" }
+}
 
-    { id: 'artists', label: "Artists" }
-]
+const categoriesList = Object.values(Categories);
 
 
 const HomePage = memo(() => 
 {   
-    const [selectedCategory, setSelectedCategory] = useState<Category>(Categories[0])
+    const [selectedCategory, setSelectedCategory] = useState<Category>(Categories['albums'])
     
-    const selectCategory = (index: number) => setSelectedCategory(Categories[index]);
+    const selectCategory = (id: string) => setSelectedCategory(Categories[id]);
 
     const tracksAPI = useAPI<SimplePublishedTrack[]>("music/track/getAll", 'get', []);
 
@@ -46,31 +47,11 @@ const HomePage = memo(() =>
     const ChosenSection = HomeSections[selectedCategory.id];
 
     return (
-        <div className='relative flex flex-col '>
-            <div className={`${websitePadding} z-[40] top-[4rem] sticky  py-[1rem] w-full flex gap-5  bg-background`}>
-                {
-                    Categories.map((category, index) =>  
-                    {
-                        return (
-                            <Chip
-                                key={category.id} 
-
-                                isSelected={selectedCategory.id === category.id} 
-                                text={category.label} 
-
-                                select={() => selectCategory(index)}
-                            />
-                        )
-                    })
-                }
-            </div>
-            
-
-            {/* mt-20 */}
-            <div className={`${websitePadding} pb-8 relative flex flex-wrap w-full gap-8`}>
-                {ChosenSection}
-            </div>
-        </div>
+        <PageContainer className="relative flex flex-col">
+           <Chips contents={categoriesList} selectedID={selectedCategory.id} select={selectCategory} />
+           
+            <VGrid>{ChosenSection}</VGrid>
+        </PageContainer>
     )
 })
 

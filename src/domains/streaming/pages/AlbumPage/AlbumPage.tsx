@@ -9,6 +9,7 @@ import moment from 'moment';
 import { SimpleArtist } from '../../../../Utils/types/artist';
 import Link from '../../../../components/Atoms/Text/Link';
 import { useWebsiteContext } from '../../../../components/Organisms/WebsiteLayout';
+import PageContainer from '../../../../components/Organisms/PageContainer';
 
 
 // TODO: refactor this later. It needs to accomidate Arabic at some point. It looks ugly!
@@ -87,16 +88,7 @@ const AlbumPage = () =>
     const isPlayingStyle = isPlaying? "border-secondary border-[0.1rem]":"";
 
     return (
-        <div 
-            className=
-            {`
-                ${websitePadding}
-                relative
-                flex flex-col 
-                
-                w-full gap-10
-            `}
-        >
+        <PageContainer className={`${websitePadding} relative flex flex-col w-full gap-10`}>
             <header className='z-[5] SD:sticky SD:top-[4rem] pt-[2rem] flex flex-col SD:flex-row gap-10 bg-background'>
                 <CoverArt 
                     className={`relative rounded-lg drop-shadow-2xl w-full SD:size-[12rem] ${isPlayingStyle}`}
@@ -122,7 +114,7 @@ const AlbumPage = () =>
                     <TrackList tracks={tracks}/>
                 </section>
             }
-        </div>
+        </PageContainer>
     )
 }
 

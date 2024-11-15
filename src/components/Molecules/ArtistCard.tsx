@@ -19,7 +19,7 @@ const ArtistCard = forwardRef<HTMLElement, Props>((props, ref) =>
     return (
         <article
             ref={ref}
-            className={`flex cursor-pointer flex-col w-[9.375rem] gap-4 items-center text-center`}
+            className={`flex cursor-pointer flex-col SD:w-[9.375rem] gap-4 items-center text-center`}
             onClick={onClick}
 
             onMouseEnter={() => setIsHover(true)}
@@ -28,16 +28,10 @@ const ArtistCard = forwardRef<HTMLElement, Props>((props, ref) =>
         
             <ArtistAvatar className='w-full' artist={artist} />
 
-            {/* <p className='max-w-full text-lg text-center text-white font-extrabold whitespace-nowrap  overflow-hidden'>
-                {artist.name}
-            </p> */}
-
-
             <VMarquee 
                 childStyle='w-fit text-lg text-center text-white font-extrabold whitespace-nowrap pe-10' 
                 setting={{ type: "hover", isHover }}
                 text={artist.name} 
-            
             />
         </article>
     )
