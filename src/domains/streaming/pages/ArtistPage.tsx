@@ -6,6 +6,7 @@ import ArtistReleaseCard from "../../../components/Molecules/AlbumCard/ArtistAlb
 import { useNavigate } from "react-router-dom";
 import { websitePadding } from "../../../config/style";
 import ArtistAvatar from "../../../components/Atoms/Avatar/ArtistAvatar";
+import PageContainer from "../../../components/Organisms/PageContainer";
 
 const ArtistAlbums = (props: { releases: ArtistRelease[] }) =>
 {
@@ -41,8 +42,8 @@ export const ArtistPage = () =>
   const artistData = artist.data;
   
   return (
-    <div 
-      className=
+
+    <PageContainer className=
       {`
         ${websitePadding}
         relative 
@@ -50,6 +51,7 @@ export const ArtistPage = () =>
         w-full flex flex-col gap-10
       `}
     >
+
       {/* Basic artist info */}
       <header className="SD:h-[15.625rem] flex gap-10 flex-col SD:flex-row">
           <ArtistAvatar 
@@ -63,8 +65,8 @@ export const ArtistPage = () =>
       </header>
 
 
-      {artistData && <ArtistAlbums releases={artistData.releases} />}
-    </div>
+      {!!artistData?.releases?.length && <ArtistAlbums releases={artistData.releases} />}
+    </PageContainer>
   )
 }
 
