@@ -12,7 +12,7 @@ const VGrid = (props: Props) => {
     const { children } = props;
     
     return (
-        <div className={`relative ${websitePadding} ${deviceType === "MOBILE"? "grid grid-cols-2 gap-10": `flex flex-wrap gap-8`}  pb-8 w-full `}>
+        <div className={`relative ${websitePadding} ${deviceType === "MOBILE"? "grid grid-cols-2 gap-5": `grid grid-cols-6 gap-10`}  pb-8 w-full `}>
             {children}
         </div>
     )
