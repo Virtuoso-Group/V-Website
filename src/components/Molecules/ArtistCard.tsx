@@ -19,7 +19,7 @@ const ArtistCard = forwardRef<HTMLElement, Props>((props, ref) =>
     return (
         <article
             ref={ref}
-            className={`flex cursor-pointer flex-col SD:w-[9.375rem] gap-4 items-center text-center`}
+            className={`flex cursor-pointer flex-col gap-4 items-center text-center`}
             onClick={onClick}
 
             onMouseEnter={() => setIsHover(true)}

@@ -20,7 +20,7 @@ const ReleaseCard = (props: Props) =>
 
     return (
         <article
-            className='flex cursor-pointer flex-col SD:w-[9.375rem] gap-2'
+            className='flex cursor-pointer flex-col gap-2'
             onClick={() => navigate(`/album/${release.release._id}`)}
 
             onMouseEnter={() => setIsHover(true)}

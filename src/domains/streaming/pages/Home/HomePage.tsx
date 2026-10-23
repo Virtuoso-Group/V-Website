@@ -50,7 +50,7 @@ const HomePage = memo(() =>
         <PageContainer className="relative flex flex-col">
            <Chips contents={categoriesList} selectedID={selectedCategory.id} select={selectCategory} />
            
-            <VGrid>{ChosenSection}</VGrid>
+            {ChosenSection}
         </PageContainer>
     )
 })

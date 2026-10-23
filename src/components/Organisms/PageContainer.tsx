@@ -11,7 +11,7 @@ const PageContainer = (props: Props) => {
   const { selectedtrack } = useWebsiteContext();
 
   return (
-    <div className={`min-h-full w-full ${!!selectedtrack? "pb-[9rem]": "pb-[2rem]"} ${props.className}`}>
+    <div className={`min-h-screen w-full ${!!selectedtrack? "pb-[9rem]": "pb-[2rem]"} ${props.className}`}>
         {props.children}
     </div>
   )
